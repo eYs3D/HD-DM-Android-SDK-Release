@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <CheckBox
+        android:id="@+id/cb_auto_exposure"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/base_margin_horizontal"
+        android:enabled="false"
+        android:paddingStart="@dimen/base_margin_horizontal"
+        android:paddingTop="@dimen/label_vertical_spacing"
+        android:paddingEnd="@dimen/base_margin_horizontal"
+        android:paddingBottom="@dimen/label_vertical_spacing"
+        android:text="@string/sensor_settings_auto_exposure"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_exposure_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cb_auto_exposure">
+
+        <TextView
+            android:id="@+id/tv_manual_exposure_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/base_margin_horizontal"
+            android:text="@string/sensor_settings_manual_exposure_time"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.warkiz.widget.IndicatorStayLayout
+            android:id="@+id/layout_exposure_time_bar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/base_margin_horizontal"
+            android:layout_marginTop="@dimen/label_half_vertical_spacing"
+            android:layout_marginEnd="@dimen/base_margin_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_manual_exposure_time">
+
+            <com.warkiz.widget.IndicatorSeekBar
+                android:id="@+id/seekBar_exposure_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                app:isb_show_indicator="rounded_rectangle"
+                app:isb_show_tick_marks_type="divider"
+                app:isb_show_tick_texts="true"
+                app:isb_tick_texts_color="@color/colorPrimary"
+                app:isb_ticks_count="2" />
+
+        </com.warkiz.widget.IndicatorStayLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/label_vertical_spacing"
+        android:background="?android:attr/dividerVertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_exposure_time" />
+
+    <CheckBox
+        android:id="@+id/cb_auto_white_balance"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/base_margin_horizontal"
+        android:enabled="false"
+        android:paddingStart="@dimen/base_margin_horizontal"
+        android:paddingTop="@dimen/label_vertical_spacing"
+        android:paddingEnd="@dimen/base_margin_horizontal"
+        android:paddingBottom="@dimen/label_vertical_spacing"
+        android:text="@string/sensor_settings_auto_white_balance"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_white_balance"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cb_auto_white_balance">
+
+        <TextView
+            android:id="@+id/tv_manual_white_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/base_margin_horizontal"
+            android:text="@string/sensor_settings_manual_white_balance"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.warkiz.widget.IndicatorStayLayout
+            android:id="@+id/layout_white_balance_bar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/base_margin_horizontal"
+            android:layout_marginTop="@dimen/label_half_vertical_spacing"
+            android:layout_marginEnd="@dimen/base_margin_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_manual_white_balance">
+
+            <com.warkiz.widget.IndicatorSeekBar
+                android:id="@+id/seekBar_white_balance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                app:isb_show_indicator="rounded_rectangle"
+                app:isb_show_tick_marks_type="divider"
+                app:isb_show_tick_texts="true"
+                app:isb_tick_texts_color="@color/colorPrimary"
+                app:isb_ticks_count="2" />
+
+        </com.warkiz.widget.IndicatorStayLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/label_vertical_spacing"
+        android:background="?android:attr/dividerVertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_white_balance" />
+
+    <TextView
+        android:id="@+id/tv_light_source"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/base_margin_horizontal"
+        android:layout_marginTop="@dimen/label_vertical_spacing"
+        android:enabled="false"
+        android:text="@string/sensor_settings_light_source"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider2" />
+
+    <RadioGroup
+        android:id="@+id/rg_light_source"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/label_half_vertical_spacing"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_light_source">
+
+        <!--        <RadioButton-->
+        <!--            android:id="@+id/light50hz"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginStart="@dimen/base_margin_horizontal"-->
+        <!--            android:duplicateParentState="true"-->
+        <!--            android:paddingStart="@dimen/base_margin_horizontal"-->
+        <!--            android:paddingEnd="@dimen/base_margin_horizontal"-->
+        <!--            android:text="@string/sensor_settings_light_50hz"-->
+        <!--            android:textAppearance="?android:attr/textAppearanceListItemSmall" />-->
+
+        <!--        <RadioButton-->
+        <!--            android:id="@+id/light60hz"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginStart="@dimen/base_margin_horizontal"-->
+        <!--            android:duplicateParentState="true"-->
+        <!--            android:paddingStart="@dimen/base_margin_horizontal"-->
+        <!--            android:paddingEnd="@dimen/base_margin_horizontal"-->
+        <!--            android:text="@string/sensor_settings_light_60hz"-->
+        <!--            android:textAppearance="?android:attr/textAppearanceListItemSmall" />-->
+    </RadioGroup>
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/label_vertical_spacing"
+        android:background="?android:attr/dividerVertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rg_light_source" />
+
+    <CheckBox
+        android:id="@+id/cb_low_light_compensation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/base_margin_horizontal"
+        android:enabled="false"
+        android:paddingStart="@dimen/base_margin_horizontal"
+        android:paddingTop="@dimen/label_vertical_spacing"
+        android:paddingEnd="@dimen/base_margin_horizontal"
+        android:paddingBottom="@dimen/label_vertical_spacing"
+        android:text="@string/sensor_settings_low_light_compensation"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider3" />
+
+    <View
+        android:id="@+id/divider4"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/dividerVertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cb_low_light_compensation" />
+
+    <Button
+        android:id="@+id/bt_reset"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/label_vertical_spacing"
+        android:text="@string/reset"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider4" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/label_vertical_spacing"
+        android:background="@color/app_detail_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bt_reset" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

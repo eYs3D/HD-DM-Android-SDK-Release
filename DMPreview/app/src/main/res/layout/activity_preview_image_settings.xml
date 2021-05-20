@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusableInTouchMode="true"
+        android:paddingTop="@dimen/label_vertical_spacing"
+        android:paddingBottom="@dimen/label_vertical_spacing">
+
+        <Spinner
+            android:id="@+id/spinner_preset"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/base_margin_horizontal"
+            android:layout_marginEnd="@dimen/base_margin_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="Mode 1" />
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/label_vertical_spacing"
+            android:background="?android:attr/dividerVertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spinner_preset" />
+
+        <TextView
+            android:id="@+id/tv_depth_data_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/base_margin_horizontal"
+            android:layout_marginTop="@dimen/label_vertical_spacing"
+            android:text="@string/preview_image_depth_data_type"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider2" />
+
+        <Spinner
+            android:id="@+id/spinner_depth_data_type"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/base_margin_horizontal"
+            android:layout_marginTop="@dimen/margin_top_10dp"
+            android:layout_marginEnd="@dimen/base_margin_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_depth_data_type"
+            tools:listitem="8_BITS" />
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/label_vertical_spacing"
+            android:background="?android:attr/dividerVertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spinner_depth_data_type" />
+
+        <TextView
+            android:id="@+id/tv_camera_stream_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/base_margin_horizontal"
+            android:layout_marginTop="@dimen/label_vertical_spacing"
+            android:text="@string/preview_image_camera_stream_settings"
+            android:textAppearance="?android:attr/textAppearance"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider3" />
+
+        <TextView
+            android:id="@+id/tv_enable_color_stream"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="72dp"
+            android:layout_marginTop="@dimen/label_half_vertical_spacing"
+            android:text="@string/preview_image_enable_color_stream"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_camera_stream_settings" />
+
+        <TextView
+            android:id="@+id/tv_enable_color_stream_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="72dp"
+            android:text="@string/preview_image_enable_color_stream_hint"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_enable_color_stream" />
+
+        <CheckBox
+            android:id="@+id/cb_enable_color_stream"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/base_margin_horizontal"
+            android:layout_marginEnd="@dimen/base_margin_horizontal"
+            android:enabled="false"
+            app:layout_constraintBottom_toBottomOf="@id/tv_enable_color_stream_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_enable_color_stream" />
+
+        <TextView
+            android:id="@+id/tv_enable_depth_stream"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="72dp"
+            android:layout_marginTop="@dimen/label_half_vertical_spacing"
+            android:text="@string/preview_image_enable_depth_stream"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cb_enable_color_stream" />
+
+        <TextView
+            android:id="@+id/tv_enable_depth_stream_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="72dp"
+            android:text="@string/preview_image_enable_depth_stream_hint"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_enable_depth_stream" />
+
+        <CheckBox
+            android:id="@+id/cb_enable_depth_stream"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/base_margin_horizontal"
+            android:layout_marginEnd="@dimen/base_margin_horizontal"
+            android:enabled="false"
+            app:layout_constraintBottom_toBottomOf="@id/tv_enable_depth_stream_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_enable_depth_stream" />
+
+        <TextView
+            android:id="@+id/tv_color_stream"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/base_margin_horizontal"
+            android:layout_marginTop="@dimen/label_vertical_spacing"
+            android:text="@string/preview_image_color_stream"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cb_enable_depth_stream" />
+
+        <Spinner
+            android:id="@+id/spinner_color_stream"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/base_margin_horizontal"
+            app:layout_constraintBottom_toBottomOf="@id/tv_color_stream"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_color_stream"
+            tools:listitem="1024x720" />
+
+        <TextView
+            android:id="@+id/tv_depth_stream"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/base_margin_horizontal"
+            android:layout_marginTop="@dimen/label_vertical_spacing"
+            android:text="@string/preview_image_depth_stream"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_color_stream" />
+
+        <Spinner
+            android:id="@+id/spinner_depth_stream"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/base_margin_horizontal"
+            app:layout_constraintBottom_toBottomOf="@id/tv_depth_stream"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_depth_stream"
+            tools:listitem="1024x720" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_color_fps"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/label_vertical_spacing"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_depth_stream">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_color_fps_preset"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_color_fps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/base_margin_horizontal"
+                    android:text="@string/preview_image_color_frame_rate"
+                    android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Spinner
+                    android:id="@+id/spinner_color_fps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/base_margin_horizontal"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_color_fps"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_color_fps"
+                    tools:listitem="20" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_color_fps_manual"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/base_margin_horizontal"
+                android:layout_marginEnd="@dimen/base_margin_horizontal"
+                android:hint="@string/preview_image_color_frame_rate"
+                android:textColorHint="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/text_input_color_fps"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:inputType="number"
+                    android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                    tools:text="20" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_depth_fps"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/label_vertical_spacing"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_color_fps">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_depth_fps_preset"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_depth_fps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/base_margin_horizontal"
+                    android:text="@string/preview_image_depth_frame_rate"
+                    android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Spinner
+                    android:id="@+id/spinner_depth_fps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/base_margin_horizontal"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_depth_fps"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_depth_fps"
+                    tools:listitem="20" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_depth_fps_manual"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/base_margin_horizontal"
+                android:layout_marginEnd="@dimen/base_margin_horizontal"
+                android:hint="@string/preview_image_depth_frame_rate"
+                android:textColorHint="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/text_input_depth_fps"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:inputType="number"
+                    android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                    tools:text="20" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/divider4"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/label_vertical_spacing"
+            android:background="?android:attr/dividerVertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_depth_fps" />
+
+        <TextView
+            android:id="@+id/tv_option"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/base_margin_horizontal"
+            android:layout_marginTop="@dimen/label_vertical_spacing"
+            android:text="@string/preview_image_option"
+            android:textAppearance="?android:attr/textAppearance"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider4" />
+
+        <TextView
+            android:id="@+id/tv_show_fps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="72dp"
+            android:layout_marginTop="@dimen/label_half_vertical_spacing"
+            android:text="@string/preview_image_show_fps"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_option" />
+
+        <TextView
+            android:id="@+id/tv_show_fps_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="72dp"
+            android:text="@string/preview_image_show_fps_hint"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_show_fps" />
+
+        <CheckBox
+            android:id="@+id/cb_show_fps"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/base_margin_horizontal"
+            android:layout_marginEnd="@dimen/base_margin_horizontal"
+            app:layout_constraintBottom_toBottomOf="@id/tv_show_fps_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_show_fps" />
+
+        <TextView
+            android:id="@+id/tv_ir_intensity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/base_margin_horizontal"
+            android:layout_marginTop="@dimen/label_vertical_spacing"
+            android:text="@string/preview_image_ir_intensity"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cb_show_fps" />
+
+        <CheckBox
+            android:id="@+id/cb_ir_extended"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/base_margin_horizontal"
+            android:text="@string/preview_image_ir_extended"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_ir_intensity"
+            app:layout_constraintStart_toEndOf="@+id/tv_ir_intensity"
+            app:layout_constraintTop_toTopOf="@+id/tv_ir_intensity" />
+
+        <com.warkiz.widget.IndicatorStayLayout
+            android:id="@+id/layout_ir_bar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/base_margin_horizontal"
+            android:layout_marginTop="@dimen/label_vertical_spacing"
+            android:layout_marginEnd="@dimen/base_margin_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_ir_intensity">
+
+            <com.warkiz.widget.IndicatorSeekBar
+                android:id="@+id/seekBar_ir"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:isb_progress="6"
+                app:isb_show_tick_marks_type="divider"
+                app:isb_show_tick_texts="true"
+                app:isb_tick_texts_color="@color/colorPrimary"
+                app:isb_tick_texts_size="8sp"
+                app:isb_ticks_count="6" />
+
+        </com.warkiz.widget.IndicatorStayLayout>
+
+        <TextView
+            android:id="@+id/tv_roi_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/base_margin_horizontal"
+            android:layout_marginTop="@dimen/label_vertical_spacing"
+            android:text="@string/preview_image_roi_size"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_ir_bar" />
+
+        <com.warkiz.widget.IndicatorStayLayout
+            android:id="@+id/layout_roi_bar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/base_margin_horizontal"
+            android:layout_marginTop="@dimen/label_vertical_spacing"
+            android:layout_marginEnd="@dimen/base_margin_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_roi_size">
+
+            <com.warkiz.widget.IndicatorSeekBar
+                android:id="@+id/seekBar_roi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/label_vertical_spacing"
+                app:isb_show_indicator="rounded_rectangle"
+                app:isb_show_tick_marks_type="divider"
+                app:isb_show_tick_texts="true"
+                app:isb_tick_texts_color="@color/colorPrimary"
+                app:isb_ticks_count="6" />
+
+        </com.warkiz.widget.IndicatorStayLayout>
+
+        <View
+            android:id="@+id/divider5"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/label_vertical_spacing"
+            android:background="?android:attr/dividerVertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_roi_bar" />
+
+        <TextView
+            android:id="@+id/tv_orientation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/base_margin_horizontal"
+            android:layout_marginTop="@dimen/label_vertical_spacing"
+            android:text="@string/preview_image_orientation"
+            android:textAppearance="?android:attr/textAppearance"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider5" />
+
+        <TextView
+            android:id="@+id/tv_reverse_orientation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="72dp"
+            android:layout_marginTop="@dimen/label_half_vertical_spacing"
+            android:text="@string/preview_image_reverse_orientation"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_orientation" />
+
+        <TextView
+            android:id="@+id/tv_reverse_orientation_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="72dp"
+            android:text="@string/preview_image_reverse_orientation_hint"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_reverse_orientation" />
+
+        <CheckBox
+            android:id="@+id/cb_orientation_reverse"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/base_margin_horizontal"
+            android:layout_marginEnd="@dimen/base_margin_horizontal"
+            app:layout_constraintBottom_toBottomOf="@id/tv_reverse_orientation_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_reverse_orientation" />
+
+        <TextView
+            android:id="@+id/tv_landscape_orientation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="72dp"
+            android:layout_marginTop="@dimen/label_half_vertical_spacing"
+            android:text="@string/preview_image_landscape_orientation"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cb_orientation_reverse" />
+
+        <TextView
+            android:id="@+id/tv_landscape_orientation_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="72dp"
+            android:text="@string/preview_image_landscape_orientation_hint"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_landscape_orientation" />
+
+        <CheckBox
+            android:id="@+id/cb_orientation_landscape"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/base_margin_horizontal"
+            android:layout_marginEnd="@dimen/base_margin_horizontal"
+            app:layout_constraintBottom_toBottomOf="@id/tv_landscape_orientation_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_landscape_orientation" />
+
+        <TextView
+            android:id="@+id/tv_mirror_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="72dp"
+            android:layout_marginTop="@dimen/label_half_vertical_spacing"
+            android:text="@string/preview_image_mirror_mode"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cb_orientation_landscape" />
+
+        <TextView
+            android:id="@+id/tv_mirror_mode_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="72dp"
+            android:text="@string/preview_image_mirror_mode_hint"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_mirror_mode" />
+
+        <CheckBox
+            android:id="@+id/cb_mirror_mode"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/base_margin_horizontal"
+            android:layout_marginEnd="@dimen/base_margin_horizontal"
+            app:layout_constraintBottom_toBottomOf="@id/tv_mirror_mode_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_mirror_mode" />
+
+        <View
+            android:id="@+id/divider6"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/label_vertical_spacing"
+            android:background="?android:attr/dividerVertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cb_mirror_mode" />
+
+        <TextView
+            android:id="@+id/tv_ply_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/base_margin_horizontal"
+            android:layout_marginTop="@dimen/label_vertical_spacing"
+            android:text="@string/preview_image_ply_filter"
+            android:textAppearance="?android:attr/textAppearance"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider6" />
+
+        <TextView
+            android:id="@+id/tv_ply_filter2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="72dp"
+            android:layout_marginTop="@dimen/label_half_vertical_spacing"
+            android:text="@string/preview_image_ply_filter"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_ply_filter" />
+
+        <TextView
+            android:id="@+id/tv_ply_filter2_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="72dp"
+            android:text="@string/preview_image_ply_filter_hint"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_ply_filter2" />
+
+        <CheckBox
+            android:id="@+id/cb_ply_filter"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/base_margin_horizontal"
+            android:layout_marginEnd="@dimen/base_margin_horizontal"
+            app:layout_constraintBottom_toBottomOf="@id/tv_ply_filter2_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_ply_filter2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

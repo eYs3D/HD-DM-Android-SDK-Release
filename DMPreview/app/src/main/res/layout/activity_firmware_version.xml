@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_firmware_version"
+        style="@style/common_settings_label"
+        android:text="@string/firmware_version_firmware_version"
+        android:textIsSelectable="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_firmware_version_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/label_value_spacing"
+        android:layout_marginEnd="@dimen/label_value_spacing"
+        android:text="@string/firmware_version_value_unknown"
+        android:textIsSelectable="true"
+        app:layout_constraintBottom_toBottomOf="@id/tv_firmware_version"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_firmware_version"
+        app:layout_constraintTop_toTopOf="@id/tv_firmware_version" />
+
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/label_vertical_spacing"
+        android:background="?android:attr/dividerVertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_firmware_version" />
+
+    <TextView
+        android:id="@+id/tv_product_id"
+        style="@style/common_settings_label"
+        android:text="@string/firmware_version_product_id"
+        android:textIsSelectable="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider1" />
+
+    <TextView
+        android:id="@+id/tv_product_id_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/label_value_spacing"
+        android:text="@string/firmware_version_value_unknown"
+        android:textIsSelectable="true"
+        app:layout_constraintBottom_toBottomOf="@id/tv_product_id"
+        app:layout_constraintStart_toEndOf="@id/tv_product_id"
+        app:layout_constraintTop_toTopOf="@id/tv_product_id" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/label_vertical_spacing"
+        android:background="?android:attr/dividerVertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_product_id" />
+
+    <TextView
+        android:id="@+id/tv_vendor_id"
+        style="@style/common_settings_label"
+        android:text="@string/firmware_version_vendor_id"
+        android:textIsSelectable="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider2" />
+
+    <TextView
+        android:id="@+id/tv_vendor_id_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/label_value_spacing"
+        android:text="@string/firmware_version_value_unknown"
+        android:textIsSelectable="true"
+        app:layout_constraintBottom_toBottomOf="@id/tv_vendor_id"
+        app:layout_constraintStart_toEndOf="@id/tv_vendor_id"
+        app:layout_constraintTop_toTopOf="@id/tv_vendor_id" />
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/label_vertical_spacing"
+        android:background="?android:attr/dividerVertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_vendor_id" />
+
+    <TextView
+        android:id="@+id/tv_serial_number"
+        style="@style/common_settings_label"
+        android:text="@string/firmware_version_serial_number"
+        android:textIsSelectable="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider3" />
+
+    <TextView
+        android:id="@+id/tv_serial_number_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/label_value_spacing"
+        android:layout_marginEnd="@dimen/label_value_spacing"
+        android:text="@string/firmware_version_value_unknown"
+        android:textIsSelectable="true"
+        app:layout_constraintBottom_toBottomOf="@id/tv_serial_number"
+        app:layout_constraintStart_toEndOf="@id/tv_serial_number"
+        app:layout_constraintTop_toTopOf="@id/tv_serial_number" />
+
+    <View
+        android:id="@+id/divider4"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/label_vertical_spacing"
+        android:background="?android:attr/dividerVertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_serial_number" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/app_detail_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider4" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

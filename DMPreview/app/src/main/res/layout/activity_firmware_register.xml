@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true">
+
+    <RadioGroup
+        android:id="@+id/rg_register_type"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/label_vertical_spacing"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RadioButton
+            android:id="@+id/rb_fw_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/base_margin_horizontal"
+            android:checked="true"
+            android:tag="FW"
+            android:text="@string/firmware_register_fw_register" />
+
+        <RadioButton
+            android:id="@+id/rb_asic_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/base_margin_horizontal"
+            android:tag="ASIC"
+            android:text="@string/firmware_register_asic_register" />
+
+        <RadioButton
+            android:id="@+id/rb_i2c_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/base_margin_horizontal"
+            android:tag="I2C"
+            android:text="@string/firmware_register_i2c_register" />
+
+    </RadioGroup>
+
+    <CheckBox
+        android:id="@+id/cb_address_2_bytes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/base_margin_horizontal"
+        android:layout_marginTop="@dimen/label_vertical_spacing"
+        android:enabled="false"
+        android:text="@string/firmware_register_address_2_bytes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rg_register_type" />
+
+    <CheckBox
+        android:id="@+id/cb_value_2_bytes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/base_margin_horizontal"
+        android:layout_marginTop="@dimen/label_vertical_spacing"
+        android:enabled="false"
+        android:text="@string/firmware_register_value_2_bytes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cb_address_2_bytes" />
+
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/label_vertical_spacing"
+        android:background="?android:attr/dividerVertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cb_value_2_bytes" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_i2c_slave_id"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/base_margin_horizontal"
+        android:layout_marginTop="@dimen/text_input_vertical_spacing"
+        android:layout_marginEnd="@dimen/base_margin_horizontal"
+        android:hint="@string/firmware_register_slave_id_register"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider1">
+
+        <com.esp.uvc.views.HexTextInput
+            android:id="@+id/text_input_i2c_slave_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/label_vertical_spacing"
+        android:background="?android:attr/dividerVertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_i2c_slave_id" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_address_text_input"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/base_margin_horizontal"
+        android:layout_marginTop="@dimen/text_input_vertical_spacing"
+        android:layout_marginEnd="@dimen/base_margin_horizontal"
+        android:hint="@string/firmware_register_register_address"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider2">
+
+        <com.esp.uvc.views.HexTextInput
+            android:id="@+id/text_input_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text|textNoSuggestions"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/label_vertical_spacing"
+        android:background="?android:attr/dividerVertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_address_text_input" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_value_text_input"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/base_margin_horizontal"
+        android:layout_marginTop="@dimen/text_input_vertical_spacing"
+        android:layout_marginEnd="@dimen/base_margin_horizontal"
+        android:hint="@string/firmware_register_register_value"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider3">
+
+        <com.esp.uvc.views.HexTextInput
+            android:id="@+id/text_input_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <View
+        android:id="@+id/divider4"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/label_vertical_spacing"
+        android:background="?android:attr/dividerVertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_value_text_input" />
+
+    <Button
+        android:id="@+id/bt_get"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/base_margin_horizontal"
+        android:layout_marginTop="@dimen/label_vertical_spacing"
+        android:enabled="false"
+        android:text="@string/firmware_register_get"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider4" />
+
+    <Button
+        android:id="@+id/bt_set"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/label_vertical_spacing"
+        android:layout_marginEnd="@dimen/base_margin_horizontal"
+        android:enabled="false"
+        android:text="@string/firmware_register_set"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider4" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/label_vertical_spacing"
+        android:background="@color/app_detail_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bt_get" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
