@@ -13,8 +13,7 @@
 
 4. Select "Open an Existing Project" to open existing DMPreview project and then select DMPreview folder which you download from GitHub.     
 ![android-3-open project](https://user-images.githubusercontent.com/13328289/119078997-daab0a80-ba29-11eb-8ddc-408795977cc0.png)  
-![android-4-select project](https://user-images.githubusercontent.com/13328289/119079058-f0b8cb00-ba29-11eb-8382-e9588399ba26.png)  
-
+![a-1](https://user-images.githubusercontent.com/13328289/121127927-1e40a980-c85d-11eb-9efb-7252dea1caf9.png)
 5. Select "Build/Clean Project"  
 ![clean-project](https://user-images.githubusercontent.com/13328289/119079230-4a20fa00-ba2a-11eb-8763-17d40f030c24.png)
 
@@ -22,14 +21,14 @@
 ![make-project](https://user-images.githubusercontent.com/13328289/119079468-bd2a7080-ba2a-11eb-8c90-c36291960bea.png)
 
 7. Build DMPreview successful.
-![android-6_build_finish](https://user-images.githubusercontent.com/13328289/119079600-fcf15800-ba2a-11eb-8bb9-b6b96a4b8583.png)
+![a-2](https://user-images.githubusercontent.com/13328289/121127991-3c0e0e80-c85d-11eb-95ee-61ba3594a9ba.png)
 
-8. The APK file will be found in the /HD-DM-Android-SDK/DMPreview/app/build/outputs/apk/debug/ folder
-![android_6](https://user-images.githubusercontent.com/13328289/119079850-8d2f9d00-ba2b-11eb-814c-93fd2614c9bd.png)
+8. The APK file will be found in the \HD-DM-Android-SDK-Release\DMPreview\app\build\outputs\apk\debug folder
+![a-3](https://user-images.githubusercontent.com/13328289/121128394-e71ec800-c85d-11eb-8277-d5efda473ff7.png)
 
 10. Connect Android device to Computer and use below command to install APK.  
      
-        adb install eDepthPreview_v1.3.9.1-debug-(202105202041).apk
+        adb install eDepthPreview_v1.3.9.1-debug-(202106081319).apk
      
 11. Launch eDepthPreview application from Android device.  
 
