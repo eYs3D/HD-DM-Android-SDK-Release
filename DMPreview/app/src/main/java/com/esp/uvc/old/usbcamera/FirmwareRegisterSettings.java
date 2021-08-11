@@ -19,7 +19,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.esp.android.usb.camera.core.EtronCamera;
+import com.esp.android.usb.camera.core.ApcCamera;
 import com.esp.android.usb.camera.core.USBMonitor;
 import com.esp.android.usb.camera.core.USBMonitor.OnDeviceConnectListener;
 import com.esp.android.usb.camera.core.USBMonitor.UsbControlBlock;
@@ -60,7 +60,7 @@ public class FirmwareRegisterSettings extends AppCompatActivity {
 
         // for accessing USB and USB camera
         private USBMonitor mUSBMonitor = null;
-        private EtronCamera mUVCCamera = null;
+        private ApcCamera mUVCCamera = null;
         private UsbDevice mUsbDevice = null;
         private Context mContext = null;
         private View mRootView;
@@ -189,7 +189,7 @@ public class FirmwareRegisterSettings extends AppCompatActivity {
                 if(DEBUG)Log.d(TAG, ">>>> getVenderId:" + ctrlBlock.getVenderId());
                 if(DEBUG)Log.d(TAG, ">>>> getProductId:" + ctrlBlock.getProductId());
                 if(DEBUG)Log.d(TAG, ">>>> getFileDescriptor:" + ctrlBlock.getFileDescriptor());
-                final EtronCamera camera = new EtronCamera();
+                final ApcCamera camera = new ApcCamera();
                 EXECUTER.execute(new Runnable() {
                     @Override
                     public void run() {
@@ -201,7 +201,7 @@ public class FirmwareRegisterSettings extends AppCompatActivity {
                             Log.e(TAG, "open uvccamera exception:" + e.toString());
                             return;
                         }
-                        if (ret == EtronCamera.EYS_OK && mUVCCamera == null) {
+                        if (ret == ApcCamera.EYS_OK && mUVCCamera == null) {
                             mUVCCamera = camera;
                         }
                         else{
@@ -287,15 +287,15 @@ public class FirmwareRegisterSettings extends AppCompatActivity {
                        int slaveId = Integer.parseInt(slaveId_edit, 16);
                        int flag = 0;
                        if(mCheckBox_Address.isChecked()) {
-                           flag |= EtronCamera.FG_Address_2Byte;
+                           flag |= ApcCamera.FG_Address_2Byte;
                        } else {
-                           flag |= EtronCamera.FG_Address_1Byte;
+                           flag |= ApcCamera.FG_Address_1Byte;
                        }
 
                        if(mCheckBox_Value.isChecked()) {
-                           flag |= EtronCamera.FG_Value_2Byte;
+                           flag |= ApcCamera.FG_Value_2Byte;
                        } else {
-                           flag |= EtronCamera.FG_Value_1Byte;
+                           flag |= ApcCamera.FG_Value_1Byte;
                        }
                        String[] hexStringI2C = new String[1];
                        int ret_i2c = mUVCCamera.getSensorRegisterValue(hexStringI2C,
@@ -344,15 +344,15 @@ public class FirmwareRegisterSettings extends AppCompatActivity {
                        int slaveId = Integer.parseInt(slaveId_edit, 16);
                        int flag = 0;
                        if(mCheckBox_Address.isChecked()) {
-                           flag |= EtronCamera.FG_Address_2Byte;
+                           flag |= ApcCamera.FG_Address_2Byte;
                        } else {
-                           flag |= EtronCamera.FG_Address_1Byte;
+                           flag |= ApcCamera.FG_Address_1Byte;
                        }
 
                        if(mCheckBox_Value.isChecked()) {
-                           flag |= EtronCamera.FG_Value_2Byte;
+                           flag |= ApcCamera.FG_Value_2Byte;
                        } else {
-                           flag |= EtronCamera.FG_Value_1Byte;
+                           flag |= ApcCamera.FG_Value_1Byte;
                        }
                        int vaule_i2c = Integer.parseInt(vaule_edit, 16);
                        int ret_i2c = mUVCCamera.setSensorRegisterValue(slaveId, address_i2c, vaule_i2c, flag);

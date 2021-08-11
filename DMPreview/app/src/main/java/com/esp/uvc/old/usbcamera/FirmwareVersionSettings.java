@@ -16,7 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.esp.android.usb.camera.core.EtronCamera;
+import com.esp.android.usb.camera.core.ApcCamera;
 import com.esp.android.usb.camera.core.USBMonitor;
 import com.esp.android.usb.camera.core.USBMonitor.OnDeviceConnectListener;
 import com.esp.android.usb.camera.core.USBMonitor.UsbControlBlock;
@@ -52,7 +52,7 @@ public class FirmwareVersionSettings extends AppCompatActivity {
 
         // for accessing USB and USB camera
         private USBMonitor mUSBMonitor = null;
-        private EtronCamera mUVCCamera = null;
+        private ApcCamera mUVCCamera = null;
         private UsbDevice mUsbDevice = null;
         private Context mContext = null;
         private View mRootView;
@@ -165,7 +165,7 @@ public class FirmwareVersionSettings extends AppCompatActivity {
                 if(DEBUG)Log.d(TAG, ">>>> getVenderId:" + ctrlBlock.getVenderId());
                 if(DEBUG)Log.d(TAG, ">>>> getProductId:" + ctrlBlock.getProductId());
                 if(DEBUG)Log.d(TAG, ">>>> getFileDescriptor:" + ctrlBlock.getFileDescriptor());
-                final EtronCamera camera = new EtronCamera();
+                final ApcCamera camera = new ApcCamera();
                 EXECUTER.execute(new Runnable() {
                     @Override
                     public void run() {
@@ -177,7 +177,7 @@ public class FirmwareVersionSettings extends AppCompatActivity {
                             Log.e(TAG, "open uvccamera exception:" + e.toString());
                             return;
                         }
-                        if (ret == EtronCamera.EYS_OK && mUVCCamera == null) {
+                        if (ret == ApcCamera.EYS_OK && mUVCCamera == null) {
                             mUVCCamera = camera;
                         }
                         else{

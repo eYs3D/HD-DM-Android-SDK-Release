@@ -1,7 +1,7 @@
 package com.esp.uvc.main.common
 
-import com.esp.android.usb.camera.core.EtronCamera
-import com.esp.android.usb.camera.core.EtronCamera.DistanceLimit
+import com.esp.android.usb.camera.core.ApcCamera
+import com.esp.android.usb.camera.core.ApcCamera.DistanceLimit
 import androidx.annotation.NonNull
 import com.esp.uvc.utils.loge
 
@@ -12,11 +12,11 @@ class ColorPaletteModel : IColorPaletteModel {
     private var mDefaultZNearest: Int = 0
     var mCurrentZNearest: Int = 0
     var mCurrentZFarthest: Int = 0
-    var mCamera: EtronCamera? = null
+    var mCamera: ApcCamera? = null
 
-    fun init(@NonNull etronCamera: EtronCamera) {
-        mCamera = etronCamera
-        val currentLimits: DistanceLimit = etronCamera.getDistanceLimitInZDTable()
+    fun init(@NonNull apcCamera: ApcCamera) {
+        mCamera = apcCamera
+        val currentLimits: DistanceLimit = apcCamera.getDistanceLimitInZDTable()
         mDefaultZNearest = currentLimits.nearest.toInt()
         mCurrentZNearest = mDefaultZNearest
 

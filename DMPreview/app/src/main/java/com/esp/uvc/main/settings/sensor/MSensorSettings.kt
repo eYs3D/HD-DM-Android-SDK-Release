@@ -1,6 +1,6 @@
 package com.esp.uvc.main.settings.sensor
 
-import com.esp.android.usb.camera.core.EtronCamera.*
+import com.esp.android.usb.camera.core.ApcCamera.*
 import com.esp.uvc.manager.*
 import com.esp.uvc.manager.ExposureManager.INDEX_AUTO_EXPOSURE
 import com.esp.uvc.manager.ExposureManager.INDEX_EXPOSURE_ABSOLUTE_TIME

@@ -1,7 +1,7 @@
 package com.esp.uvc.manager
 
-import com.esp.android.usb.camera.core.EtronCamera
-import com.esp.android.usb.camera.core.EtronCamera.*
+import com.esp.android.usb.camera.core.ApcCamera
+import com.esp.android.usb.camera.core.ApcCamera.*
 
 private const val MAX_EXPOSURE_ABSOLUTE_TIME = 3
 private const val MIN_EXPOSURE_ABSOLUTE_TIME = -13
@@ -18,31 +18,31 @@ object ExposureManager {
      * Auto Exposure
      **/
 
-    fun getAE(etronCamera: EtronCamera?): Int {
-        return etronCamera?.exposureMode ?: EYS_ERROR
+    fun getAE(apcCamera: ApcCamera?): Int {
+        return apcCamera?.exposureMode ?: EYS_ERROR
     }
 
     fun getAEBySharedPrefs(): Int {
         return SharedPrefManager.get(KEY.AUTO_EXPOSURE, EYS_ERROR) as Int
     }
 
-    fun isAE(etronCamera: EtronCamera?): Boolean {
-        return getAE(etronCamera) == EXPOSURE_MODE_AUTO_APERTURE
+    fun isAE(apcCamera: ApcCamera?): Boolean {
+        return getAE(apcCamera) == EXPOSURE_MODE_AUTO_APERTURE
     }
 
-    fun setAE(etronCamera: EtronCamera?, enabled: Boolean): Int {
+    fun setAE(apcCamera: ApcCamera?, enabled: Boolean): Int {
         val value = if (enabled) EXPOSURE_MODE_AUTO_APERTURE else EXPOSURE_MODE_MANUAL
-        return etronCamera?.setExposureMode(value) ?: EYS_ERROR
+        return apcCamera?.setExposureMode(value) ?: EYS_ERROR
     }
 
-    fun setAEBySharedPrefs(etronCamera: EtronCamera?) {
+    fun setAEBySharedPrefs(apcCamera: ApcCamera?) {
         val ae = getAEBySharedPrefs()
         if (ae >= 0) {
-            if (ae != getAE(etronCamera)) {
-                setAE(etronCamera, ae == EXPOSURE_MODE_AUTO_APERTURE)
+            if (ae != getAE(apcCamera)) {
+                setAE(apcCamera, ae == EXPOSURE_MODE_AUTO_APERTURE)
             }
             if (ae == EXPOSURE_MODE_MANUAL) {
-                setExposureAbsoluteTimeBySharedPrefs(etronCamera)
+                setExposureAbsoluteTimeBySharedPrefs(apcCamera)
             }
         }
     }
@@ -51,26 +51,26 @@ object ExposureManager {
      * Exposure
      **/
 
-    fun getExposureAbsoluteTime(etronCamera: EtronCamera?): Int {
-        return etronCamera?.exposureAbsoluteTime ?: DEVICE_FIND_FAIL
+    fun getExposureAbsoluteTime(apcCamera: ApcCamera?): Int {
+        return apcCamera?.exposureAbsoluteTime ?: DEVICE_FIND_FAIL
     }
 
     fun getExposureAbsoluteTimeBySharedPrefs(): Int {
         return SharedPrefManager.get(KEY.EXPOSURE_ABSOLUTE_TIME, DEVICE_FIND_FAIL) as Int
     }
 
-    fun setExposureAbsoluteTime(etronCamera: EtronCamera?, current: Int): Int {
-        return etronCamera?.setExposureAbsoluteTime(current) ?: EYS_ERROR
+    fun setExposureAbsoluteTime(apcCamera: ApcCamera?, current: Int): Int {
+        return apcCamera?.setExposureAbsoluteTime(current) ?: EYS_ERROR
     }
 
-    fun setExposureAbsoluteTimeBySharedPrefs(etronCamera: EtronCamera?, force: Boolean = false) {
+    fun setExposureAbsoluteTimeBySharedPrefs(apcCamera: ApcCamera?, force: Boolean = false) {
         val time =
             getExposureAbsoluteTimeBySharedPrefs()
         if (force || (time != DEVICE_FIND_FAIL && time != DEVICE_NOT_SUPPORT && time != getExposureAbsoluteTime(
-                etronCamera
+                apcCamera
             ))
         ) {
-            setExposureAbsoluteTime(etronCamera, time)
+            setExposureAbsoluteTime(apcCamera, time)
         }
     }
 
@@ -93,11 +93,11 @@ object ExposureManager {
         SharedPrefManager.saveAll()
     }
 
-    fun setupSharedPrefs(etronCamera: EtronCamera?) {
-        SharedPrefManager.put(KEY.AUTO_EXPOSURE, getAE(etronCamera))
+    fun setupSharedPrefs(apcCamera: ApcCamera?) {
+        SharedPrefManager.put(KEY.AUTO_EXPOSURE, getAE(apcCamera))
         // Avoid after setting EXPOSURE_ABSOLUTE_TIME by SensorSettingsActivity and the ae is on, then go preview and back to SensorSettingsActivity
         if (getExposureAbsoluteTimeBySharedPrefs() == DEVICE_FIND_FAIL) {
-            SharedPrefManager.put(KEY.EXPOSURE_ABSOLUTE_TIME, getExposureAbsoluteTime(etronCamera))
+            SharedPrefManager.put(KEY.EXPOSURE_ABSOLUTE_TIME, getExposureAbsoluteTime(apcCamera))
         }
         SharedPrefManager.saveAll()
     }

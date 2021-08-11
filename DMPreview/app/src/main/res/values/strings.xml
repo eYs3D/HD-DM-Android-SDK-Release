@@ -51,10 +51,10 @@
     <string name="enable_stream_depth_checked_title">Enable depth stream</string>
     <string name="enable_stream_depth_checked_summary">Enable/disable depth stream preview </string>
     <string name="depth_data_type_title">Depth Data type</string>
-    <string name="etron_preview_frame_size_title">Color Stream</string>
+    <string name="apc_preview_frame_size_title">Color Stream</string>
     <string name="depth_preview_frame_size_title">Depth Stream</string>
-    <string name="etron_color_preview_frame_rate_title">Color Frame Rate</string>
-    <string name="etron_depth_preview_frame_rate_title">Depth Frame Rate</string>
+    <string name="apc_color_preview_frame_rate_title">Color Frame Rate</string>
+    <string name="apc_depth_preview_frame_rate_title">Depth Frame Rate</string>
     <string name="input_frame_rate">Input frame rate</string>
     <string name="z_far_title">Z Far for save .ply</string>
     <string name="index_for_file_id_title">Index for file ID</string>
@@ -142,7 +142,7 @@
     <string name="software_app_version">App Version:1.2.3.17</string>
     <string name="software_sdk_version">SDK Version:1.0.1.8</string>
     <string name="software_version_license">Apache License</string>
-    <string name="software_version_cliam">Copyright (c) 2016, Etron Inc.\n All rights reserved.</string>
+    <string name="software_version_cliam">Copyright (c) 2016, eYs3D Inc.\n All rights reserved.</string>
     <string name="software_version_claim2">Copyright (c) 2019, eYs3D Inc.\n All rights reserved.</string>
 
     <string name="camera_sensor_settings_ae">AE enabled</string>

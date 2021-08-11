@@ -17,7 +17,7 @@ import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.esp.android.usb.camera.core.EtronCamera;
+import com.esp.android.usb.camera.core.ApcCamera;
 import com.esp.android.usb.camera.core.USBMonitor;
 import com.esp.uvc.R;
 
@@ -67,7 +67,7 @@ public class FirmwareUpdateSettings extends AppCompatActivity {
         private static Activity mActivity;
         // for accessing USB and USB camera
         private USBMonitor mUSBMonitor = null;
-        private EtronCamera mUVCCamera = null;
+        private ApcCamera mUVCCamera = null;
         private UsbDevice mUsbDevice = null;
         private Context mContext = null;
         private View mRootView;
@@ -207,7 +207,7 @@ public class FirmwareUpdateSettings extends AppCompatActivity {
                 if(DEBUG)Log.d(TAG, ">>>> getVenderId:" + ctrlBlock.getVenderId());
                 if(DEBUG)Log.d(TAG, ">>>> getProductId:" + ctrlBlock.getProductId());
                 if(DEBUG)Log.d(TAG, ">>>> getFileDescriptor:" + ctrlBlock.getFileDescriptor());
-                final EtronCamera camera = new EtronCamera();
+                final ApcCamera camera = new ApcCamera();
                 EXECUTER.execute(new Runnable() {
                     @Override
                     public void run() {
@@ -215,7 +215,7 @@ public class FirmwareUpdateSettings extends AppCompatActivity {
                         try {
                             ret = camera.open(ctrlBlock);
                             Log.d(TAG, "open uvccamera ret:" + ret);
-                            if (ret == EtronCamera.EYS_OK) {
+                            if (ret == ApcCamera.EYS_OK) {
                                 mUVCCamera = camera;
                             }
                         } catch (Exception e) {
@@ -439,30 +439,30 @@ public class FirmwareUpdateSettings extends AppCompatActivity {
                     Log.i(TAG, "Write to flash complete...");
                     String path= Environment.getExternalStorageDirectory().getPath()+ "/eYs3D/fw.bin";
                     toastMessage("Write to flash complete...:"+path);
-                } else if(result == EtronCamera.ETronDI_KEEP_DATA_FAIL_SERIALNUMBER) {
+                } else if(result == ApcCamera.APC_KEEP_DATA_FAIL_SERIALNUMBER) {
                     Log.d(TAG, "Write to flash failed...:"+result);
-                    toastMessage("Write to flash failed...:ETronDI_KEEP_DATA_FAIL_SERIALNUMBER");
-                }else if(result == EtronCamera.ETronDI_KEEP_DATA_FAIL_SENSORPOSITION) {
+                    toastMessage("Write to flash failed...:APC_KEEP_DATA_FAIL_SERIALNUMBER");
+                }else if(result == ApcCamera.APC_KEEP_DATA_FAIL_SENSORPOSITION) {
                     Log.d(TAG, "Write to flash failed...:"+result);
-                    toastMessage("Write to flash failed...:ETronDI_KEEP_DATA_FAIL_SENSORPOSITION");
-                }else if(result == EtronCamera.ETronDI_KEEP_DATA_FAIL_RECTIFYTABLE) {
+                    toastMessage("Write to flash failed...:APC_KEEP_DATA_FAIL_SENSORPOSITION");
+                }else if(result == ApcCamera.APC_KEEP_DATA_FAIL_RECTIFYTABLE) {
                     Log.d(TAG, "Write to flash failed...:"+result);
-                    toastMessage("Write to flash failed...:ETronDI_KEEP_DATA_FAIL_RECTIFYTABLE");
-                }else if(result == EtronCamera.ETronDI_KEEP_DATA_FAIL_CALIBRATIONLOG) {
+                    toastMessage("Write to flash failed...:APC_KEEP_DATA_FAIL_RECTIFYTABLE");
+                }else if(result == ApcCamera.APC_KEEP_DATA_FAIL_CALIBRATIONLOG) {
                     Log.d(TAG, "Write to flash failed...:"+result);
-                    toastMessage("Write to flash failed...:ETronDI_KEEP_DATA_FAIL_CALIBRATIONLOG");
-                }else if(result == EtronCamera.ETronDI_KEEP_DATA_FAIL_ZDTABLE) {
+                    toastMessage("Write to flash failed...:APC_KEEP_DATA_FAIL_CALIBRATIONLOG");
+                }else if(result == ApcCamera.APC_KEEP_DATA_FAIL_ZDTABLE) {
                     Log.d(TAG, "Write to flash failed...:"+result);
-                    toastMessage("Write to flash failed...:ETronDI_KEEP_DATA_FAIL_ZDTABLE");
-                }else if(result == EtronCamera.ETronDI_KEEP_DATA_FAIL_LUT) {
+                    toastMessage("Write to flash failed...:APC_KEEP_DATA_FAIL_ZDTABLE");
+                }else if(result == ApcCamera.APC_KEEP_DATA_FAIL_LUT) {
                     Log.d(TAG, "Write to flash failed...:"+result);
-                    toastMessage("Write to flash failed...:ETronDI_KEEP_DATA_FAIL_LUT");
-                }else if(result == EtronCamera.ETronDI_KEEP_DATA_FAIL_ISP) {
+                    toastMessage("Write to flash failed...:APC_KEEP_DATA_FAIL_LUT");
+                }else if(result == ApcCamera.APC_KEEP_DATA_FAIL_ISP) {
                     Log.d(TAG, "Write to flash failed...:"+result);
-                    toastMessage("Write to flash failed...:ETronDI_KEEP_DATA_FAIL_ISP");
-                }else if(result == EtronCamera.ETronDI_KEEP_DATA_FAIL_FWTAG) {
+                    toastMessage("Write to flash failed...:APC_KEEP_DATA_FAIL_ISP");
+                }else if(result == ApcCamera.APC_KEEP_DATA_FAIL_FWTAG) {
                     Log.d(TAG, "Write to flash failed...:"+result);
-                    toastMessage("Write to flash failed...:ETronDI_KEEP_DATA_FAIL_FWTAG");
+                    toastMessage("Write to flash failed...:APC_KEEP_DATA_FAIL_FWTAG");
                 }else {
                     Log.d(TAG, "Write to flash failed...:"+result);
                     toastMessage("Write to flash failed...:"+result);

@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.esp.android.usb.camera.core.EtronCamera;
+import com.esp.android.usb.camera.core.ApcCamera;
 import com.esp.uvc.BuildConfig;
 import com.esp.uvc.R;
 
@@ -65,7 +65,7 @@ public class SoftwareVersionSettings extends AppCompatActivity {
 
             mVersionAPP = stringBuilder.toString();
 //            mVersionSDK = com.esp.android.usb.camera.core.BuildConfig.VERSION_NAME;
-            mVersionSDK = EtronCamera.getSDKVerion();
+            mVersionSDK = ApcCamera.getSDKVerion();
 
             Log.i(TAG,"Version:"+ mVersionAPP);
             Log.i(TAG,"Version SDK:"+mVersionSDK);

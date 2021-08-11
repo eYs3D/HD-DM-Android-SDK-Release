@@ -18,7 +18,7 @@ class MModuleSync(p: IModuleSync.Presenter, usbMonitor: USBMonitor) : IModuleSyn
     private val mUsbMonitor = usbMonitor
 
     // Support two devices now
-    private var mCameras = Array<EtronCamera?>(2) { null }
+    private var mCameras = Array<ApcCamera?>(2) { null }
 
     private var mMasterIndex = -1
 
@@ -85,10 +85,10 @@ class MModuleSync(p: IModuleSync.Presenter, usbMonitor: USBMonitor) : IModuleSyn
         if (!createNew) {
             return
         }
-        val tmpCamera: EtronCamera?
+        val tmpCamera: ApcCamera?
         var index = getCameraIndex(device!!, ctrlBlock!!)
         if (index == -1) {
-            tmpCamera = EtronCamera()
+            tmpCamera = ApcCamera()
             index = mCameras.indexOfFirst { it == null }
             if (index == -1) {
                 loge("USB parser error")
@@ -97,7 +97,7 @@ class MModuleSync(p: IModuleSync.Presenter, usbMonitor: USBMonitor) : IModuleSyn
         } else {
             tmpCamera = mCameras[index]
         }
-        if (tmpCamera!!.open(ctrlBlock) != EtronCamera.EYS_OK) {
+        if (tmpCamera!!.open(ctrlBlock) != ApcCamera.EYS_OK) {
             return
         } else {
             if (ctrlBlock.isIMU) {
@@ -114,7 +114,7 @@ class MModuleSync(p: IModuleSync.Presenter, usbMonitor: USBMonitor) : IModuleSyn
                     lowSwitch = false
                 ) // Low switch not support sync now
                 tmpCamera.videoMode = defaultMode!!.videoMode
-                tmpCamera.getStreamInfoList(EtronCamera.INTERFACE_NUMBER_COLOR).forEach { info ->
+                tmpCamera.getStreamInfoList(ApcCamera.INTERFACE_NUMBER_COLOR).forEach { info ->
                     if (info.height == defaultMode.rgbCameraState!!.resolution.height && info.width == defaultMode.rgbCameraState!!.resolution.width && info.bIsFormatMJPEG == defaultMode.rgbCameraState!!.isMJPEG)
                         tmpCamera.setPreviewSize(info, defaultMode.rgbCameraState!!.fps)
                 }
@@ -123,7 +123,7 @@ class MModuleSync(p: IModuleSync.Presenter, usbMonitor: USBMonitor) : IModuleSyn
                 tmpCamera.setMonitorFrameRate(true, UVCCamera.CAMERA_COLOR)
                 tmpCamera.setFrameCallback(
                     mFrameCallbacks[index],
-                    EtronCamera.PIXEL_FORMAT_RGBX,
+                    ApcCamera.PIXEL_FORMAT_RGBX,
                     UVCCamera.CAMERA_COLOR
                 )
                 tmpCamera.startPreview(UVCCamera.CAMERA_COLOR)
@@ -166,10 +166,10 @@ class MModuleSync(p: IModuleSync.Presenter, usbMonitor: USBMonitor) : IModuleSyn
     }
 
     private fun getCameraIndex(device: UsbDevice, ctrlBlock: USBMonitor.UsbControlBlock): Int {
-        mCameras.forEachIndexed { i, etronCamera ->
-            if (etronCamera != null) {
-                val cameraDevice = etronCamera.getDevice(false)
-                val hidDevice = etronCamera.getDevice(true)
+        mCameras.forEachIndexed { i, apcCamera ->
+            if (apcCamera != null) {
+                val cameraDevice = apcCamera.getDevice(false)
+                val hidDevice = apcCamera.getDevice(true)
                 if (ctrlBlock.isIMU && hidDevice == null) {
                     if (cameraDevice.deviceName.split("/")[5] == device.deviceName.split("/")[5]) {
                         return i

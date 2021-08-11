@@ -2,7 +2,7 @@ package com.esp.uvc.main.settings.firmware_table
 
 import android.hardware.usb.UsbDevice
 import android.os.Environment
-import com.esp.android.usb.camera.core.EtronCamera
+import com.esp.android.usb.camera.core.ApcCamera
 import com.esp.android.usb.camera.core.USBMonitor
 import com.esp.uvc.camera_modes.CameraModeManager
 import com.esp.uvc.utils.loge
@@ -10,7 +10,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.*
 
-private const val ETronDI_CALIB_LOG_FILE_ID_0 = 240
+private const val APC_CALIB_LOG_FILE_ID_0 = 240
 
 private const val RECTIFY_LOG_READ = "rectify_log_read"
 
@@ -21,7 +21,7 @@ class MFirmwareTable(p: IFirmwareTable.Presenter, usbMonitor: USBMonitor) : IFir
     private val mIPresenter = p
     private val mUsbMonitor = usbMonitor
 
-    private var mCamera: EtronCamera? = null
+    private var mCamera: ApcCamera? = null
 
     override fun registerUsbMonitor() {
         mUsbMonitor.register()
@@ -62,8 +62,8 @@ class MFirmwareTable(p: IFirmwareTable.Presenter, usbMonitor: USBMonitor) : IFir
         if (mCamera != null) {
             loge("Camera exists, not re-creating")
         } else {
-            mCamera = EtronCamera()
-            if (mCamera!!.open(ctrlBlock) == EtronCamera.EYS_OK) {
+            mCamera = ApcCamera()
+            if (mCamera!!.open(ctrlBlock) == ApcCamera.EYS_OK) {
                 mIPresenter.onConnected()
             } else {
                 mIPresenter.onConnectionFailed()
@@ -87,7 +87,7 @@ class MFirmwareTable(p: IFirmwareTable.Presenter, usbMonitor: USBMonitor) : IFir
             if (last.category == CharCategory.CONTROL) {
                 serialNumber = serialNumber!!.substring(0, serialNumber.length - 1)
             }
-            val buffer = mCamera!!.getFileData(ETronDI_CALIB_LOG_FILE_ID_0 + index)
+            val buffer = mCamera!!.getFileData(APC_CALIB_LOG_FILE_ID_0 + index)
             val rectifyLogData = mCamera!!.getRectifyLogData(index)
             if (rectifyLogData == null) {
                 mIPresenter.onRectifyLog(-1, null)

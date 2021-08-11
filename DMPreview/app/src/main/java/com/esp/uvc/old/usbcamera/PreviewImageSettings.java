@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.esp.android.usb.camera.core.EtronCamera;
+import com.esp.android.usb.camera.core.ApcCamera;
 import com.esp.android.usb.camera.core.Size;
 import com.esp.android.usb.camera.core.StreamInfo;
 import com.esp.android.usb.camera.core.USBMonitor;
@@ -32,7 +32,7 @@ public class PreviewImageSettings extends AppCompatActivity {
     private static final String TAG = "PreviewImageSettings";
     private static final String KEY_ENABLE_STREAM_COLOR_CHECKED = "enable_stream_color_checked";
     private static final String KEY_ENABLE_STREAM_DEPTH_CHECKED = "enable_stream_depth_checked";
-    private static final String KEY_ETRON_PREVIEW_FRAME_SIZE = "etron_preview_frame_size";
+    private static final String KEY_APC_PREVIEW_FRAME_SIZE = "apc_preview_frame_size";
     private static final String KEY_DEPTH_PREVIEW_FRAME_SIZE = "depth_preview_frame_size";
     private static final String KEY_COLOR_PREVIEW_FRAME_RATE = "color_preview_frame_rate";
     private static final String KEY_DEPTH_PREVIEW_FRAME_RATE = "depth_preview_frame_rate";
@@ -78,7 +78,7 @@ public class PreviewImageSettings extends AppCompatActivity {
                 = new ThreadPoolExecutor(CORE_POOL_SIZE, MAX_POOL_SIZE, KEEP_ALIVE_TIME,
                 TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
         private USBMonitor mUSBMonitor = null;
-        private EtronCamera mUVCCamera = null;
+        private ApcCamera mUVCCamera = null;
         private UsbDevice mUsbDevice = null;
         private String mSupportedSize;
         private boolean mEnableStreamColor = true;
@@ -89,7 +89,7 @@ public class PreviewImageSettings extends AppCompatActivity {
         private boolean mPostProcessOpencl = false;
         private boolean mMonitorFrameRate = false;
 
-        private int mEtronIndex = 0;
+        private int mApcIndex = 0;
         private int mDepthIndex = 0;
         private int mDepthDataType = 1;
         private int mColorFrameRate = 30;
@@ -103,7 +103,7 @@ public class PreviewImageSettings extends AppCompatActivity {
         private CheckBoxPreference mCheckBoxPreference_FlipViewWindowChecked;
         private CheckBoxPreference mCheckBoxPreference_PostProcessOpencl;
         private CheckBoxPreference mCheckBoxPreference_MonitorFrameRate;
-        private ListPreference mListPreference_EtronPreviewFrameSize;
+        private ListPreference mListPreference_ApcPreviewFrameSize;
         private ListPreference mListPreference_DepthPreviewFrameSize;
         private ListPreference mListPreference_DepthDataType;
         private EditTextPreference mEditTextPreference_OnlyColorPreviewFrameRate;
@@ -180,15 +180,15 @@ public class PreviewImageSettings extends AppCompatActivity {
                 mEntriesDepth = getEntriesFromSetting(UVCCamera.INTERFACE_NUMBER_DEPTH);
             }
 
-            mListPreference_EtronPreviewFrameSize.setEntries(mEntriesColor);
-            mListPreference_EtronPreviewFrameSize.setEntryValues(mEntriesColor);
+            mListPreference_ApcPreviewFrameSize.setEntries(mEntriesColor);
+            mListPreference_ApcPreviewFrameSize.setEntryValues(mEntriesColor);
             mListPreference_DepthPreviewFrameSize.setEntries(mEntriesDepth);
             mListPreference_DepthPreviewFrameSize.setEntryValues(mEntriesDepth);
 
             if (mEntriesColor.length == 0) {
-                mEtronIndex = -1;
-            } else if (mEtronIndex >= mEntriesColor.length ) {
-                mEtronIndex = 0;
+                mApcIndex = -1;
+            } else if (mApcIndex >= mEntriesColor.length ) {
+                mApcIndex = 0;
             }
 
 
@@ -215,8 +215,8 @@ public class PreviewImageSettings extends AppCompatActivity {
                     = (CheckBoxPreference) findPreference(KEY_POST_PROCESS_OPENCL);
             mCheckBoxPreference_MonitorFrameRate
                     = (CheckBoxPreference) findPreference(KEY_MONITOR_FRAMERATE);
-            mListPreference_EtronPreviewFrameSize        = (ListPreference) findPreference(KEY_ETRON_PREVIEW_FRAME_SIZE);
-            mListPreference_EtronPreviewFrameSize.setOnPreferenceChangeListener(SettingsFragment.this);
+            mListPreference_ApcPreviewFrameSize        = (ListPreference) findPreference(KEY_APC_PREVIEW_FRAME_SIZE);
+            mListPreference_ApcPreviewFrameSize.setOnPreferenceChangeListener(SettingsFragment.this);
             mListPreference_DepthPreviewFrameSize        = (ListPreference) findPreference(KEY_DEPTH_PREVIEW_FRAME_SIZE);
             mListPreference_DepthPreviewFrameSize.setOnPreferenceChangeListener(SettingsFragment.this);
             mListPreference_DepthDataType                = (ListPreference) findPreference(KEY_DEPTH_DATATYPE);
@@ -234,8 +234,8 @@ public class PreviewImageSettings extends AppCompatActivity {
         }
 
         public void buildUI() {
-            mListPreference_EtronPreviewFrameSize.setEntries(mEntriesColor);
-            mListPreference_EtronPreviewFrameSize.setEntryValues(mEntriesColor);
+            mListPreference_ApcPreviewFrameSize.setEntries(mEntriesColor);
+            mListPreference_ApcPreviewFrameSize.setEntryValues(mEntriesColor);
             mListPreference_DepthPreviewFrameSize.setEntries(mEntriesDepth);
             mListPreference_DepthPreviewFrameSize.setEntryValues(mEntriesDepth);
             mListPreference_DepthDataType.setEntries(mEntriesDepthDataType);
@@ -243,16 +243,16 @@ public class PreviewImageSettings extends AppCompatActivity {
         }
 
         public void updateUI() {
-            if(mEtronIndex >-1){
-                mListPreference_EtronPreviewFrameSize.setValueIndex(mEtronIndex);
-                mListPreference_EtronPreviewFrameSize.setSummary(mEntriesColor[mEtronIndex]);
+            if(mApcIndex >-1){
+                mListPreference_ApcPreviewFrameSize.setValueIndex(mApcIndex);
+                mListPreference_ApcPreviewFrameSize.setSummary(mEntriesColor[mApcIndex]);
             }
             if(mDepthIndex >-1){
                 mListPreference_DepthPreviewFrameSize.setValueIndex(mDepthIndex);
                 mListPreference_DepthPreviewFrameSize.setSummary(mEntriesDepth[mDepthIndex]);
             }
             mListPreference_DepthDataType.setValueIndex(mDepthDataType);
-            if(mDepthDataType == EtronCamera.VideoMode.COLOR_ONLY || mDepthDataType == EtronCamera.VideoMode.OFF_RECTIFY) {
+            if(mDepthDataType == ApcCamera.VideoMode.COLOR_ONLY || mDepthDataType == ApcCamera.VideoMode.OFF_RECTIFY) {
                 mEnableStreamDepth = false;
                 mCheckBoxPreference_EnableStreamDepthChecked.setEnabled(false);
                 mEditTextPreference_DepthPreviewFrameRate.setEnabled(false);
@@ -282,7 +282,7 @@ public class PreviewImageSettings extends AppCompatActivity {
             AppSettings appSettings = AppSettings.getInstance(mContext);
             mEnableStreamColor = appSettings.get(AppSettings.ENABLE_STREAM_COLOR, mEnableStreamColor);
             mEnableStreamDepth = appSettings.get(AppSettings.ENABLE_STREAM_DEPTH, mEnableStreamDepth);
-            mEtronIndex = appSettings.get(AppSettings.ETRON_INDEX, mEtronIndex);
+            mApcIndex = appSettings.get(AppSettings.APC_INDEX, mApcIndex);
             mDepthIndex = appSettings.get(AppSettings.DEPTH_INDEX, mDepthIndex);
             mDepthDataType = appSettings.get(AppSettings.DEPTH_DATA_TYPE, mDepthDataType);
             mColorFrameRate = appSettings.get(AppSettings.COLOR_FRAME_RATE, mColorFrameRate);
@@ -292,7 +292,7 @@ public class PreviewImageSettings extends AppCompatActivity {
             mFlip = appSettings.get(AppSettings.FLIP, mFlip);
             mSupportedSize = appSettings.get(AppSettings.SUPPORTED_SIZE,"");
             mPostProcessOpencl = appSettings.get(AppSettings.POST_PROCESS_OPENCL, mPostProcessOpencl);
-            if(!EtronCamera.isSupportOpenCL()) {
+            if(!ApcCamera.isSupportOpenCL()) {
                 Log.e(TAG, "Not support OpenCL!");
                 mPostProcessOpencl = false;
                 mCheckBoxPreference_PostProcessOpencl.setChecked(false);
@@ -313,7 +313,7 @@ public class PreviewImageSettings extends AppCompatActivity {
             appSettings.put(AppSettings.LANDSCAPE, mLandscape);
             appSettings.put(AppSettings.FLIP, mFlip);
 
-            appSettings.put(AppSettings.ETRON_INDEX, mEtronIndex);
+            appSettings.put(AppSettings.APC_INDEX, mApcIndex);
             appSettings.put(AppSettings.DEPTH_INDEX, mDepthIndex);
             appSettings.put(AppSettings.DEPTH_DATA_TYPE, mDepthDataType);
             appSettings.put(AppSettings.COLOR_FRAME_RATE, mColorFrameRate);
@@ -331,8 +331,8 @@ public class PreviewImageSettings extends AppCompatActivity {
 
         public boolean onPreferenceChange(Preference preference, Object objValue) {
             final String key = preference.getKey();
-            if (KEY_ETRON_PREVIEW_FRAME_SIZE.equals(key)) {
-                mEtronIndex = mListPreference_EtronPreviewFrameSize.findIndexOfValue((String) objValue);
+            if (KEY_APC_PREVIEW_FRAME_SIZE.equals(key)) {
+                mApcIndex = mListPreference_ApcPreviewFrameSize.findIndexOfValue((String) objValue);
             } else if (KEY_DEPTH_PREVIEW_FRAME_SIZE.equals(key)) {
                 mDepthIndex = mListPreference_DepthPreviewFrameSize.findIndexOfValue((String) objValue);
             } else if (KEY_DEPTH_DATATYPE.equals(key)) {
@@ -372,7 +372,7 @@ public class PreviewImageSettings extends AppCompatActivity {
         }
 
         private CharSequence[] getEntriesFromSetting(int interfaceNumber){
-            List<Size> list =EtronCamera.getSupportedSizeList(mSupportedSize,interfaceNumber);
+            List<Size> list =ApcCamera.getSupportedSizeList(mSupportedSize,interfaceNumber);
             CharSequence[] entries=new CharSequence[list.size()];
             for(int i=0;i<list.size();i++){
                 String type = list.get(i).type==6 ? "MJPEG" : "YUV";
@@ -443,7 +443,7 @@ public class PreviewImageSettings extends AppCompatActivity {
                 if(DEBUG)Log.d(TAG, ">>>> getVenderId:" + ctrlBlock.getVenderId());
                 if(DEBUG)Log.d(TAG, ">>>> getProductId:" + ctrlBlock.getProductId());
                 if(DEBUG)Log.d(TAG, ">>>> getFileDescriptor:" + ctrlBlock.getFileDescriptor());
-                final EtronCamera camera = new EtronCamera();
+                final ApcCamera camera = new ApcCamera();
                 EXECUTER.execute(new Runnable() {
                     @Override
                     public void run() {
@@ -455,7 +455,7 @@ public class PreviewImageSettings extends AppCompatActivity {
                             Log.e(TAG, "open uvccamera exception:" + e.toString());
                             return;
                         }
-                        if (ret == EtronCamera.EYS_OK && mUVCCamera == null) {
+                        if (ret == ApcCamera.EYS_OK && mUVCCamera == null) {
                             mUVCCamera = camera;
                             mSupportedSize = mUVCCamera.getSupportedSize();
 

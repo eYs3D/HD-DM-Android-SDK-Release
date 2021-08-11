@@ -1,7 +1,7 @@
 package com.esp.uvc.main.settings.preview_settings
 
 import android.hardware.usb.UsbDevice
-import com.esp.android.usb.camera.core.EtronCamera
+import com.esp.android.usb.camera.core.ApcCamera
 import com.esp.android.usb.camera.core.StreamInfo
 import com.esp.android.usb.camera.core.USBMonitor
 import com.esp.android.usb.camera.core.UVCCamera
@@ -58,7 +58,7 @@ class MPreviewSettings(p: IPreviewSettings.Presenter, usbMonitor: USBMonitor) :
     private val mIPresenter = p
     private val mUsbMonitor = usbMonitor
 
-    private var mCamera: EtronCamera? = null
+    private var mCamera: ApcCamera? = null
 
     private var mProductVersion: String? = null
     private var mSupportedColorRes: ArrayList<String>? = null // All of module supported
@@ -145,8 +145,8 @@ class MPreviewSettings(p: IPreviewSettings.Presenter, usbMonitor: USBMonitor) :
         if (mCamera != null) {
             loge("Camera exists, not re-creating")
         } else {
-            mCamera = EtronCamera()
-            if (mCamera!!.open(ctrlBlock) == EtronCamera.EYS_OK) {
+            mCamera = ApcCamera()
+            if (mCamera!!.open(ctrlBlock) == ApcCamera.EYS_OK) {
                 mProductVersion = mCamera!!.productVersion
                 mSupportedColorRes =
                     genResolution(mCamera!!.getStreamInfoList(UVCCamera.INTERFACE_NUMBER_COLOR))
@@ -442,7 +442,7 @@ class MPreviewSettings(p: IPreviewSettings.Presenter, usbMonitor: USBMonitor) :
         if (isInterLeaveMode) {
             LightSourceManager.setSharedPrefs(
                 LightSourceManager.INDEX_LOW_LIGHT_COMPENSATION,
-                EtronCamera.LOW_LIGHT_COMPENSATION_OFF
+                ApcCamera.LOW_LIGHT_COMPENSATION_OFF
             )
             // Cover the "different design" PIF (8059/8062)
             if (mProductVersion!!.contains("YX8059")) {

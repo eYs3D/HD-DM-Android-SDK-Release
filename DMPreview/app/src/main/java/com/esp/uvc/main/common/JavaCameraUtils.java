@@ -1,6 +1,6 @@
 package com.esp.uvc.main.common;
 
-import com.esp.android.usb.camera.core.EtronCamera;
+import com.esp.android.usb.camera.core.ApcCamera;
 
 import java.nio.ByteBuffer;
 
@@ -26,25 +26,25 @@ public class JavaCameraUtils {
         int zValue;
         final String depthInfo;
 
-        if (depthDataType == EtronCamera.VideoMode.RECTIFY_14_BITS || depthDataType == EtronCamera.VideoMode.RAW_14_BITS ||
-                depthDataType == EtronCamera.VideoMode.RECTIFY_14_BITS_INTERLEAVE_MODE || depthDataType == EtronCamera.VideoMode.RAW_14_BITS_INTERLEAVE_MODE) {
+        if (depthDataType == ApcCamera.VideoMode.RECTIFY_14_BITS || depthDataType == ApcCamera.VideoMode.RAW_14_BITS ||
+                depthDataType == ApcCamera.VideoMode.RECTIFY_14_BITS_INTERLEAVE_MODE || depthDataType == ApcCamera.VideoMode.RAW_14_BITS_INTERLEAVE_MODE) {
             zValue = (frame.get(index * 2 + 1) & 0xff) * 256 + ((frame.get(index * 2 + 0) & 0xff));
         } else {
             if (mZDBuffer == null) {
                 return new Pair<>(0, 0);
             }
 
-            if (depthDataType == EtronCamera.VideoMode.RECTIFY_11_BITS || depthDataType == EtronCamera.VideoMode.RAW_11_BITS ||
-                    depthDataType == EtronCamera.VideoMode.RECTIFY_11_BITS_INTERLEAVE_MODE || depthDataType == EtronCamera.VideoMode.RAW_11_BITS_INTERLEAVE_MODE) {
+            if (depthDataType == ApcCamera.VideoMode.RECTIFY_11_BITS || depthDataType == ApcCamera.VideoMode.RAW_11_BITS ||
+                    depthDataType == ApcCamera.VideoMode.RECTIFY_11_BITS_INTERLEAVE_MODE || depthDataType == ApcCamera.VideoMode.RAW_11_BITS_INTERLEAVE_MODE) {
                 dValue = (frame.get(index * 2 + 1) & 0xff) * 256 + ((frame.get(index * 2 + 0) & 0xff));
             }
-            if (depthDataType == EtronCamera.VideoMode.RECTIFY_8_BITS_x80 || depthDataType == EtronCamera.VideoMode.RAW_8_BITS_x80 ||
-                    depthDataType == EtronCamera.VideoMode.RECTIFY_8_BITS_x80_INTERLEAVE_MODE || depthDataType == EtronCamera.VideoMode.RAW_8_BITS_x80_INTERLEAVE_MODE) {
+            if (depthDataType == ApcCamera.VideoMode.RECTIFY_8_BITS_x80 || depthDataType == ApcCamera.VideoMode.RAW_8_BITS_x80 ||
+                    depthDataType == ApcCamera.VideoMode.RECTIFY_8_BITS_x80_INTERLEAVE_MODE || depthDataType == ApcCamera.VideoMode.RAW_8_BITS_x80_INTERLEAVE_MODE) {
                 dValue = (frame.get(index * 2 + 1) & 0xff) * 256 + ((frame.get(index * 2 + 0) & 0xff));
                 dValue *= 8;
             }
-            if (depthDataType == EtronCamera.VideoMode.RECTIFY_8_BITS || depthDataType == EtronCamera.VideoMode.RAW_8_BITS ||
-                    depthDataType == EtronCamera.VideoMode.RECTIFY_8_BITS_INTERLEAVE_MODE || depthDataType == EtronCamera.VideoMode.RAW_8_BITS_INTERLEAVE_MODE) {
+            if (depthDataType == ApcCamera.VideoMode.RECTIFY_8_BITS || depthDataType == ApcCamera.VideoMode.RAW_8_BITS ||
+                    depthDataType == ApcCamera.VideoMode.RECTIFY_8_BITS_INTERLEAVE_MODE || depthDataType == ApcCamera.VideoMode.RAW_8_BITS_INTERLEAVE_MODE) {
                 dValue = frame.get(index) & 0xff;
                 dValue *= 8;
             }
@@ -67,24 +67,24 @@ public class JavaCameraUtils {
         int depth = 0;
 
         switch (depthDataType.shortValue()) {
-            case EtronCamera.VideoMode.RECTIFY_8_BITS_x80:
-            case EtronCamera.VideoMode.RAW_8_BITS_x80:
-            case EtronCamera.VideoMode.RECTIFY_8_BITS_x80_INTERLEAVE_MODE:
-            case EtronCamera.VideoMode.RAW_8_BITS_x80_INTERLEAVE_MODE:
+            case ApcCamera.VideoMode.RECTIFY_8_BITS_x80:
+            case ApcCamera.VideoMode.RAW_8_BITS_x80:
+            case ApcCamera.VideoMode.RECTIFY_8_BITS_x80_INTERLEAVE_MODE:
+            case ApcCamera.VideoMode.RAW_8_BITS_x80_INTERLEAVE_MODE:
                 dValue = (frame.get(index * 2 + 1) & 0xff) * 256 + ((frame.get(index * 2 + 0) & 0xff));
                 dValue *= 8;
                 break;
-            case EtronCamera.VideoMode.RECTIFY_8_BITS:
-            case EtronCamera.VideoMode.RAW_8_BITS:
-            case EtronCamera.VideoMode.RECTIFY_8_BITS_INTERLEAVE_MODE:
-            case EtronCamera.VideoMode.RAW_8_BITS_INTERLEAVE_MODE:
+            case ApcCamera.VideoMode.RECTIFY_8_BITS:
+            case ApcCamera.VideoMode.RAW_8_BITS:
+            case ApcCamera.VideoMode.RECTIFY_8_BITS_INTERLEAVE_MODE:
+            case ApcCamera.VideoMode.RAW_8_BITS_INTERLEAVE_MODE:
                 dValue = frame.get(index) & 0xff;
                 dValue *= 8;
                 break;
-            case EtronCamera.VideoMode.RECTIFY_11_BITS:
-            case EtronCamera.VideoMode.RAW_11_BITS:
-            case EtronCamera.VideoMode.RECTIFY_11_BITS_INTERLEAVE_MODE:
-            case EtronCamera.VideoMode.RAW_11_BITS_INTERLEAVE_MODE:
+            case ApcCamera.VideoMode.RECTIFY_11_BITS:
+            case ApcCamera.VideoMode.RAW_11_BITS:
+            case ApcCamera.VideoMode.RECTIFY_11_BITS_INTERLEAVE_MODE:
+            case ApcCamera.VideoMode.RAW_11_BITS_INTERLEAVE_MODE:
                 dValue = (frame.get(index * 2 + 1) & 0xff) * 256 + ((frame.get(index * 2 + 0) & 0xff));
                 break;
             default:

@@ -37,7 +37,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.esp.android.usb.camera.core.EtronCamera;
+import com.esp.android.usb.camera.core.ApcCamera;
 import com.esp.android.usb.camera.core.IFrameCallback;
 import com.esp.android.usb.camera.core.RectifyLogData;
 import com.esp.android.usb.camera.core.StreamInfo;
@@ -62,9 +62,9 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import static com.esp.android.usb.camera.core.EtronCamera.PRODUCT_VERSION_EX8029;
-import static com.esp.android.usb.camera.core.EtronCamera.PRODUCT_VERSION_EX8036;
-import static com.esp.android.usb.camera.core.EtronCamera.PRODUCT_VERSION_EX8037;
+import static com.esp.android.usb.camera.core.ApcCamera.PRODUCT_VERSION_EX8029;
+import static com.esp.android.usb.camera.core.ApcCamera.PRODUCT_VERSION_EX8036;
+import static com.esp.android.usb.camera.core.ApcCamera.PRODUCT_VERSION_EX8037;
 
 
 public class CameraMainActivity extends AppCompatActivity {
@@ -99,7 +99,7 @@ public class CameraMainActivity extends AppCompatActivity {
 
     // for accessing USB and USB camera
     private USBMonitor mUSBMonitor = null;
-    private EtronCamera mUVCCamera = null;
+    private ApcCamera mUVCCamera = null;
     private UVCCameraTextureView mUVCCameraViewR = null;
     private UVCCameraTextureView mUVCCameraViewL = null;
     private UVCCameraTextureView mUVCCameraViewProcessed = null;
@@ -295,7 +295,7 @@ public class CameraMainActivity extends AppCompatActivity {
             if (DEBUG) Log.v(TAG, ">>>> onConnect UsbDevice:" + device);
             if (DEBUG) Log.v(TAG, ">>>> onConnect UsbControlBlock:" + ctrlBlock);
             if (DEBUG) Log.v(TAG, ">>>> onConnect createNew:" + createNew);
-            mUVCCamera = new EtronCamera();
+            mUVCCamera = new ApcCamera();
             EXECUTER.execute(new Runnable() {
                 @Override
                 public void run() {
@@ -326,7 +326,7 @@ public class CameraMainActivity extends AppCompatActivity {
                         Depth_W = streamInfoDepthList[mStreamInfoIndexDepth].width;
                         Depth_H = streamInfoDepthList[mStreamInfoIndexDepth].height;
 
-                        if(mDepthDataType == EtronCamera.VideoMode.RECTIFY_8_BITS || mDepthDataType == EtronCamera.VideoMode.RAW_8_BITS) {
+                        if(mDepthDataType == ApcCamera.VideoMode.RECTIFY_8_BITS || mDepthDataType == ApcCamera.VideoMode.RAW_8_BITS) {
                             Depth_W *= 2;
                         }
                     }
@@ -372,10 +372,10 @@ public class CameraMainActivity extends AppCompatActivity {
                             //set texture for preview.
                             final SurfaceTexture surfaceTexture_l = mUVCCameraViewL.getSurfaceTexture();
                             if (surfaceTexture_l != null)mLeftPreviewSurface = new Surface(surfaceTexture_l);
-                            mUVCCamera.setPreviewDisplay(mLeftPreviewSurface, EtronCamera.CAMERA_COLOR);
+                            mUVCCamera.setPreviewDisplay(mLeftPreviewSurface, ApcCamera.CAMERA_COLOR);
                             //callback function for processing.
-                            mUVCCamera.setFrameCallback(mColorIFrameCallback, EtronCamera.PIXEL_FORMAT_RGBX, EtronCamera.CAMERA_COLOR);
-                            mUVCCamera.startPreview(EtronCamera.CAMERA_COLOR);
+                            mUVCCamera.setFrameCallback(mColorIFrameCallback, ApcCamera.PIXEL_FORMAT_RGBX, ApcCamera.CAMERA_COLOR);
+                            mUVCCamera.startPreview(ApcCamera.CAMERA_COLOR);
                             mIsRunning= true;
                         } catch (Exception e) {
                             Log.e(TAG, "set color uvccamera exception:" + e.toString());
@@ -389,8 +389,8 @@ public class CameraMainActivity extends AppCompatActivity {
                             mUVCCamera.setPreviewSize(streamInfoDepthList[mStreamInfoIndexDepth], mDepthFrameRate);
                             final SurfaceTexture surfaceTexture_r = mUVCCameraViewR.getSurfaceTexture();
                             if (surfaceTexture_r != null)mRightPreviewSurface = new Surface(surfaceTexture_r);
-                            mUVCCamera.setPreviewDisplay(mRightPreviewSurface, EtronCamera.CAMERA_DEPTH);
-                            mUVCCamera.startPreview(EtronCamera.CAMERA_DEPTH);
+                            mUVCCamera.setPreviewDisplay(mRightPreviewSurface, ApcCamera.CAMERA_DEPTH);
+                            mUVCCamera.startPreview(ApcCamera.CAMERA_DEPTH);
                             mIsRunning= true;
                         } catch (Exception e) {
                             Log.e(TAG, "set depth uvccamera exception:" + e.toString());
@@ -420,8 +420,8 @@ public class CameraMainActivity extends AppCompatActivity {
 
             if (mUVCCamera != null && device.equals(mUVCCamera.getDevice())) {
                 if (mUVCCamera != null) {
-                    mUVCCamera.stopPreview(EtronCamera.CAMERA_COLOR);
-                    mUVCCamera.stopPreview(EtronCamera.CAMERA_DEPTH);
+                    mUVCCamera.stopPreview(ApcCamera.CAMERA_COLOR);
+                    mUVCCamera.stopPreview(ApcCamera.CAMERA_DEPTH);
                 }
                 if (mLeftPreviewSurface != null) {
                     mLeftPreviewSurface.release();
@@ -491,8 +491,8 @@ public class CameraMainActivity extends AppCompatActivity {
         public void run() {
 
             while(mIsRunning && mUVCCamera != null) {
-                final EtronCamera.CurrentFrameRate frameRateColor = mUVCCamera.getCurrentFrameRate(EtronCamera.CAMERA_COLOR);
-                final EtronCamera.CurrentFrameRate frameRateDepth = mUVCCamera.getCurrentFrameRate(EtronCamera.CAMERA_DEPTH);
+                final ApcCamera.CurrentFrameRate frameRateColor = mUVCCamera.getCurrentFrameRate(ApcCamera.CAMERA_COLOR);
+                final ApcCamera.CurrentFrameRate frameRateDepth = mUVCCamera.getCurrentFrameRate(ApcCamera.CAMERA_DEPTH);
 
                 try {
                     runOnUiThread(new Runnable() {
@@ -529,8 +529,8 @@ public class CameraMainActivity extends AppCompatActivity {
                 Log.i(TAG,String.format("colorPalette[%d]:%3d,%3d,%3d",i,colorPalette[i*4+0],colorPalette[i*4+1],colorPalette[i*4+2]));
             }
 
-            mUVCCamera.setFrameCallback(mFrameGrabber.getCallbackColor(), EtronCamera.PIXEL_FORMAT_RGBX, EtronCamera.CAMERA_COLOR);
-            mUVCCamera.setFrameCallback(mFrameGrabber.getCallbackDepth(), EtronCamera.FRAME_FORMAT_YUYV, EtronCamera.CAMERA_DEPTH);
+            mUVCCamera.setFrameCallback(mFrameGrabber.getCallbackColor(), ApcCamera.PIXEL_FORMAT_RGBX, ApcCamera.CAMERA_COLOR);
+            mUVCCamera.setFrameCallback(mFrameGrabber.getCallbackDepth(), ApcCamera.FRAME_FORMAT_YUYV, ApcCamera.CAMERA_DEPTH);
             while (mIsRunning) {
                 mFrameGrabber.grabLatestFrame();
                 ByteBuffer frameDepth = mFrameGrabber.getLatestFrameDepth();
@@ -606,7 +606,7 @@ public class CameraMainActivity extends AppCompatActivity {
             }
             //Set preference
             AppSettings appSettings = AppSettings.getInstance(mContext);
-            appSettings.put(AppSettings.ETRON_INDEX,mStreamInfoIndexColor);
+            appSettings.put(AppSettings.APC_INDEX,mStreamInfoIndexColor);
             appSettings.put(AppSettings.DEPTH_INDEX,mStreamInfoIndexDepth);
             appSettings.put(AppSettings.SUPPORTED_SIZE,supportedSize);
             appSettings.saveAll();
@@ -694,15 +694,15 @@ public class CameraMainActivity extends AppCompatActivity {
     private final OnClickListener mSavePlyListener = new OnClickListener() {
         public void onClick(View v) {
             if(mUVCCamera != null  && (mEnableStreamColor && mEnableStreamDepth)) {
-//                if( Color_W != Depth_W* (mDepthDataType == EtronCamera.DEPTH_DATA_8_BITS? 2:1)
+//                if( Color_W != Depth_W* (mDepthDataType == ApcCamera.DEPTH_DATA_8_BITS? 2:1)
 //                        || Color_H != Depth_H){
                 if( Color_W != Depth_W || Color_H != Depth_H){
                     Toast.makeText(CameraMainActivity.this, "error:Wrong resolution set...", Toast.LENGTH_LONG).show();
                     return;
                 }
 
-                mUVCCamera.setFrameCallback(mFrameGrabber.getCallbackColor(), EtronCamera.PIXEL_FORMAT_RGBX, EtronCamera.CAMERA_COLOR);
-                mUVCCamera.setFrameCallback(mFrameGrabber.getCallbackDepth(), EtronCamera.FRAME_FORMAT_YUYV, EtronCamera.CAMERA_DEPTH);
+                mUVCCamera.setFrameCallback(mFrameGrabber.getCallbackColor(), ApcCamera.PIXEL_FORMAT_RGBX, ApcCamera.CAMERA_COLOR);
+                mUVCCamera.setFrameCallback(mFrameGrabber.getCallbackDepth(), ApcCamera.FRAME_FORMAT_YUYV, ApcCamera.CAMERA_DEPTH);
 
                 int deviceType = mUVCCamera.getDeviceType();
                 int index = 0;
@@ -735,7 +735,7 @@ public class CameraMainActivity extends AppCompatActivity {
                                 ByteBuffer frameColor = mFrameGrabber.getLatestFrameColor();
 
                                 ArrayList<PlyWriter.CloudPoint> cloudPoints = new ArrayList<>();
-                                cloudPoints = PlyWriter.etronFrameTo3D(Color_W, Color_H, frameColor.array(), frameDepth.array(), rectifyLogData.getNormalizationReProjectMat(), 1, true, 0.0f, mZFar, true);
+                                cloudPoints = PlyWriter.APCFrameTo3D(Color_W, Color_H, frameColor.array(), frameDepth.array(), rectifyLogData.getNormalizationReProjectMat(), 1, true, 0.0f, mZFar, true);
                                 String dirPath = Environment.getExternalStorageDirectory() + "/" + "uvccamera/";
                                 String filename = getDateTimeString() + ".ply";
                                 File dir = new File(dirPath);
@@ -964,9 +964,9 @@ public class CameraMainActivity extends AppCompatActivity {
         AppSettings appSettings = AppSettings.getInstance(mContext);
         mEnableStreamColor = appSettings.get(AppSettings.ENABLE_STREAM_COLOR, mEnableStreamColor);
         mEnableStreamDepth = appSettings.get(AppSettings.ENABLE_STREAM_DEPTH, mEnableStreamDepth);
-        mStreamInfoIndexColor = appSettings.get((AppSettings.ETRON_INDEX),0);
+        mStreamInfoIndexColor = appSettings.get((AppSettings.APC_INDEX),0);
         mStreamInfoIndexDepth = appSettings.get((AppSettings.DEPTH_INDEX),0);
-        mDepthDataType = appSettings.get((AppSettings.DEPTH_DATA_TYPE), EtronCamera.VideoMode.RECTIFY_8_BITS);
+        mDepthDataType = appSettings.get((AppSettings.DEPTH_DATA_TYPE), ApcCamera.VideoMode.RECTIFY_8_BITS);
         mAWBStatus = appSettings.get(AppSettings.AWB_STATUS, false);
         mAEStatus = appSettings.get(AppSettings.AE_STATUS, false);
         mCameraSensorChange = appSettings.get(AppSettings.CAMERA_SENSOR_CHANGE, false);
@@ -1167,8 +1167,8 @@ public class CameraMainActivity extends AppCompatActivity {
     }
 
     private void monitorFrameRate() {
-        if(mEnableStreamColor)mUVCCamera.setMonitorFrameRate(true,EtronCamera.CAMERA_COLOR);
-        if(mEnableStreamDepth)mUVCCamera.setMonitorFrameRate(true,EtronCamera.CAMERA_DEPTH);
+        if(mEnableStreamColor)mUVCCamera.setMonitorFrameRate(true,ApcCamera.CAMERA_COLOR);
+        if(mEnableStreamDepth)mUVCCamera.setMonitorFrameRate(true,ApcCamera.CAMERA_DEPTH);
         EXECUTER.execute(mRunnableMonitorFrameRate);
     }
 
@@ -1176,9 +1176,9 @@ public class CameraMainActivity extends AppCompatActivity {
 
         if(mUVCCamera != null) {
             if (mShowMeasure) {
-                mUVCCamera.setFrameCallback(mDepthMeasureIFrameCallback, EtronCamera.FRAME_FORMAT_YUYV, EtronCamera.CAMERA_DEPTH);
+                mUVCCamera.setFrameCallback(mDepthMeasureIFrameCallback, ApcCamera.FRAME_FORMAT_YUYV, ApcCamera.CAMERA_DEPTH);
             } else {
-                mUVCCamera.setFrameCallback(null, EtronCamera.FRAME_FORMAT_YUYV, EtronCamera.CAMERA_DEPTH);
+                mUVCCamera.setFrameCallback(null, ApcCamera.FRAME_FORMAT_YUYV, ApcCamera.CAMERA_DEPTH);
             }
         }
     }
@@ -1251,7 +1251,7 @@ public class CameraMainActivity extends AppCompatActivity {
             int zValue;
             final String depthInfo;
 
-            if(mDepthDataType == EtronCamera.VideoMode.RECTIFY_14_BITS || mDepthDataType == EtronCamera.VideoMode.RAW_14_BITS) {
+            if(mDepthDataType == ApcCamera.VideoMode.RECTIFY_14_BITS || mDepthDataType == ApcCamera.VideoMode.RAW_14_BITS) {
 
                 zValue = (frame.get(index*2+1) & 0xff) * 256 + ((frame.get(index*2+0) & 0xff));
                 depthInfo = "Depth z: " + zValue + " mm";
@@ -1260,19 +1260,19 @@ public class CameraMainActivity extends AppCompatActivity {
                     return;
                 }
 
-                if(mDepthDataType == EtronCamera.VideoMode.RECTIFY_11_BITS
-                        || mDepthDataType == EtronCamera.VideoMode.RAW_11_BITS) {
+                if(mDepthDataType == ApcCamera.VideoMode.RECTIFY_11_BITS
+                        || mDepthDataType == ApcCamera.VideoMode.RAW_11_BITS) {
 
                     dValue = (frame.get(index*2+1) & 0xff) * 256 + ((frame.get(index*2+0) & 0xff));
                 }
-                if(mDepthDataType == EtronCamera.VideoMode.RECTIFY_8_BITS_x80
-                            || mDepthDataType == EtronCamera.VideoMode.RAW_8_BITS_x80) {
+                if(mDepthDataType == ApcCamera.VideoMode.RECTIFY_8_BITS_x80
+                            || mDepthDataType == ApcCamera.VideoMode.RAW_8_BITS_x80) {
 
                     dValue = (frame.get(index * 2 + 1) & 0xff) * 256 + ((frame.get(index * 2 + 0) & 0xff));
                     dValue *= 8;
                 }
-                if (mDepthDataType == EtronCamera.VideoMode.RECTIFY_8_BITS
-                        || mDepthDataType == EtronCamera.VideoMode.RAW_8_BITS) {
+                if (mDepthDataType == ApcCamera.VideoMode.RECTIFY_8_BITS
+                        || mDepthDataType == ApcCamera.VideoMode.RAW_8_BITS) {
 
                     dValue = frame.get(index) & 0xff;
                     dValue *= 8;
@@ -1282,7 +1282,7 @@ public class CameraMainActivity extends AppCompatActivity {
                 depthInfo = "Depth z: " + zValue + " mm, d = " + dValue;
             }
 
-            EtronCamera.CurrentFrameRate mCurrentFrameRate = mUVCCamera.getCurrentFrameRate(EtronCamera.CAMERA_COLOR);
+            ApcCamera.CurrentFrameRate mCurrentFrameRate = mUVCCamera.getCurrentFrameRate(ApcCamera.CAMERA_COLOR);
             Log.i(TAG, "fps:"+mCurrentFrameRate.mFrameRateUvc);
             runOnUiThread(new Runnable() {
                 @Override

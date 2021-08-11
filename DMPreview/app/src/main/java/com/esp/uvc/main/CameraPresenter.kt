@@ -11,7 +11,7 @@ import android.view.OrientationEventListener
 import android.view.Surface
 import androidx.compose.ui.graphics.vectormath.Vector3
 import com.esp.android.usb.camera.core.*
-import com.esp.android.usb.camera.core.EtronCamera.*
+import com.esp.android.usb.camera.core.ApcCamera.*
 import com.esp.android.usb.camera.core.UVCCamera.CAMERA_COLOR
 import com.esp.uvc.BuildConfig
 import com.esp.uvc.R
@@ -62,7 +62,7 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
 
     /*USB & Camera*/
     private var usbMonitor: USBMonitor? = null
-    private var etronCamera: EtronCamera? = null
+    private var apcCamera: ApcCamera? = null
 
     private var mCameraMode: CameraMode? = null
 
@@ -154,8 +154,8 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
     override fun onStart() {
         usbMonitor = USBMonitor(mContext, mOnDeviceConnectListener)
         usbMonitor?.register()
-        etronCamera?.destroy()
-        etronCamera = null
+        apcCamera?.destroy()
+        apcCamera = null
         depthMeasureEnabled = false
         mIView.enableDepthMeasure(false)
         mIView.updateInfoTextRGB()
@@ -191,7 +191,7 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
 
     override fun onStop() {
         savePreferenceState()
-        irManager.setIrCurrentVal(etronCamera, 0)
+        irManager.setIrCurrentVal(apcCamera, 0)
         mIView.enableDepthFilterButton(false)
         mIView.enableColorPaletteButton(false)
         mIView.enablePLYButton(false)
@@ -201,8 +201,8 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
         mIView.enableFocalLengthButton(false)
         mIView.enableAccuracySettingsButton(false)
         mZDBuffer = null
-        etronCamera?.destroy()
-        etronCamera = null
+        apcCamera?.destroy()
+        apcCamera = null
         usbMonitor?.unregister()
         usbMonitor?.destroy()
         usbMonitor = null
@@ -217,9 +217,9 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
     }
 
     override fun unattach() {
-        etronCamera?.close()
-        etronCamera?.destroy()
-        etronCamera = null
+        apcCamera?.close()
+        apcCamera?.destroy()
+        apcCamera = null
         usbMonitor?.destroy()
         usbMonitor = null
 
@@ -234,7 +234,7 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
     private var mDepthFilterModel = DepthFilterModel()
 
     override fun onDepthFilterClick(tag: String) {
-        if (etronCamera == null) {
+        if (apcCamera == null) {
             mIView.toast(getString(R.string.camera_error_not_connected_abort))
             return
         }
@@ -348,7 +348,7 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
     }
 
     override fun onIMUClick() {
-        if (etronCamera == null) {
+        if (apcCamera == null) {
             mIView.toast(getString(R.string.camera_error_not_connected_abort))
         } else {
             mIView.showIMUDialogFragment(
@@ -361,9 +361,9 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
     }
 
     override fun onFocalLengthClick() {
-        val focalLength = etronCamera!!.deviceFocalLength
+        val focalLength = apcCamera!!.deviceFocalLength
         val focalLength2 =
-            etronCamera!!.getFlashFocalLength(mDepthInfo!!.width, mDepthInfo!!.height)
+            apcCamera!!.getFlashFocalLength(mDepthInfo!!.width, mDepthInfo!!.height)
         mIView.showFocalLengthDialogFragment(
             focalLength[0],
             focalLength[1],
@@ -375,7 +375,7 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
     }
 
     override fun onSensorSettingsClick() {
-        if (etronCamera == null) {
+        if (apcCamera == null) {
             mIView.toast(getString(R.string.camera_error_not_connected_abort))
         } else {
             val exposureInfo = getExposureInfo()
@@ -390,14 +390,14 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
                 wbInfo[2],
                 wbInfo[3],
                 !(SharedPrefManager.get(KEY.INTERLEAVE_MODE, false) as Boolean),
-                LightSourceManager.isLLC(etronCamera),
+                LightSourceManager.isLLC(apcCamera),
                 mOnSensorListener
             )
         }
     }
 
     override fun onIRClick() {
-        if (etronCamera == null) {
+        if (apcCamera == null) {
             mIView.toast(getString(R.string.camera_error_not_connected_abort))
             return
         }
@@ -414,9 +414,9 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
             irManager.irCurrentVal,
             irManager.irExtendedFlag,
             fun(newIrValue: Int, extended: Boolean) {
-                val isExtSuccess = irManager.setIRExtension(etronCamera, extended)
+                val isExtSuccess = irManager.setIRExtension(apcCamera, extended)
                 irManager.setIrCurrentVal(
-                    etronCamera,
+                    apcCamera,
                     newIrValue.coerceIn(irManager.irMin..irManager.irMax)
                 )
 
@@ -453,7 +453,7 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
     }
 
     override fun enabledDepthMeasure(enabled: Boolean) {
-        if (etronCamera == null) {
+        if (apcCamera == null) {
             mIView.toast(getString(R.string.camera_error_not_connected_abort))
             return
         }
@@ -481,7 +481,7 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
     }
 
     override fun onStartLivePly() {
-        if (etronCamera == null) {
+        if (apcCamera == null) {
             mIView.toast(getString(R.string.camera_error_not_connected_abort))
             return
         }
@@ -494,8 +494,8 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
             return
         }
         val errorMsg = if (isSupportOpenCL()) { // adb cmd check
-            if (EtronCamera.isSupportOpenCL()) {  // init check
-                val result = etronCamera?.onStartLivePly(mLivePlyPresenterCallback)
+            if (ApcCamera.isSupportOpenCL()) {  // init check
+                val result = apcCamera?.onStartLivePly(mLivePlyPresenterCallback)
                 if (eys_error.EYS_SUCCESS.ordinal == result) {
                     mIView.showLivePlyView(true)
                     return
@@ -516,7 +516,7 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
     }
 
     override fun onStopLivePly() {
-        etronCamera?.onStopLivePly()
+        apcCamera?.onStopLivePly()
         mIView.showLivePlyView(false)
         mLivePlyFrameCount = 0
     }
@@ -525,7 +525,7 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
     @SuppressLint("SimpleDateFormat")
     override fun savePLY() {
         mIView.enablePLYButton(false)
-        if (etronCamera == null) {
+        if (apcCamera == null) {
             mIView.toast(getString(R.string.camera_error_not_connected_abort))
             return
         }
@@ -546,7 +546,7 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
             "${getString(R.string.ply_saving_start)}$timestampFilename"
         )
         GlobalScope.launch(Dispatchers.IO) {
-            val result = etronCamera!!.saveStaticPlyWithFilter(timestampFilename, isUseFilter)
+            val result = apcCamera!!.saveStaticPlyWithFilter(timestampFilename, isUseFilter)
             mIView.showProgressDialog(false, isUseFilter, "")
             val errorMessage = when (result) {
                 eys_error.EYS_SUCCESS.ordinal -> null
@@ -574,36 +574,36 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
     }
 
     override fun rgbCameraToggle() {
-        if (etronCamera == null) {
+        if (apcCamera == null) {
             mIView.showSnack(getString(R.string.camera_error_not_connected)) {}
             return
         }
         if (!mEnableStreamColor) {
             mIView.toast(getString(R.string.camera_preview_toast_opening_rgb_camera))
             mEnableStreamColor = !mEnableStreamColor
-            if (mEnableStreamColor && etronCamera!!.getStreamInfoList(INTERFACE_NUMBER_COLOR)
+            if (mEnableStreamColor && apcCamera!!.getStreamInfoList(INTERFACE_NUMBER_COLOR)
                     .isNotEmpty()
             ) {
                 try {
                     mColorInfo =
-                        etronCamera!!.getStreamInfoList(INTERFACE_NUMBER_COLOR)[mStreamInfoIndexColor]
+                        apcCamera!!.getStreamInfoList(INTERFACE_NUMBER_COLOR)[mStreamInfoIndexColor]
                     logd(
-                        "Setup Color Streaming for device : ${etronCamera!!.productVersion}" +
+                        "Setup Color Streaming for device : ${apcCamera!!.productVersion}" +
                                 ", mCameraMode : ${mCameraMode!!.rgbCameraState!!}\n" +
                                 "Real to set camera : (${mColorInfo!!.width}, ${mColorInfo!!.height})" +
                                 ", isMJPEG : ${mColorInfo!!.bIsFormatMJPEG}, interfaceNumber : ${mColorInfo!!.interfaceNumber}"
                     )
-                    etronCamera!!.setPreviewSize(mColorInfo, mCameraMode!!.rgbCameraState!!.fps)
+                    apcCamera!!.setPreviewSize(mColorInfo, mCameraMode!!.rgbCameraState!!.fps)
                     //set texture for preview.
                     rgbSurface = Surface(mIView.getRGBTextureView().surfaceTexture)
-                    etronCamera!!.setPreviewDisplay(rgbSurface, CAMERA_COLOR)
+                    apcCamera!!.setPreviewDisplay(rgbSurface, CAMERA_COLOR)
                     //callback function for processing.
-                    etronCamera!!.setFrameCallback(
+                    apcCamera!!.setFrameCallback(
                         mColorIFrameCallback,
                         PIXEL_FORMAT_RGBX,
                         CAMERA_COLOR
                     )
-                    etronCamera!!.startPreview(CAMERA_COLOR)
+                    apcCamera!!.startPreview(CAMERA_COLOR)
                 } catch (e: Exception) {
                     loge("Failed to setup color stream from usb device : $e")
                     mIView.showSnack(getString(R.string.camera_error_rgb_failed)) {}
@@ -612,7 +612,7 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
             }
         } else {
             mEnableStreamColor = !mEnableStreamColor
-            etronCamera?.stopPreview(CAMERA_COLOR)
+            apcCamera?.stopPreview(CAMERA_COLOR)
             rgbSurface?.release()
             rgbSurface = null
             mIView.updateInfoTextRGB()
@@ -620,27 +620,27 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
     }
 
     override fun depthCameraToggle() {
-        if (etronCamera == null) {
+        if (apcCamera == null) {
             mIView.showSnack(getString(R.string.camera_error_not_connected)) {}
             return
         }
         if (!mEnableStreamDepth) {
             mEnableStreamDepth = !mEnableStreamDepth
             mIView.toast(getString(R.string.camera_preview_toast_opening_depth_camera))
-            if (mEnableStreamDepth && etronCamera!!.getStreamInfoList(INTERFACE_NUMBER_DEPTH)
+            if (mEnableStreamDepth && apcCamera!!.getStreamInfoList(INTERFACE_NUMBER_DEPTH)
                     .isNotEmpty()
             ) {
                 try {
                     mDepthInfo =
-                        etronCamera!!.getStreamInfoList(INTERFACE_NUMBER_DEPTH)[mStreamInfoIndexDepth]
+                        apcCamera!!.getStreamInfoList(INTERFACE_NUMBER_DEPTH)[mStreamInfoIndexDepth]
                     logd(
-                        "Setup Depth Streaming for device : ${etronCamera!!.productVersion}" +
+                        "Setup Depth Streaming for device : ${apcCamera!!.productVersion}" +
                                 ", mCameraMode : ${mCameraMode!!.depthCameraState!!}\n" +
                                 "Real to set camera : (${mDepthInfo!!.width}, ${mDepthInfo!!.height})" +
                                 ", isMJPEG : ${mDepthInfo!!.bIsFormatMJPEG}, interfaceNumber : ${mDepthInfo!!.interfaceNumber}"
                     )
-                    etronCamera!!.setPreviewSize(mDepthInfo, mCameraMode!!.depthCameraState!!.fps)
-                    mColorPaletteModel.init(etronCamera!!)
+                    apcCamera!!.setPreviewSize(mDepthInfo, mCameraMode!!.depthCameraState!!.fps)
+                    mColorPaletteModel.init(apcCamera!!)
                     mColorPaletteModel.setZDistance(
                         mColorPaletteModel.mCurrentZNearest,
                         mColorPaletteModel.mCurrentZFarthest
@@ -649,7 +649,7 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
                         mColorPaletteModel.mCurrentZNearest,
                         mColorPaletteModel.mCurrentZFarthest
                     )
-                    mDepthFilterModel.init(etronCamera!!)
+                    mDepthFilterModel.init(apcCamera!!)
                     mIView.enableDepthFilterButton(true)
                     mIView.enableColorPaletteButton(true)
                     if (mEnableStreamColor && mEnableStreamDepth) {
@@ -657,17 +657,17 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
                         mIView.enableLivePlyButton(true)
                     }
                     depthSurface = Surface(mIView.getDepthTextureView().surfaceTexture)
-                    etronCamera!!.setPreviewDisplay(depthSurface, CAMERA_DEPTH)
-                    etronCamera!!.setFrameCallback(
+                    apcCamera!!.setPreviewDisplay(depthSurface, CAMERA_DEPTH)
+                    apcCamera!!.setFrameCallback(
                         mDepthIFrameCallback,
                         FRAME_FORMAT_YUYV,
                         CAMERA_DEPTH
                     )
-                    etronCamera!!.setErrorCallback(
+                    apcCamera!!.setErrorCallback(
                         { mIView.showErrorHandleDialog(mOnAlertListener) },
                         CAMERA_DEPTH
                     )
-                    etronCamera!!.startPreview(CAMERA_DEPTH)
+                    apcCamera!!.startPreview(CAMERA_DEPTH)
                 } catch (e: Exception) {
                     loge("Failed to setup depth stream from usb device : $e")
                     e.printStackTrace()
@@ -677,7 +677,7 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
             }
         } else {
             mEnableStreamDepth = !mEnableStreamDepth
-            etronCamera?.stopPreview(CAMERA_DEPTH)
+            apcCamera?.stopPreview(CAMERA_DEPTH)
             mIView.enableColorPaletteButton(false)
             mIView.enableDepthFilterButton(false)
             mIView.enablePLYButton(false)
@@ -733,7 +733,7 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
     }
 
     private fun savePreferenceState() {
-        if (etronCamera != null) {
+        if (apcCamera != null) {
             SharedPrefManager.put(KEY.ENABLE_COLOR, mEnableStreamColor)
             SharedPrefManager.put(KEY.ENABLE_DEPTH, mEnableStreamDepth)
             SharedPrefManager.put(KEY.COLOR_RESOLUTION, mStreamInfoIndexColor)
@@ -746,9 +746,9 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
             SharedPrefManager.put(KEY.USB_TYPE, mUsbType ?: "")
         }
 
-        ExposureManager.setupSharedPrefs(etronCamera)
-        WhiteBalanceManager.setupSharedPrefs(etronCamera)
-        LightSourceManager.setupSharedPrefs(etronCamera)
+        ExposureManager.setupSharedPrefs(apcCamera)
+        WhiteBalanceManager.setupSharedPrefs(apcCamera)
+        LightSourceManager.setupSharedPrefs(apcCamera)
 
         irManager.saveSharedPref()
 
@@ -820,12 +820,12 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
     }
 
     private fun getExposureInfo(): IntArray {
-        val isAE = ExposureManager.getAE(etronCamera)
+        val isAE = ExposureManager.getAE(apcCamera)
         // Avoid into SensorSettings and edit the current value but the auto is on then back to main.
         // (The current value is changed, but not set to camera.)
         var current = ExposureManager.getExposureAbsoluteTimeBySharedPrefs()
         if (current == DEVICE_FIND_FAIL) {
-            current = ExposureManager.getExposureAbsoluteTime(etronCamera)
+            current = ExposureManager.getExposureAbsoluteTime(apcCamera)
         }
         ExposureManager.setSharedPrefs(ExposureManager.INDEX_EXPOSURE_ABSOLUTE_TIME, current)
         val limit = ExposureManager.getExposureAbsoluteTimeLimit()
@@ -833,29 +833,29 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
     }
 
     private fun getWBInfo(): IntArray {
-        val isAWB = WhiteBalanceManager.getAWB(etronCamera)
+        val isAWB = WhiteBalanceManager.getAWB(apcCamera)
         // Avoid into SensorSettings and edit the current value but the auto is on then back to main.
         // (The current value is changed, but not set to camera.)
         var current = WhiteBalanceManager.getCurrentWBBySharedPrefs()
         if (current == EYS_ERROR) {
-            current = WhiteBalanceManager.getCurrentWB(etronCamera)
+            current = WhiteBalanceManager.getCurrentWB(apcCamera)
         }
         WhiteBalanceManager.setSharedPrefs(WhiteBalanceManager.INDEX_CURRENT_WHITE_BALANCE, current)
         var limit = WhiteBalanceManager.getWBLimitBySharedPrefs()
         if (limit[0] == EYS_ERROR) {
-            limit = WhiteBalanceManager.getWBLimit(etronCamera)!!
+            limit = WhiteBalanceManager.getWBLimit(apcCamera)!!
         }
         return intArrayOf(isAWB, current, limit[0], limit[1])
     }
 
     private fun sensorCheckedChanged(tag: String, enabled: Boolean) {
         if (tag == TAG_EXPOSURE) {
-            val ae = ExposureManager.isAE(etronCamera)
+            val ae = ExposureManager.isAE(apcCamera)
             if (ae == enabled) {
                 // Avoid first setup the dialog and callback this.
                 return
             }
-            val result = ExposureManager.setAE(etronCamera, enabled)
+            val result = ExposureManager.setAE(apcCamera, enabled)
             if (enabled) {
                 if (result == 0) {
                     mIView.toast(getString(R.string.camera_ae_enabled))
@@ -867,19 +867,19 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
                 if (result == 0) {
                     mIView.toast(getString(R.string.camera_ae_disabled))
                     // Camera will not auto set to the past value, so force = true
-                    ExposureManager.setExposureAbsoluteTimeBySharedPrefs(etronCamera, true)
+                    ExposureManager.setExposureAbsoluteTimeBySharedPrefs(apcCamera, true)
                 } else {
                     mIView.toast(getString(R.string.camera_ae_disabled_failed))
                     mIView.onSensorCheckedChanged(tag, !enabled)
                 }
             }
         } else if (tag == TAG_WHITE_BALANCE) {
-            val awb = WhiteBalanceManager.isAWB(etronCamera)
+            val awb = WhiteBalanceManager.isAWB(apcCamera)
             if (awb == enabled) {
                 // Avoid first setup the dialog and callback this.
                 return
             }
-            val result = WhiteBalanceManager.setAWB(etronCamera, enabled)
+            val result = WhiteBalanceManager.setAWB(apcCamera, enabled)
             if (enabled) {
                 if (result == 0) {
                     mIView.toast(getString(R.string.camera_awb_enabled))
@@ -891,19 +891,19 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
                 if (result == 0) {
                     mIView.toast(getString(R.string.camera_awb_disabled))
                     // Camera will not auto set to the past value, so force = true
-                    WhiteBalanceManager.setCurrentWBBySharedPrefs(etronCamera, true)
+                    WhiteBalanceManager.setCurrentWBBySharedPrefs(apcCamera, true)
                 } else {
                     mIView.toast(getString(R.string.camera_awb_disabled_failed))
                     mIView.onSensorCheckedChanged(tag, !enabled)
                 }
             }
         } else if (tag == TAG_LOW_LIGHT_COMPENSATION) {
-            val llc = LightSourceManager.isLLC(etronCamera)
+            val llc = LightSourceManager.isLLC(apcCamera)
             if (llc == enabled) {
                 // Avoid first setup the dialog and callback this.
                 return
             }
-            val result = LightSourceManager.setLLC(etronCamera, enabled)
+            val result = LightSourceManager.setLLC(apcCamera, enabled)
             if (enabled) {
                 if (result == 0) {
                     mIView.toast(getString(R.string.camera_llc_enabled))
@@ -924,10 +924,10 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
 
     private fun sensorValueChanged(tag: String?, value: Int) {
         if (tag == TAG_EXPOSURE) {
-            ExposureManager.setExposureAbsoluteTime(etronCamera, value)
+            ExposureManager.setExposureAbsoluteTime(apcCamera, value)
             ExposureManager.setSharedPrefs(ExposureManager.INDEX_EXPOSURE_ABSOLUTE_TIME, value)
         } else if (tag == TAG_WHITE_BALANCE) {
-            WhiteBalanceManager.setCurrentWB(etronCamera, value)
+            WhiteBalanceManager.setCurrentWB(apcCamera, value)
             WhiteBalanceManager.setSharedPrefs(
                 WhiteBalanceManager.INDEX_CURRENT_WHITE_BALANCE,
                 value
@@ -940,7 +940,7 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
     }
 
     private fun checkForSupportedDevice(pid: Int, lowSwitch: Boolean = false): CameraMode? {
-        val defaultMode = CameraModeManager.getDefaultMode(pid, etronCamera!!.isUSB3, lowSwitch)
+        val defaultMode = CameraModeManager.getDefaultMode(pid, apcCamera!!.isUSB3, lowSwitch)
         if (defaultMode != null) {
             mCameraMode = defaultMode
             logi("Defaults applied : $mCameraMode")
@@ -957,7 +957,7 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
         SharedPrefManager.put(KEY.PRESET_MODE, default.mode)
         SharedPrefManager.saveAll()
         logd("Set video mode : ${mCameraMode!!.videoMode}")
-        etronCamera?.videoMode = default.videoMode
+        apcCamera?.videoMode = default.videoMode
         configureInterleaveMode(
             SharedPrefManager.get(KEY.INTERLEAVE_MODE, false) as Boolean || default.videoMode > 9
         )
@@ -968,7 +968,7 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
         }
         if (default.depthCameraState != null) {
             loge("Starting DEPTH")
-            if (etronCamera == null) {
+            if (apcCamera == null) {
                 mIView.showSnack(getString(R.string.camera_error_depth_failed))
                 return
             }
@@ -980,7 +980,7 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
     }
 
     private fun startCameraViaPreferences() {
-        if (etronCamera == null) {
+        if (apcCamera == null) {
             mIView.toast(getString(R.string.camera_error_not_connected_abort))
             setCanNavigate(true)
             return
@@ -1016,11 +1016,11 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
         mCameraMode!!.videoMode =
             SharedPrefManager.get(KEY.VIDEO_MODE, mCameraMode!!.videoMode) as Int
         logd("Set video mode : ${mCameraMode!!.videoMode}")
-        etronCamera?.videoMode = mCameraMode!!.videoMode
-        ExposureManager.setAEBySharedPrefs(etronCamera)
-        WhiteBalanceManager.setAWBBySharedPrefs(etronCamera)
-        LightSourceManager.setCurrentLSBySharedPrefs(etronCamera)
-        LightSourceManager.setLLCBySharedPrefs(etronCamera)
+        apcCamera?.videoMode = mCameraMode!!.videoMode
+        ExposureManager.setAEBySharedPrefs(apcCamera)
+        WhiteBalanceManager.setAWBBySharedPrefs(apcCamera)
+        LightSourceManager.setCurrentLSBySharedPrefs(apcCamera)
+        LightSourceManager.setLLCBySharedPrefs(apcCamera)
         configureInterleaveMode(SharedPrefManager.get(KEY.INTERLEAVE_MODE, false) as Boolean)
         if (mEnableStreamColor) {
             mEnableStreamColor = false
@@ -1041,17 +1041,17 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
     }
 
     private fun configureInterleaveMode(enabled: Boolean) {
-        if (etronCamera == null) {
+        if (apcCamera == null) {
             return
         }
         if (CameraModeManager.isSupportedInterLeaveMode(
                 mContext,
-                etronCamera!!.pid,
-                if (etronCamera!!.isUSB3) "3" else "2",
+                apcCamera!!.pid,
+                if (apcCamera!!.isUSB3) "3" else "2",
                 mProductVersion!!.contains("_L")
             )
         ) {
-            val res = etronCamera!!.setInterleaveMode(enabled)
+            val res = apcCamera!!.setInterleaveMode(enabled)
             if (BuildConfig.DEBUG) {
                 logi(
                     "[esp_interleave] INTERLEAVE_FPS_CHOSEN=${
@@ -1067,7 +1067,7 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
     }
 
     private fun setupRGBSize(isDefaultMode: Boolean) {
-        val streamInfoColorList = etronCamera!!.getStreamInfoList(INTERFACE_NUMBER_COLOR)
+        val streamInfoColorList = apcCamera!!.getStreamInfoList(INTERFACE_NUMBER_COLOR)
         if (streamInfoColorList != null && streamInfoColorList.isNotEmpty()) {
             if (isDefaultMode) {
                 var rgbIndex = -1
@@ -1102,7 +1102,7 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
     }
 
     private fun setupDepthSize(isDefaultMode: Boolean) {
-        val streamInfoDepthList = etronCamera!!.getStreamInfoList(UVCCamera.INTERFACE_NUMBER_DEPTH)
+        val streamInfoDepthList = apcCamera!!.getStreamInfoList(UVCCamera.INTERFACE_NUMBER_DEPTH)
         if (streamInfoDepthList != null && streamInfoDepthList.isNotEmpty()) {
             // Bit8 PIF's "width / 2" in csv / get from FW / set to camera, "real width" to calculate something ...
             val depthWidthModifier =
@@ -1157,15 +1157,15 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
     }
 
     private fun configureIRSupport(isFirstLaunch: Boolean) {
-        if (etronCamera == null) {
+        if (apcCamera == null) {
             return
         }
         if (irOverride) {
             mIView.enableIRButton(true)
-            irManager.initIR(etronCamera!!, isFirstLaunch)
+            irManager.initIR(apcCamera!!, isFirstLaunch)
         } else {
             mIView.enableIRButton(false)
-            irManager.setIrCurrentVal(etronCamera, 0)
+            irManager.setIrCurrentVal(apcCamera, 0)
         }
     }
 
@@ -1210,13 +1210,13 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
                 val data = lineValue[14].shl(4) + lineValue[15]
 
                 val tmp = arrayOfNulls<String>(1)
-                if (etronCamera != null) {
-                    etronCamera!!.getHWRegisterValue(tmp, regAddress)
+                if (apcCamera != null) {
+                    apcCamera!!.getHWRegisterValue(tmp, regAddress)
                     var regValue = tmp[0]!!.toInt(16).toUShort()
                     regValue = regValue.and(notValidDataRange)
                     regValue = regValue.or(data.toUShort())
                     var retryCount = 5
-                    while (etronCamera != null && etronCamera!!.setHWRegisterValue(
+                    while (apcCamera != null && apcCamera!!.setHWRegisterValue(
                             regAddress,
                             regValue.toInt()
                         ) < 0 && retryCount > 0
@@ -1290,43 +1290,43 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
                 if (!createNew) {
                     return
                 }
-                if (etronCamera == null) {
-                    etronCamera = EtronCamera()
+                if (apcCamera == null) {
+                    apcCamera = ApcCamera()
                 }
                 GlobalScope.launch(Dispatchers.IO) {
                     if (ctrlBlock!!.isIMU) {
-                        if (etronCamera!!.open(ctrlBlock) == EYS_OK) {
+                        if (apcCamera!!.open(ctrlBlock) == EYS_OK) {
                             logd("IMU open success")
                             mIView.enableIMUButton(true)
-                            etronCamera!!.enableIMUDataOutput(true)
-                            etronCamera!!.readIMUData(mIMUDataCallback)
+                            apcCamera!!.enableIMUDataOutput(true)
+                            apcCamera!!.readIMUData(mIMUDataCallback)
                         }
                     } else {
                         setCanNavigate(false)
                         //open camera
-                        if (etronCamera!!.open(ctrlBlock) != EYS_OK) {
+                        if (apcCamera!!.open(ctrlBlock) != EYS_OK) {
                             mIView.showSnack(getString(R.string.camera_error_open_failed_retry)) {}
-                            etronCamera = null
+                            apcCamera = null
                             setCanNavigate(true)
                             return@launch //jump out as we cannot continue no camera to work with
                         }
 
-                        mProductVersion = etronCamera!!.productVersion
+                        mProductVersion = apcCamera!!.productVersion
                         var defaultMode: CameraMode? = null
                         if (mProductVersion != null) {
                             if (mProductVersion!!.contains("8036")) {
                                 val lowSwitch = IntArray(1)
-                                etronCamera!!.getFWRegisterValue(lowSwitch, 0xE5)
+                                apcCamera!!.getFWRegisterValue(lowSwitch, 0xE5)
                                 if (lowSwitch[0] == 1) {
                                     mProductVersion += "_L"
                                 }
                             }
                             defaultMode = checkForSupportedDevice(
-                                etronCamera!!.pid,
+                                apcCamera!!.pid,
                                 mProductVersion!!.contains("_L")
                             )
                         }
-                        mUsbType = if (etronCamera!!.isUSB3) VALUE.USB_TYPE_3 else VALUE.USB_TYPE_2
+                        mUsbType = if (apcCamera!!.isUSB3) VALUE.USB_TYPE_3 else VALUE.USB_TYPE_2
                         depthSurface?.release()
                         depthSurface = null
                         rgbSurface?.release()
@@ -1356,7 +1356,7 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
                         }
                         if (mDepthInfo != null) {
                             if (mProductVersion != null && mProductVersion!!.contains("8062")) {
-                                if (etronCamera!!.adjustFocalLength(
+                                if (apcCamera!!.adjustFocalLength(
                                         mDepthInfo!!.width,
                                         mDepthInfo!!.height
                                     ) == eys_error.EYS_SUCCESS.ordinal
@@ -1364,14 +1364,14 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
                                     mIView.enableFocalLengthButton(true)
                                 }
                             }
-                            val fileIndex = etronCamera!!.currentFileIndex
-                            mRectifyLogData = etronCamera!!.getRectifyLogData(fileIndex)
-                            mZDBuffer = etronCamera!!.getZDTableValue(fileIndex)
+                            val fileIndex = apcCamera!!.currentFileIndex
+                            mRectifyLogData = apcCamera!!.getRectifyLogData(fileIndex)
+                            mZDBuffer = apcCamera!!.getZDTableValue(fileIndex)
                             mIView.enableAccuracySettingsButton(true)
                         }
                         if (monitorFramerate) {
-                            etronCamera?.setMonitorFrameRate(monitorFramerate, CAMERA_COLOR)
-                            etronCamera?.setMonitorFrameRate(
+                            apcCamera?.setMonitorFrameRate(monitorFramerate, CAMERA_COLOR)
+                            apcCamera?.setMonitorFrameRate(
                                 monitorFramerate,
                                 UVCCamera.CAMERA_DEPTH
                             )
@@ -1385,10 +1385,10 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
                 if (device == null) {
                     return
                 }
-                if (etronCamera != null && device == etronCamera!!.device) {
+                if (apcCamera != null && device == apcCamera!!.device) {
                     //todo cleanup device & screen
-                    etronCamera!!.destroy()
-                    etronCamera = null
+                    apcCamera!!.destroy()
+                    apcCamera = null
                 }
                 mIView.hideDialogs()
                 mIView.enableIRButton(false)
@@ -1491,7 +1491,7 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
         }
         if (rgbfpsThrottleJob == null && mEnableStreamColor && monitorFramerate) {
             rgbfpsThrottleJob = GlobalScope.launch(Dispatchers.IO) {
-                val rgbFPS = etronCamera?.getCurrentFrameRate(CAMERA_COLOR)
+                val rgbFPS = apcCamera?.getCurrentFrameRate(CAMERA_COLOR)
                 if (rgbFPS != null) {
                     if (BuildConfig.DEBUG) {
                         mIView.updateInfoTextRGB(
@@ -1527,7 +1527,7 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
         }
         if (depthFpsThrottleJob == null && mEnableStreamDepth && !depthMeasureEnabled && monitorFramerate) {
             depthFpsThrottleJob = GlobalScope.launch(Dispatchers.IO) {
-                val depthFPS = etronCamera?.getCurrentFrameRate(CAMERA_DEPTH)
+                val depthFPS = apcCamera?.getCurrentFrameRate(CAMERA_DEPTH)
                 if (depthFPS != null) {
                     if (BuildConfig.DEBUG) {
                         mIView.updateInfoTextDepth(
@@ -1627,36 +1627,36 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
         override fun onClicked(tag: String) {
             when (tag) {
                 IMUDialogFragment.TAG_STATUS -> {
-                    mIView.onIMUStatus(etronCamera!!.isIMUEnabled)
+                    mIView.onIMUStatus(apcCamera!!.isIMUEnabled)
                 }
                 IMUDialogFragment.TAG_ENABLE_IMU -> {
-                    etronCamera!!.enableIMUDataOutput(true)
-                    etronCamera!!.readIMUData(mIMUDataCallback)
+                    apcCamera!!.enableIMUDataOutput(true)
+                    apcCamera!!.readIMUData(mIMUDataCallback)
                 }
                 IMUDialogFragment.TAG_DISABLE_IMU -> {
-                    etronCamera!!.enableIMUDataOutput(false)
-                    etronCamera!!.stopReadIMUData()
+                    apcCamera!!.enableIMUDataOutput(false)
+                    apcCamera!!.stopReadIMUData()
                 }
                 IMUDialogFragment.TAG_GET_MODULE_NAME -> {
-                    mIView.onIMUModuleName(etronCamera!!.imuModuleName)
+                    mIView.onIMUModuleName(apcCamera!!.imuModuleName)
                 }
                 IMUDialogFragment.TAG_GET_FW_VERSION -> {
-                    mIView.onIMUFWVersion(etronCamera!!.imufwVersion)
+                    mIView.onIMUFWVersion(apcCamera!!.imufwVersion)
                 }
                 IMUDialogFragment.TAG_CALIBRATION -> {
-                    etronCamera!!.doIMUCalibration(mIMUDataCallback)
+                    apcCamera!!.doIMUCalibration(mIMUDataCallback)
                 }
                 IMUDialogFragment.TAG_SAVE_RAW_DATA -> {
                     mIsSaveIMUData = !mIsSaveIMUData
                     if (mIsSaveIMUData) {
                         val timestampFilename = SimpleDateFormat(PLY_DATE_PATTERN).format(Date())
-                        etronCamera!!.startIMULogData(timestampFilename)
+                        apcCamera!!.startIMULogData(timestampFilename)
                     } else {
-                        etronCamera!!.stopIMULogData()
+                        apcCamera!!.stopIMULogData()
                     }
                     mIView.onIMUSaveRawData(mIsSaveIMUData)
                 }
-                IMUDialogFragment.TAG_RESET -> etronCamera!!.resetIMU()
+                IMUDialogFragment.TAG_RESET -> apcCamera!!.resetIMU()
             }
         }
     }
@@ -1664,15 +1664,15 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
     private val mFocalLengthListener = object : FocalLengthDialogFragment.OnListener {
 
         override fun onFocalLength(value: Int) {
-            if (etronCamera!!.adjustFocalLength(
+            if (apcCamera!!.adjustFocalLength(
                     mDepthInfo!!.width,
                     mDepthInfo!!.height,
                     value
                 ) == eys_error.EYS_SUCCESS.ordinal
             ) {
-                val focalLength = etronCamera!!.deviceFocalLength
+                val focalLength = apcCamera!!.deviceFocalLength
                 val focalLength2 =
-                    etronCamera!!.getFlashFocalLength(mDepthInfo!!.width, mDepthInfo!!.height)
+                    apcCamera!!.getFlashFocalLength(mDepthInfo!!.width, mDepthInfo!!.height)
                 mIView.onFocalLength(
                     focalLength[0],
                     focalLength[1],
@@ -2026,7 +2026,7 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
         val bytes = ByteArray(frame.remaining())
         frame.get(bytes, 0, bytes.size)
         val depthZOfROI =
-            etronCamera!!.getDepthZOfROI(bytes, rect.left, rect.top, rect.right, rect.bottom)
+            apcCamera!!.getDepthZOfROI(bytes, rect.left, rect.top, rect.right, rect.bottom)
 
         var fillCount = 0
         for (z in depthZOfROI) {
@@ -2067,7 +2067,7 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
         val bytes = ByteArray(frame.remaining())
         frame.get(bytes, 0, bytes.size)
         val depthZOfROI =
-            etronCamera!!.getDepthZOfROI(bytes, rect.left, rect.top, rect.right, rect.bottom)
+            apcCamera!!.getDepthZOfROI(bytes, rect.left, rect.top, rect.right, rect.bottom)
 
         sortZ(depthZOfROI)
         val fittedPlane = calculateFittedPlane(depthZOfROI, width, height)

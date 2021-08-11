@@ -15,8 +15,8 @@
         android:title="@string/enable_stream_depth_checked_title"
         android:summary="@string/enable_stream_depth_checked_summary"/>
     <ListPreference
-        android:key="etron_preview_frame_size"
-        android:title="@string/etron_preview_frame_size_title"
+        android:key="apc_preview_frame_size"
+        android:title="@string/apc_preview_frame_size_title"
         android:persistent="false"/>
     <ListPreference
         android:key="depth_preview_frame_size"
@@ -25,12 +25,12 @@
 
     <EditTextPreference
         android:key="color_preview_frame_rate"
-        android:title="@string/etron_color_preview_frame_rate_title"
+        android:title="@string/apc_color_preview_frame_rate_title"
         android:dialogTitle="@string/input_frame_rate" />
 
     <EditTextPreference
         android:key="depth_preview_frame_rate"
-        android:title="@string/etron_depth_preview_frame_rate_title"
+        android:title="@string/apc_depth_preview_frame_rate_title"
         android:dialogTitle="@string/input_frame_rate" />
 
     <PreferenceCategory android:key="category_view"

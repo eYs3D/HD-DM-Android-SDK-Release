@@ -1,7 +1,7 @@
 package com.esp.uvc.main.settings.firmware_version
 
 import android.hardware.usb.UsbDevice
-import com.esp.android.usb.camera.core.EtronCamera
+import com.esp.android.usb.camera.core.ApcCamera
 import com.esp.android.usb.camera.core.USBMonitor
 import com.esp.uvc.camera_modes.CameraModeManager
 import com.esp.uvc.utils.loge
@@ -12,7 +12,7 @@ class MFirmwareVersion(p: IFirmwareVersion.Presenter, usbMonitor: USBMonitor) :
     private val mIPresenter = p
     private val mUsbMonitor = usbMonitor
 
-    private var mCamera: EtronCamera? = null
+    private var mCamera: ApcCamera? = null
 
     override fun registerUsbMonitor() {
         mUsbMonitor.register()
@@ -53,8 +53,8 @@ class MFirmwareVersion(p: IFirmwareVersion.Presenter, usbMonitor: USBMonitor) :
         if (mCamera != null) {
             loge("Camera exists, not re-creating")
         } else {
-            mCamera = EtronCamera()
-            if (mCamera!!.open(ctrlBlock) == EtronCamera.EYS_OK) {
+            mCamera = ApcCamera()
+            if (mCamera!!.open(ctrlBlock) == ApcCamera.EYS_OK) {
                 setDeviceInfo()
             } else {
                 mIPresenter.onConnectionFailed()

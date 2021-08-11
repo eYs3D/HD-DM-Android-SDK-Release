@@ -1,7 +1,7 @@
 package com.esp.uvc.main.settings.firmware_register
 
 import android.hardware.usb.UsbDevice
-import com.esp.android.usb.camera.core.EtronCamera
+import com.esp.android.usb.camera.core.ApcCamera
 import com.esp.android.usb.camera.core.USBMonitor
 import com.esp.uvc.camera_modes.CameraModeManager
 import com.esp.uvc.utils.loge
@@ -17,7 +17,7 @@ class MFirmwareRegister(p: IFirmwareRegister.Presenter, usbMonitor: USBMonitor) 
     private val mIPresenter = p
     private val mUsbMonitor = usbMonitor
 
-    private var mCamera: EtronCamera? = null
+    private var mCamera: ApcCamera? = null
 
     override fun registerUsbMonitor() {
         mUsbMonitor.register()
@@ -58,8 +58,8 @@ class MFirmwareRegister(p: IFirmwareRegister.Presenter, usbMonitor: USBMonitor) 
         if (mCamera != null) {
             loge("Camera exists, not re-creating")
         } else {
-            mCamera = EtronCamera()
-            if (mCamera!!.open(ctrlBlock) == EtronCamera.EYS_OK) {
+            mCamera = ApcCamera()
+            if (mCamera!!.open(ctrlBlock) == ApcCamera.EYS_OK) {
                 mIPresenter.onConnected()
             } else {
                 mIPresenter.onConnectionFailed()
@@ -93,9 +93,9 @@ class MFirmwareRegister(p: IFirmwareRegister.Presenter, usbMonitor: USBMonitor) 
             REGISTER_TYPE_ASIC -> mCamera!!.getHWRegisterValue(ret, address)
             REGISTER_TYPE_I2C -> {
                 var flag =
-                    if (address2Bytes) EtronCamera.FG_Address_2Byte else EtronCamera.FG_Address_1Byte
+                    if (address2Bytes) ApcCamera.FG_Address_2Byte else ApcCamera.FG_Address_1Byte
                 flag =
-                    flag or if (value2Bytes) EtronCamera.FG_Value_2Byte else EtronCamera.FG_Value_1Byte
+                    flag or if (value2Bytes) ApcCamera.FG_Value_2Byte else ApcCamera.FG_Value_1Byte
                 mCamera!!.getSensorRegisterValue(ret, i2cSlaveId, address, flag)
             }
         }
@@ -128,9 +128,9 @@ class MFirmwareRegister(p: IFirmwareRegister.Presenter, usbMonitor: USBMonitor) 
             REGISTER_TYPE_ASIC -> ret = mCamera!!.setHWRegisterValue(address, value)
             REGISTER_TYPE_I2C -> {
                 var flag =
-                    if (address2Bytes) EtronCamera.FG_Address_2Byte else EtronCamera.FG_Address_1Byte
+                    if (address2Bytes) ApcCamera.FG_Address_2Byte else ApcCamera.FG_Address_1Byte
                 flag =
-                    flag or if (value2Bytes) EtronCamera.FG_Value_2Byte else EtronCamera.FG_Value_1Byte
+                    flag or if (value2Bytes) ApcCamera.FG_Value_2Byte else ApcCamera.FG_Value_1Byte
                 ret = mCamera!!.setSensorRegisterValue(i2cSlaveId, address, value, flag)
             }
         }

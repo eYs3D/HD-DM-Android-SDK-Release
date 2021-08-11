@@ -22,7 +22,7 @@ public class PlyWriter {
         int b;
     }
 
-    public static ArrayList<CloudPoint> etronFrameTo3D(int width, int height,  byte[] colorArray,byte[] depthArray, float reprojectMat[], int depthBytes,  boolean clipping, float zNear, float zFar, boolean removeINF){
+    public static ArrayList<CloudPoint> APCFrameTo3D(int width, int height,  byte[] colorArray,byte[] depthArray, float reprojectMat[], int depthBytes,  boolean clipping, float zNear, float zFar, boolean removeINF){
         float centerX = -1.0f*reprojectMat[3];
         float centerY = -1.0f*reprojectMat[7];
         float focalLength = reprojectMat[11];

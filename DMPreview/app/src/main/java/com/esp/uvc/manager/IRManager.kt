@@ -2,8 +2,8 @@ package com.esp.uvc.manager
 
 import android.content.Context
 import androidx.annotation.NonNull
-import com.esp.android.usb.camera.core.EtronCamera
-import com.esp.android.usb.camera.core.EtronCamera.*
+import com.esp.android.usb.camera.core.ApcCamera
+import com.esp.android.usb.camera.core.ApcCamera.*
 import com.esp.uvc.utils.loge
 import com.esp.uvc.utils.logi
 
@@ -25,8 +25,8 @@ class IRManager(context: Context) {
     /**
      * Return if setting firmware registers successfully
      */
-    fun setIrCurrentVal(etronCamera: EtronCamera?, value: Int): Boolean {
-        return if (etronCamera?.setIRCurrentValue(value) != EYS_ERROR) {
+    fun setIrCurrentVal(apcCamera: ApcCamera?, value: Int): Boolean {
+        return if (apcCamera?.setIRCurrentValue(value) != EYS_ERROR) {
             logi("[ir_ext] IRManager setIrCurrentVal $value")
             irCurrentVal = value
             dump()
@@ -41,21 +41,21 @@ class IRManager(context: Context) {
     /**
      * Return if setting firmware registers successfully
      */
-    fun setIRExtension(etronCamera: EtronCamera?, isEnable: Boolean): Boolean {
-        if (etronCamera == null) {
+    fun setIRExtension(apcCamera: ApcCamera?, isEnable: Boolean): Boolean {
+        if (apcCamera == null) {
             loge("[ir_ext] err camera null failing setting ir extension")
             dump()
             return false
         }
 
-        val currentIrMax = etronCamera.irMaxValue
+        val currentIrMax = apcCamera.irMaxValue
         if (currentIrMax != IRMAX_NOT_SUP_CTRL) {
             val result: Int = if (isEnable) {
                 loge("[ir_ext] setIRExtension 15")
-                etronCamera.setIRMaxValue(IR_EXT_MAX_VALUE)
+                apcCamera.setIRMaxValue(IR_EXT_MAX_VALUE)
             } else {
                 loge("[ir_ext] setIRExtension 6")
-                etronCamera.setIRMaxValue(IR_DEF_MAX_VALUE)
+                apcCamera.setIRMaxValue(IR_DEF_MAX_VALUE)
             }
 
             if (result != EYS_ERROR) {
@@ -75,20 +75,20 @@ class IRManager(context: Context) {
         return false
     }
 
-    fun initIR(@NonNull etronCamera: EtronCamera, isFirstLaunch: Boolean) {
+    fun initIR(@NonNull apcCamera: ApcCamera, isFirstLaunch: Boolean) {
         loge("[ir_ext] initIR firstLaunch $isFirstLaunch")
         if (isFirstLaunch) {
-            setIrCurrentVal(etronCamera, IR_DEF_VALUE)
-            if (!setIRExtension(etronCamera, false)) {
+            setIrCurrentVal(apcCamera, IR_DEF_VALUE)
+            if (!setIRExtension(apcCamera, false)) {
                 loge("[ir_ext] startCameraViaDefaults set false failed")
             }
-            irMin = etronCamera.irMinValue
-            irMax = etronCamera.irMaxValue
+            irMin = apcCamera.irMinValue
+            irMax = apcCamera.irMaxValue
             dump()
             return
         }
 
-        readIRFromSharePref(etronCamera)
+        readIRFromSharePref(apcCamera)
         dump()
     }
 
@@ -100,14 +100,14 @@ class IRManager(context: Context) {
         loge("[ir_ext] cleared!!")
     }
 
-    private fun readIRFromSharePref(etronCamera: EtronCamera?) {
+    private fun readIRFromSharePref(apcCamera: ApcCamera?) {
         loge("[ir_ext] readIRFromSharePref")
         val isIRExtendSharedPref = SharedPrefManager.get(KEY.IR_EXTENDED, irExtendedFlag) as Boolean
-        setIRExtension(etronCamera, isIRExtendSharedPref)
+        setIRExtension(apcCamera, isIRExtendSharedPref)
 
         val irValueSharedPref = SharedPrefManager.get(KEY.IR_VALUE, irCurrentVal) as Int
         if (irCurrentVal != irValueSharedPref) {
-            setIrCurrentVal(etronCamera, irValueSharedPref)
+            setIrCurrentVal(apcCamera, irValueSharedPref)
         }
 
         irMin = SharedPrefManager.get(KEY.IR_MIN, irMin) as Int

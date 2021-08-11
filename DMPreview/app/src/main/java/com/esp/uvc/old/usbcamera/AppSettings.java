@@ -29,7 +29,7 @@ public class AppSettings extends SharedPrefManager {
     public final static String DEPTH_W = "Depth_W";
     public final static String Depth_H = "Depth_H";
 
-    public final static String ETRON_INDEX = "mEtronIndex";
+    public final static String APC_INDEX = "mApcIndex";
     public final static String DEPTH_INDEX = "mDepthIndex";
 
     public final static String DEPTH_DATA_TYPE = "mDepthDataType";
@@ -83,7 +83,7 @@ public class AppSettings extends SharedPrefManager {
     private final static int Depth_H_DEFAULT = 0;
 
     private final static int ONLY_COLOR_POSITION_DEFAULT = 0;
-    private final static int ETRON_POSITION_DEFAULT = 0;
+    private final static int APC_POSITION_DEFAULT = 0;
     private final static int DEPTH_POSITION_DEFAULT = 0;
 
     private final static int FISH_POSITION_DEFAULT = 0;

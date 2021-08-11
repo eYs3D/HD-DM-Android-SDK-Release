@@ -1,7 +1,7 @@
 package com.esp.uvc.main.common
 
-import com.esp.android.usb.camera.core.EtronCamera
-import com.esp.android.usb.camera.core.EtronCamera.*
+import com.esp.android.usb.camera.core.ApcCamera
+import com.esp.android.usb.camera.core.ApcCamera.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -18,17 +18,17 @@ object CameraUtils {
         }
     }
 
-    fun getIRMAXValue(etronCamera: EtronCamera): Int {
+    fun getIRMAXValue(apcCamera: ApcCamera): Int {
         var value: Int
-        value = etronCamera.irMaxValue
-        if (value == -1 && etronCamera.productVersion == PRODUCT_VERSION_EX8029) {
+        value = apcCamera.irMaxValue
+        if (value == -1 && apcCamera.productVersion == PRODUCT_VERSION_EX8029) {
             value = 0x10
         }
         return value
     }
 
-    fun getCurrentIRValue(etronCamera: EtronCamera): Int {
-        return etronCamera.irCurrentValue
+    fun getCurrentIRValue(apcCamera: ApcCamera): Int {
+        return apcCamera.irCurrentValue
     }
 
     fun getDateTimeString(): String {
@@ -38,43 +38,43 @@ object CameraUtils {
     }
 
 
-    fun getZDTableValue(etronCamera: EtronCamera, depthHeight: Int, color: Int): IntArray {
-        val mProductVersion = etronCamera.productVersion
+    fun getZDTableValue(apcCamera: ApcCamera, depthHeight: Int, color: Int): IntArray {
+        val mProductVersion = apcCamera.productVersion
         if (mProductVersion == PRODUCT_VERSION_EX8036) {
-            if (!etronCamera.isUSB3 && color != 0 && depthHeight != 0 && (color % depthHeight != 0)) {
+            if (!apcCamera.isUSB3 && color != 0 && depthHeight != 0 && (color % depthHeight != 0)) {
                 // For mode 34 35 on PIF
-                return etronCamera.getZDTableValue(2)
+                return apcCamera.getZDTableValue(2)
             }
             if (depthHeight == 720) {
-                return etronCamera.zdTableValue
+                return apcCamera.zdTableValue
             } else if (depthHeight >= 480) {
-                return etronCamera.getZDTableValue(1)
+                return apcCamera.getZDTableValue(1)
             }
-            return etronCamera.zdTableValue
+            return apcCamera.zdTableValue
         }
         if (mProductVersion == PRODUCT_VERSION_EX8037) {
             return when {
                 depthHeight >= 720 -> {
-                    etronCamera.zdTableValue
+                    apcCamera.zdTableValue
                 }
                 depthHeight >= 480 -> {
-                    etronCamera.getZDTableValue(1)
+                    apcCamera.getZDTableValue(1)
                 }
                 else -> {
-                    etronCamera.zdTableValue
+                    apcCamera.zdTableValue
                 }
             }
         } else {
-            return if (!etronCamera.isUSB3 || depthHeight >= 720) {
-                etronCamera.zdTableValue
+            return if (!apcCamera.isUSB3 || depthHeight >= 720) {
+                apcCamera.zdTableValue
             } else {
-                etronCamera.getZDTableValue(1)
+                apcCamera.getZDTableValue(1)
             }
         }
     }
 
-    fun getMinIRValue(etronCamera: EtronCamera): Int {
-        return etronCamera.irMinValue
+    fun getMinIRValue(apcCamera: ApcCamera): Int {
+        return apcCamera.irMinValue
     }
 
 

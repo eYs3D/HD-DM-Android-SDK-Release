@@ -1,13 +1,13 @@
 package com.esp.uvc.camera_modes
 
 import android.util.Size
-import com.esp.android.usb.camera.core.EtronCamera
+import com.esp.android.usb.camera.core.ApcCamera
 
 private val DEFAULT_EX8036_U2_MODE = CameraMode(
     8036,
     false,
     19,
-    EtronCamera.VideoMode.RECTIFY_8_BITS,
+    ApcCamera.VideoMode.RECTIFY_8_BITS,
     CameraState(false, Size(640, 480), 15),
     CameraState(false, Size(320, 480), 15)
 )
@@ -16,7 +16,7 @@ private val DEFAULT_EX8036_U3_MODE = CameraMode(
     8036,
     true,
     2,
-    EtronCamera.VideoMode.RECTIFY_11_BITS,
+    ApcCamera.VideoMode.RECTIFY_11_BITS,
     CameraState(false, Size(640, 480), 30),
     CameraState(false, Size(640, 480), 30)
 )
@@ -25,7 +25,7 @@ private val DEFAULT_EX8036_L_U2_MODE = CameraMode(
     8036,
     false,
     36,
-    EtronCamera.VideoMode.RECTIFY_8_BITS,
+    ApcCamera.VideoMode.RECTIFY_8_BITS,
     CameraState(false, Size(640, 480), 15),
     CameraState(false, Size(320, 480), 15)
 )
@@ -34,7 +34,7 @@ private val DEFAULT_EX8036_L_U3_MODE = CameraMode(
     8036,
     true,
     6,
-    EtronCamera.VideoMode.RECTIFY_11_BITS,
+    ApcCamera.VideoMode.RECTIFY_11_BITS,
     CameraState(false, Size(640, 480), 30),
     CameraState(false, Size(640, 480), 30)
 )
@@ -43,25 +43,16 @@ private val DEFAULT_EX8037_U2_MODE = CameraMode(
     8037,
     false,
     31,
-    EtronCamera.VideoMode.RECTIFY_8_BITS,
+    ApcCamera.VideoMode.RECTIFY_8_BITS,
     CameraState(true, Size(1280, 720), 10),
     CameraState(false, Size(640, 720), 10)
-)
-
-private val DEFAULT_EX8052_U3_MODE = CameraMode(
-    8052,
-    true,
-    2,
-    EtronCamera.VideoMode.RECTIFY_11_BITS,
-    CameraState(false, Size(640, 480), 60),
-    CameraState(false, Size(640, 480), 60)
 )
 
 private val DEFAULT_EX8059_U2_MODE = CameraMode(
     8059,
     false,
     9,
-    EtronCamera.VideoMode.RECTIFY_11_BITS_INTERLEAVE_MODE,
+    ApcCamera.VideoMode.RECTIFY_11_BITS_INTERLEAVE_MODE,
     CameraState(true, Size(1280, 720), 24),
     CameraState(false, Size(640, 360), 24)
 )
@@ -70,7 +61,7 @@ private val DEFAULT_EX8059_U3_MODE = CameraMode(
     8059,
     true,
     6,
-    EtronCamera.VideoMode.RECTIFY_11_BITS,
+    ApcCamera.VideoMode.RECTIFY_11_BITS,
     CameraState(false, Size(640, 400), 60),
     CameraState(false, Size(640, 400), 60)
 )
@@ -79,7 +70,7 @@ private val DEFAULT_YX8062_U2_MODE = CameraMode(
     8062,
     false,
     6,
-    EtronCamera.VideoMode.RECTIFY_11_BITS,
+    ApcCamera.VideoMode.RECTIFY_11_BITS,
     CameraState(true, Size(1280, 720), 30),
     CameraState(false, Size(640, 360), 30)
 )
@@ -88,7 +79,7 @@ private val DEFAULT_YX8062_U3_MODE = CameraMode(
     8062,
     true,
     3,
-    EtronCamera.VideoMode.RECTIFY_11_BITS,
+    ApcCamera.VideoMode.RECTIFY_11_BITS,
     CameraState(false, Size(1280, 720), 30),
     CameraState(false, Size(1280, 720), 30)
 )
@@ -101,7 +92,6 @@ private val DEFAULT_CAMERA_MODES = arrayListOf(
     DEFAULT_EX8036_L_U2_MODE,
     DEFAULT_EX8036_L_U3_MODE,
     DEFAULT_EX8037_U2_MODE,
-    DEFAULT_EX8052_U3_MODE,
     DEFAULT_EX8059_U2_MODE,
     DEFAULT_EX8059_U3_MODE,
     DEFAULT_YX8062_U2_MODE,

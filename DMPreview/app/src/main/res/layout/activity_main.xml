@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ff000000"
-    tools:context="com.etron.usbcamera.MainActivity"
+    tools:context="com.apc.usbcamera.MainActivity"
     tools:ignore="MergeRootFrame" >
 
     <TextView

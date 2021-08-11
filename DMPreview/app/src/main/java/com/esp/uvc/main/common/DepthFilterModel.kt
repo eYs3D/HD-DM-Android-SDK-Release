@@ -1,7 +1,7 @@
 package com.esp.uvc.main.common
 
 import androidx.annotation.NonNull
-import com.esp.android.usb.camera.core.EtronCamera
+import com.esp.android.usb.camera.core.ApcCamera
 
 class DepthFilterModel {
     var mIsMainEnablerFilter = true
@@ -24,10 +24,10 @@ class DepthFilterModel {
 
     var mIsMainEnablerRemoveCurve = false
 
-    var mCamera: EtronCamera? = null
+    var mCamera: ApcCamera? = null
 
-    fun init(@NonNull etronCamera: EtronCamera) {
-        mCamera = etronCamera
+    fun init(@NonNull apcCamera: ApcCamera) {
+        mCamera = apcCamera
         minConfigs()
         updateCameraConfigs()
     }
@@ -113,7 +113,7 @@ class DepthFilterModel {
 
     fun subSampleEnabler(enabled: Boolean) {
         mIsMainEnablerSubSample = enabled
-        mCamera?.setDepthFilterByType(EtronCamera.SUBSAMPLE, mIsMainEnablerSubSample)
+        mCamera?.setDepthFilterByType(ApcCamera.SUBSAMPLE, mIsMainEnablerSubSample)
     }
 
     fun subSampleModeCallback(value: Int) {
@@ -133,7 +133,7 @@ class DepthFilterModel {
 
     fun setHoleFillEnabler(enabled: Boolean) {
         mIsMainEnablerHoleFill = enabled
-        mCamera?.setDepthFilterByType(EtronCamera.HOLE_FILL, mIsMainEnablerHoleFill)
+        mCamera?.setDepthFilterByType(ApcCamera.HOLE_FILL, mIsMainEnablerHoleFill)
     }
 
     fun setHoleFillHorizontal(enabled: Boolean) {
@@ -149,7 +149,7 @@ class DepthFilterModel {
 
     fun setEdgePreservingEnabler(enabled: Boolean) {
         mIsMainEnablerEdgePreserving = enabled
-        mCamera?.setDepthFilterByType(EtronCamera.EDGE_PRESERVING_FILTER, mIsMainEnablerEdgePreserving)
+        mCamera?.setDepthFilterByType(ApcCamera.EDGE_PRESERVING_FILTER, mIsMainEnablerEdgePreserving)
     }
 
     fun edgePreservingLevelCallback(value: Int) {
@@ -159,7 +159,7 @@ class DepthFilterModel {
 
     fun setTemporalFilterEnabler(enabled: Boolean) {
         mIsMainEnablerTemporalFilter = enabled
-        mCamera?.setDepthFilterByType(EtronCamera.TEMPORAL_FILTER, mIsMainEnablerTemporalFilter)
+        mCamera?.setDepthFilterByType(ApcCamera.TEMPORAL_FILTER, mIsMainEnablerTemporalFilter)
 
     }
 
@@ -170,6 +170,6 @@ class DepthFilterModel {
 
     fun setRemoveCurveEnabler(enabled: Boolean) {
         mIsMainEnablerRemoveCurve = enabled
-        mCamera?.setDepthFilterByType(EtronCamera.FLYING_POINT_FILTER, mIsMainEnablerRemoveCurve)
+        mCamera?.setDepthFilterByType(ApcCamera.FLYING_POINT_FILTER, mIsMainEnablerRemoveCurve)
     }
 }

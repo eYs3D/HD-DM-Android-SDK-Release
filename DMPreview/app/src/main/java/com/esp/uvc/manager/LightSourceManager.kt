@@ -1,7 +1,7 @@
 package com.esp.uvc.manager
 
-import com.esp.android.usb.camera.core.EtronCamera
-import com.esp.android.usb.camera.core.EtronCamera.*
+import com.esp.android.usb.camera.core.ApcCamera
+import com.esp.android.usb.camera.core.ApcCamera.*
 import com.esp.uvc.application.AndroidApplication
 
 private const val DEFAULT_CURRENT_LIGHT_SOURCE = 2
@@ -16,27 +16,27 @@ object LightSourceManager {
      * Light Source
      **/
 
-    fun getCurrentLS(etronCamera: EtronCamera?): Int {
-        return etronCamera?.currentPowerlineFrequency ?: EYS_ERROR
+    fun getCurrentLS(apcCamera: ApcCamera?): Int {
+        return apcCamera?.currentPowerlineFrequency ?: EYS_ERROR
     }
 
     fun getCurrentLSBySharedPrefs(): Int {
         return SharedPrefManager.get(KEY.CURRENT_LIGHT_SOURCE, EYS_ERROR) as Int
     }
 
-    fun setCurrentLS(etronCamera: EtronCamera?, value: Int): Int {
-        return etronCamera?.setCurrentPowerlineFrequency(value) ?: EYS_ERROR
+    fun setCurrentLS(apcCamera: ApcCamera?, value: Int): Int {
+        return apcCamera?.setCurrentPowerlineFrequency(value) ?: EYS_ERROR
     }
 
-    fun setCurrentLSBySharedPrefs(etronCamera: EtronCamera?) {
+    fun setCurrentLSBySharedPrefs(apcCamera: ApcCamera?) {
         val currentLS = getCurrentLSBySharedPrefs()
-        if (currentLS >= 0 && currentLS != getCurrentLS(etronCamera)) {
-            setCurrentLS(etronCamera, currentLS)
+        if (currentLS >= 0 && currentLS != getCurrentLS(apcCamera)) {
+            setCurrentLS(apcCamera, currentLS)
         }
     }
 
-    fun getLSLimit(etronCamera: EtronCamera?): IntArray? {
-        return etronCamera?.powerlineFrequencyLimit
+    fun getLSLimit(apcCamera: ApcCamera?): IntArray? {
+        return apcCamera?.powerlineFrequencyLimit
     }
 
     fun getLSLimitBySharedPrefs(): IntArray {
@@ -50,27 +50,27 @@ object LightSourceManager {
      * Low Light Compensation
      **/
 
-    fun getLLC(etronCamera: EtronCamera?): Int {
-        return etronCamera?.exposurePriority ?: EYS_ERROR
+    fun getLLC(apcCamera: ApcCamera?): Int {
+        return apcCamera?.exposurePriority ?: EYS_ERROR
     }
 
     fun getLLCBySharedPrefs(): Int {
         return SharedPrefManager.get(KEY.LOW_LIGHT_COMPENSATION, EYS_ERROR) as Int
     }
 
-    fun isLLC(etronCamera: EtronCamera?): Boolean {
-        return getLLC(etronCamera) == LOW_LIGHT_COMPENSATION_ON
+    fun isLLC(apcCamera: ApcCamera?): Boolean {
+        return getLLC(apcCamera) == LOW_LIGHT_COMPENSATION_ON
     }
 
-    fun setLLC(etronCamera: EtronCamera?, enabled: Boolean): Int {
+    fun setLLC(apcCamera: ApcCamera?, enabled: Boolean): Int {
         val value = if (enabled) LOW_LIGHT_COMPENSATION_ON else LOW_LIGHT_COMPENSATION_OFF
-        return etronCamera?.setExposurePriority(value) ?: EYS_ERROR
+        return apcCamera?.setExposurePriority(value) ?: EYS_ERROR
     }
 
-    fun setLLCBySharedPrefs(etronCamera: EtronCamera?) {
+    fun setLLCBySharedPrefs(apcCamera: ApcCamera?) {
         val value = getLLCBySharedPrefs()
-        if (value >= 0 && value != getLLC(etronCamera)) {
-            setLLC(etronCamera, value == LOW_LIGHT_COMPENSATION_ON)
+        if (value >= 0 && value != getLLC(apcCamera)) {
+            setLLC(apcCamera, value == LOW_LIGHT_COMPENSATION_ON)
         }
     }
 
@@ -86,13 +86,13 @@ object LightSourceManager {
         SharedPrefManager.saveAll()
     }
 
-    fun setupSharedPrefs(etronCamera: EtronCamera?) {
-        val currentLS = getCurrentLS(etronCamera)
+    fun setupSharedPrefs(apcCamera: ApcCamera?) {
+        val currentLS = getCurrentLS(apcCamera)
         SharedPrefManager.put(KEY.CURRENT_LIGHT_SOURCE, currentLS)
-        val limitLS = getLSLimit(etronCamera)
+        val limitLS = getLSLimit(apcCamera)
         SharedPrefManager.put(KEY.MIN_LIGHT_SOURCE, limitLS?.get(0) ?: EYS_ERROR)
         SharedPrefManager.put(KEY.MAX_LIGHT_SOURCE, limitLS?.get(1) ?: EYS_ERROR)
-        val llc = getLLC(etronCamera)
+        val llc = getLLC(apcCamera)
         SharedPrefManager.put(KEY.LOW_LIGHT_COMPENSATION, llc)
         SharedPrefManager.saveAll()
     }

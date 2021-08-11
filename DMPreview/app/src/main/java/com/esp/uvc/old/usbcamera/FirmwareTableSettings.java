@@ -18,7 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.esp.android.usb.camera.core.EtronCamera;
+import com.esp.android.usb.camera.core.ApcCamera;
 import com.esp.android.usb.camera.core.RectifyLogData;
 import com.esp.android.usb.camera.core.USBMonitor;
 import com.esp.android.usb.camera.core.USBMonitor.OnDeviceConnectListener;
@@ -57,10 +57,10 @@ public class FirmwareTableSettings extends AppCompatActivity {
     private static final String KEY_GET_FILE_PATH = "get_file_path";
 
     //File id
-    private static final int ETronDI_Y_OFFSET_FILE_ID_0		=		30;
-    private static final int ETronDI_RECTIFY_FILE_ID_0		=		40;
-    private static final int ETronDI_ZD_TABLE_FILE_ID_0		=		50;
-    private static final int ETronDI_CALIB_LOG_FILE_ID_0	=		240;
+    private static final int APC_Y_OFFSET_FILE_ID_0		=		30;
+    private static final int APC_RECTIFY_FILE_ID_0		=		40;
+    private static final int APC_ZD_TABLE_FILE_ID_0		=		50;
+    private static final int APC_CALIB_LOG_FILE_ID_0	=		240;
     // for thread pool
     private static final int CORE_POOL_SIZE = 1;
     private static final int MAX_POOL_SIZE = 4;
@@ -151,7 +151,7 @@ public class FirmwareTableSettings extends AppCompatActivity {
 
         // for accessing USB and USB camera
         private USBMonitor mUSBMonitor = null;
-        private EtronCamera mUVCCamera = null;
+        private ApcCamera mUVCCamera = null;
         private UsbDevice mUsbDevice = null;
 
         private Preference mPreference_GetFilePath;
@@ -257,7 +257,7 @@ public class FirmwareTableSettings extends AppCompatActivity {
                 if(DEBUG)Log.d(TAG, ">>>> getVenderId:" + ctrlBlock.getVenderId());
                 if(DEBUG)Log.d(TAG, ">>>> getProductId:" + ctrlBlock.getProductId());
                 if(DEBUG)Log.d(TAG, ">>>> getFileDescriptor:" + ctrlBlock.getFileDescriptor());
-                final EtronCamera camera = new EtronCamera();
+                final ApcCamera camera = new ApcCamera();
                 EXECUTER.execute(new Runnable() {
                     @Override
                     public void run() {
@@ -269,7 +269,7 @@ public class FirmwareTableSettings extends AppCompatActivity {
                             Log.e(TAG, "open uvccam era exception:" + e.toString());
                             return;
                         }
-                        if (ret == EtronCamera.EYS_OK && mUVCCamera == null) {
+                        if (ret == ApcCamera.EYS_OK && mUVCCamera == null) {
                             mUVCCamera = camera;
                         }
                         else{
@@ -401,7 +401,7 @@ public class FirmwareTableSettings extends AppCompatActivity {
 
                     for(int index=0; index < numberOfDepthStream;index++){
                         int[] zdTable = mUVCCamera.getZDTableValue(index);
-                        byte[] buffer = mUVCCamera.getFileData(ETronDI_ZD_TABLE_FILE_ID_0+index);
+                        byte[] buffer = mUVCCamera.getFileData(APC_ZD_TABLE_FILE_ID_0+index);
                         if(buffer == null || zdTable == null){
                             if(index==0)Toast.makeText(mContext, "failed to read zdTable", Toast.LENGTH_SHORT).show();
                             break;
@@ -441,7 +441,7 @@ public class FirmwareTableSettings extends AppCompatActivity {
                     for(int i=0; i < numberOfDepthStream;i++){
                         int index = i;
                         RectifyLogData rectifyLogData = mUVCCamera.getRectifyLogData(index);
-                        byte[] buffer = mUVCCamera.getFileData(ETronDI_CALIB_LOG_FILE_ID_0 + index);
+                        byte[] buffer = mUVCCamera.getFileData(APC_CALIB_LOG_FILE_ID_0 + index);
                         if(rectifyLogData == null){
                             if(i==0)Toast.makeText(mContext, "failed to read rectify log", Toast.LENGTH_SHORT).show();
                             break;
@@ -461,7 +461,8 @@ public class FirmwareTableSettings extends AppCompatActivity {
                 } else if (preference == mPreference_RectifyLogWrite) {
                     if(mFile!=null && mFile.exists()) {
                         byte[] buffer = readFromFile(mFile);
-                        if (mUVCCamera.setFileData(buffer, ETronDI_CALIB_LOG_FILE_ID_0+mIndex) != 0) {
+                        if (mUVCCamera.setFileData(buffer,
+                                APC_CALIB_LOG_FILE_ID_0+mIndex) != 0) {
                             Toast.makeText(mContext, "Write failed index:"+mIndex, Toast.LENGTH_LONG).show();
                         } else {
                             Toast.makeText(mContext, "Write complete index:"+mIndex, Toast.LENGTH_LONG).show();

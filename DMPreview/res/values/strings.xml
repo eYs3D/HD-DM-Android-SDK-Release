@@ -25,7 +25,7 @@
 */
 -->
 <resources>
-    <string name="app_name">Etron USBCamera</string>
+    <string name="app_name">APC USBCamera</string>
     <string name="select">Select USB Web Camera(Depth)</string>
     <string name="camera">Camera</string>
     <string name="refresh">Refresh</string>
