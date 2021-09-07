@@ -1,0 +1,9 @@
+1;L'+D;640x400_MJPEG;640x400;null;null;11,14;30;30;2;1;null
+2;L'+D;320x200_MJPEG;320x200;null;null;11,14;30;30;2;1;null
+3;L'+D;320x104_MJPEG;320x104;null;null;11,14;30;30;2;1;null
+4;L'+R'+D;1280x400_MJPEG;640x400;null;null;11;30;30;2;1;null
+5;L'+R'+D;640x200_MJPEG;320x200;null;null;11;30;30;2;1;null
+6;L'+R'+D;640x104_MJPEG;320x104;null;null;11;30;30;2;1;null
+7;L+R;1280x400_YUYV;null;null;null;null;15;null;2;0;null
+8;L+R;640x200_YUYV;null;null;null;null;15;null;2;0;null
+9;L+R;640x104_YUYV;null;null;null;null;15;null;2;0;null
