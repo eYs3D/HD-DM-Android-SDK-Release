@@ -843,7 +843,13 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
         WhiteBalanceManager.setSharedPrefs(WhiteBalanceManager.INDEX_CURRENT_WHITE_BALANCE, current)
         var limit = WhiteBalanceManager.getWBLimitBySharedPrefs()
         if (limit[0] == EYS_ERROR) {
-            limit = WhiteBalanceManager.getWBLimit(apcCamera)!!
+            try {
+                limit = WhiteBalanceManager.getWBLimit(apcCamera)!!
+            } catch(e: NullPointerException) {
+                // The camera doesn't support white balance, such as YX8071
+                logi("got NullPointerException when getting WBLimit")
+                return intArrayOf(0, 0, 0, 0)
+            }
         }
         return intArrayOf(isAWB, current, limit[0], limit[1])
     }
