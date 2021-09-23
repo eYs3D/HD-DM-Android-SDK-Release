@@ -6,19 +6,19 @@ import com.esp.android.usb.camera.core.ApcCamera
 private val DEFAULT_EX8036_U2_MODE = CameraMode(
     8036,
     false,
-    19,
-    ApcCamera.VideoMode.RECTIFY_8_BITS,
-    CameraState(false, Size(640, 480), 15),
-    CameraState(false, Size(320, 480), 15)
+    36,
+    ApcCamera.VideoMode.RECTIFY_11_BITS,
+    CameraState(true, Size(1280, 720), 30),
+    CameraState(false, Size(640, 360), 30)
 )
 
 private val DEFAULT_EX8036_U3_MODE = CameraMode(
     8036,
     true,
-    2,
+    5,
     ApcCamera.VideoMode.RECTIFY_11_BITS,
-    CameraState(false, Size(640, 480), 30),
-    CameraState(false, Size(640, 480), 30)
+    CameraState(false, Size(1280, 720), 30),
+    CameraState(false, Size(640, 360), 30)
 )
 
 private val DEFAULT_EX8036_L_U2_MODE = CameraMode(
@@ -46,6 +46,24 @@ private val DEFAULT_EX8037_U2_MODE = CameraMode(
     ApcCamera.VideoMode.RECTIFY_8_BITS,
     CameraState(true, Size(1280, 720), 10),
     CameraState(false, Size(640, 720), 10)
+)
+
+private val DEFAULT_EX8052_U2_MODE = CameraMode(
+    8052,
+    false,
+    36,
+    ApcCamera.VideoMode.RECTIFY_11_BITS,
+    CameraState(true, Size(1280, 720), 30),
+    CameraState(false, Size(640, 360), 30)
+)
+
+private val DEFAULT_EX8052_U3_MODE = CameraMode(
+    8052,
+    true,
+    5,
+    ApcCamera.VideoMode.RECTIFY_11_BITS,
+    CameraState(false, Size(640, 360), 30),
+    CameraState(false, Size(640, 360), 30)
 )
 
 private val DEFAULT_EX8059_U2_MODE = CameraMode(
@@ -101,6 +119,8 @@ private val DEFAULT_CAMERA_MODES = arrayListOf(
     DEFAULT_EX8036_L_U2_MODE,
     DEFAULT_EX8036_L_U3_MODE,
     DEFAULT_EX8037_U2_MODE,
+    DEFAULT_EX8052_U2_MODE,
+    DEFAULT_EX8052_U3_MODE,
     DEFAULT_EX8059_U2_MODE,
     DEFAULT_EX8059_U3_MODE,
     DEFAULT_YX8062_U2_MODE,

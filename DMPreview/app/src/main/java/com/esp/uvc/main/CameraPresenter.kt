@@ -603,6 +603,10 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
                         PIXEL_FORMAT_RGBX,
                         CAMERA_COLOR
                     )
+                    apcCamera!!.setErrorCallback(
+                        { mIView.showErrorHandleDialog(mOnAlertListener) },
+                        CAMERA_COLOR
+                    )
                     apcCamera!!.startPreview(CAMERA_COLOR)
                 } catch (e: Exception) {
                     loge("Failed to setup color stream from usb device : $e")
@@ -999,11 +1003,15 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
                             (presetMode == 1 || presetMode == 2 || presetMode == 3 || presetMode == 8 ||
                                     presetMode == 12 || presetMode == 13 || presetMode == 14 || presetMode == 15 ||
                                     presetMode == 16 || presetMode == 18 || presetMode == 19 || presetMode == 28)) ||
-                    (mProductVersion!! == "EX8036" &&
-                            (presetMode == 1 || presetMode == 3 || presetMode == 5 || presetMode == 6 ||
-                                    (presetMode == 7 && fps > 30) || presetMode == 8 || (presetMode == 10 && fps > 30) ||
-                                    presetMode == 14)) ||
-                    (mProductVersion!! == "YX8062" && (presetMode == 1 || presetMode == 2)))
+                    (mProductVersion!! == "EX8036" && (presetMode == 1 || presetMode == 2 || presetMode == 3 || presetMode == 4 ||
+                                                               presetMode == 8 || presetMode == 9 || presetMode == 10 ||
+                                                               presetMode == 11 || presetMode == 12 || presetMode == 13 ||
+                                                               presetMode == 15 || presetMode == 25)) ||
+                    (mProductVersion!! == "YX8062" && (presetMode == 1 || presetMode == 2)) ||
+                    (mProductVersion!! == "EX8052" && (presetMode == 1 || presetMode == 2 || presetMode == 3 || presetMode == 4 ||
+                                                               presetMode == 8 || presetMode == 9 || presetMode == 10 ||
+                                                               presetMode == 11 || presetMode == 12 || presetMode == 13 ||
+                                                               presetMode == 15 || presetMode == 25 || presetMode == 27)))
         ) {
             mIView.showWarningDialog(mOnAlertListener)
         } else {
