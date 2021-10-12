@@ -137,6 +137,9 @@
             android:label="@string/software_version_title"
             android:screenOrientation="fullSensor" />
 
+        <activity android:name=".sample.MoveDataSample"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="fullSensor" />
     </application>
 
     <uses-feature android:name="android.hardware.camera" />
