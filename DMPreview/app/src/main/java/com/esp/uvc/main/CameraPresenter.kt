@@ -1326,6 +1326,8 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
                         }
 
                         mProductVersion = apcCamera!!.productVersion
+                        logd("mProductVersion: $mProductVersion")
+
                         var defaultMode: CameraMode? = null
                         if (mProductVersion != null) {
                             if (mProductVersion!!.contains("8036")) {
@@ -1379,6 +1381,8 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
                                 }
                             }
                             val fileIndex = apcCamera!!.currentFileIndex
+                            loge("fileIndex: $fileIndex")
+
                             mRectifyLogData = apcCamera!!.getRectifyLogData(fileIndex)
                             mZDBuffer = apcCamera!!.getZDTableValue(fileIndex)
                             mIView.enableAccuracySettingsButton(true)

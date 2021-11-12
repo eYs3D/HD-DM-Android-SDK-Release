@@ -1,0 +1,5 @@
+1;L'+D;1280x920_MJPEG;1280x920;null;null;11,14;7;7;2;1;null
+2;L'+D scale_down mode;1280x920_MJPEG;640x460;null;null;11,14;30;30;2;1;null
+3;L'+R'+D;2560x920_MJPEG;1280x920;null;null;11;6;6;2;1;null
+4;L'+R'+D scale_down mode;2560x920_MJPEG;640x460;null;null;11;25;25;2;1;null
+5;L+R;2560x920_YUYV;null;null;null;null;4;null;2;0;null
