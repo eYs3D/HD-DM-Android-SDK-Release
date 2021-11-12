@@ -4,7 +4,7 @@ import androidx.annotation.NonNull
 import com.esp.android.usb.camera.core.ApcCamera
 
 class DepthFilterModel {
-    var mIsMainEnablerFilter = true
+    var mIsMainEnablerFilter = false
     var mIsEnableFull = false
     var mIsEnableMin = true
 

@@ -49,8 +49,17 @@ private val VIDEO_MODES_TABLE = mapOf(
     "8_BITS_RAW_INTERLEAVE_MODE" to 22,
     "14_BITS_RAW_INTERLEAVE_MODE" to 23,
     "8_BITS_x80_RAW_INTERLEAVE_MODE" to 24,
-    "11_BITS_RAW_INTERLEAVE_MODE" to 25
-)
+    "11_BITS_RAW_INTERLEAVE_MODE" to 25,
+    "8_BITS_RECTIFY_SCALE_DOWN_MODE" to 33,
+    "14_BITS_RECTIFY_SCALE_DOWN_MODE" to 34,
+    "8_BITS_RECTIFY_x80_SCALE_DOWN_MODE" to 35,
+    "11_BITS_RECTIFY_SCALE_DOWN_MODE" to 36,
+    "8_BITS_RAW_SCALE_DOWN_MODE" to 38,
+    "14_BITS_RAW_SCALE_DOWN_MODE" to 39,
+    "8_BITS_RAW_x80_SCALE_DOWN_MODE" to 40,
+    "11_BITS_RAW_SCALE_DOWN_MODE" to 41,
+
+    )
 
 class MPreviewSettings(p: IPreviewSettings.Presenter, usbMonitor: USBMonitor) :
     IPreviewSettings.Model, KoinComponent {
@@ -265,6 +274,19 @@ class MPreviewSettings(p: IPreviewSettings.Presenter, usbMonitor: USBMonitor) :
                         14 -> tmp.add("14_BITS_RAW_INTERLEAVE_MODE")
                     }
                 }
+            } else if (preset.description.contains("scale_down mode")) {
+                    preset.bits.forEach {
+                        if (preset.rectifyMode == 1 || preset.lResolution == null) when (it) {
+                            8 -> tmp.add("8_BITS_RECTIFY_SCALE_DOWN_MODE")
+                            11 -> tmp.add("11_BITS_RECTIFY_SCALE_DOWN_MODE")
+                            14 -> tmp.add("14_BITS_RECTIFY_SCALE_DOWN_MODE")
+                        }
+                        else when (it) {
+                            8 -> tmp.add("8_BITS_RAW_SCALE_DOWN_MODE")
+                            11 -> tmp.add("11_BITS_RAW_SCALE_DOWN_MODE")
+                            14 -> tmp.add("14_BITS_RAW_SCALE_DOWN_MODE")
+                        }
+                    }
             } else {
                 preset.bits.forEach {
                     if (preset.rectifyMode == 1 || preset.lResolution == null) when (it) {
