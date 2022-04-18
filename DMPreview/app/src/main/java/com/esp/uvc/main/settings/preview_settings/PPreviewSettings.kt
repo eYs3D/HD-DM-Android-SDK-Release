@@ -2,6 +2,7 @@ package com.esp.uvc.main.settings.preview_settings
 
 import android.hardware.usb.UsbDevice
 import com.esp.android.usb.camera.core.USBMonitor
+import com.esp.uvc.utils.logd
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import org.koin.core.parameter.parametersOf
@@ -58,12 +59,14 @@ class PPreviewSettings(v: IPreviewSettings.View, usbMonitor: USBMonitor) :
 
     override fun onOption(
         showFps: Boolean,
+        /* remove IR UI from settings
         irExtended: Boolean,
         irCurrent: Int,
+        */
         roiSizeList: List<String>,
         roiSizeIndex: Int
     ) {
-        mIView.onOption(showFps, irExtended, irCurrent, roiSizeList, roiSizeIndex)
+        mIView.onOption(showFps, /*irExtended, irCurrent,*/ roiSizeList, roiSizeIndex)//remove IR UI from settings
     }
 
     override fun onOrientation(

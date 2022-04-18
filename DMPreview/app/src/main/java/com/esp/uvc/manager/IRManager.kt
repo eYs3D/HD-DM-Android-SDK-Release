@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.annotation.NonNull
 import com.esp.android.usb.camera.core.ApcCamera
 import com.esp.android.usb.camera.core.ApcCamera.*
+import com.esp.uvc.utils.logd
 import com.esp.uvc.utils.loge
 import com.esp.uvc.utils.logi
 
@@ -13,6 +14,11 @@ class IRManager(context: Context) {
     private val IR_UNINITIALIZED_VALUE = -2
     private val IR_MIN_VALUE = 0
     private val IR_DEF_VALUE = 3
+    //+MARY
+    private val IR_MARY_DEF_VALUE = 0x30
+    private val IR_MARY_DEF_MAX_VALUE = 0x60
+    private val IR_MARY_EXT_MAX_VALUE = 0xff
+    //-MARY
     private val IR_DEF_MAX_VALUE = 6
     private val IR_EXT_MAX_VALUE = 15
     private val IRMAX_NOT_SUP_CTRL = 0xff
@@ -47,20 +53,35 @@ class IRManager(context: Context) {
             dump()
             return false
         }
-
+        val mProductVersion = apcCamera!!.productVersion
         val currentIrMax = apcCamera.irMaxValue
-        if (currentIrMax != IRMAX_NOT_SUP_CTRL) {
+        if ((currentIrMax != IRMAX_NOT_SUP_CTRL && !mProductVersion!!.contains("MARY")) || mProductVersion!!.contains("MARY")) {
             val result: Int = if (isEnable) {
-                loge("[ir_ext] setIRExtension 15")
-                apcCamera.setIRMaxValue(IR_EXT_MAX_VALUE)
+                if (mProductVersion != null && mProductVersion!!.contains("MARY")) {
+                    loge("[ir_ext] setIRExtension 255")
+                    apcCamera.setIRMaxValue(IR_MARY_EXT_MAX_VALUE)
+                } else {
+                    loge("[ir_ext] setIRExtension 15")
+                    apcCamera.setIRMaxValue(IR_EXT_MAX_VALUE)
+                }
             } else {
-                loge("[ir_ext] setIRExtension 6")
-                apcCamera.setIRMaxValue(IR_DEF_MAX_VALUE)
+                if (mProductVersion != null && mProductVersion!!.contains("MARY")) {
+                    loge("[ir_ext] setIRExtension 96")
+                    apcCamera.setIRMaxValue(IR_MARY_DEF_MAX_VALUE)
+                } else {
+                    loge("[ir_ext] setIRExtension 6")
+                    apcCamera.setIRMaxValue(IR_DEF_MAX_VALUE)
+                }
             }
 
             if (result != EYS_ERROR) {
-                irMax = if (isEnable) IR_EXT_MAX_VALUE
-                else IR_DEF_MAX_VALUE
+                if (mProductVersion != null && mProductVersion!!.contains("MARY")) {
+                    irMax = if (isEnable) IR_MARY_EXT_MAX_VALUE
+                    else IR_MARY_DEF_MAX_VALUE
+                } else {
+                    irMax = if (isEnable) IR_EXT_MAX_VALUE
+                    else IR_DEF_MAX_VALUE
+                }
                 irExtendedFlag = isEnable
                 dump()
                 return true
@@ -78,7 +99,11 @@ class IRManager(context: Context) {
     fun initIR(@NonNull apcCamera: ApcCamera, isFirstLaunch: Boolean) {
         loge("[ir_ext] initIR firstLaunch $isFirstLaunch")
         if (isFirstLaunch) {
-            setIrCurrentVal(apcCamera, IR_DEF_VALUE)
+            if (apcCamera!!.productVersion != null && apcCamera!!.productVersion!!.contains("MARY")) {
+                setIrCurrentVal(apcCamera, IR_MARY_DEF_VALUE)
+            } else {
+                setIrCurrentVal(apcCamera, IR_DEF_VALUE)
+            }
             if (!setIRExtension(apcCamera, false)) {
                 loge("[ir_ext] startCameraViaDefaults set false failed")
             }
@@ -111,6 +136,9 @@ class IRManager(context: Context) {
         }
 
         irMin = SharedPrefManager.get(KEY.IR_MIN, irMin) as Int
+        //+MARY
+        irMax = SharedPrefManager.get(KEY.IR_MAX, irMax) as Int
+        //-MARY
         dump()
     }
 

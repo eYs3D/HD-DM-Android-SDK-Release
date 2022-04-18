@@ -29,6 +29,7 @@ import com.esp.uvc.old.usbcamera.CameraDialog
 import com.esp.uvc.old.usbcamera.FrameGrabber
 import com.esp.uvc.roi_size.RoiSizeProvider
 import com.esp.uvc.utils.*
+import kotlinx.android.synthetic.main.activity_preview_image_settings.*
 import kotlinx.coroutines.*
 import org.koin.core.KoinComponent
 import org.koin.core.inject
@@ -1381,9 +1382,15 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
                                 }
                             }
                             val fileIndex = apcCamera!!.currentFileIndex
+
+                            mRectifyLogData = if (mProductVersion != null && mProductVersion!!.contains("MARY")) {
+                                apcCamera!!.getRectifyLogData(0)
+                            } else {
+                                apcCamera!!.getRectifyLogData(fileIndex)
+                            }
                             loge("fileIndex: $fileIndex")
 
-                            mRectifyLogData = apcCamera!!.getRectifyLogData(fileIndex)
+                            //mRectifyLogData = apcCamera!!.getRectifyLogData(fileIndex)
                             mZDBuffer = apcCamera!!.getZDTableValue(fileIndex)
                             mIView.enableAccuracySettingsButton(true)
                         }

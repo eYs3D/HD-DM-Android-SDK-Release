@@ -7,8 +7,8 @@ import java.lang.Exception
 // Integration => CameraMode / PresetMode / DepthRange
 object CameraModeManager {
 
-    // 8036, 8037, 8052, 8059, 8062, 8062 IMU, 8071, Hypatia2
-    val SUPPORTED_PID_LIST = intArrayOf(0x0120, 0x0121, 0x0137, 0x0146, 0x0162, 0x0163, 0x0160, 0x0173)
+    // 8036, 8037, 8052, 8059, 8062, 8062 IMU, 8071, Hypatia2, Mary
+    val SUPPORTED_PID_LIST = intArrayOf(0x0120, 0x0121, 0x0137, 0x0146, 0x0162, 0x0163, 0x0160, 0x0173, 0x0174)
 
     fun getDefaultMode(pid: Int, isUsb3: Boolean, lowSwitch: Boolean): CameraMode? {
         return CameraMode.getDefaultMode(
@@ -87,6 +87,7 @@ object CameraModeManager {
             0x0160 -> "8071"
             0x0162 -> "8062"
             0x0173 -> "173"
+            0x0174 -> "174"
             else -> "-1"
         }
     }

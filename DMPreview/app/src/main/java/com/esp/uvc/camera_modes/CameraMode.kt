@@ -71,26 +71,26 @@ private val DEFAULT_EX8059_U2_MODE = CameraMode(
     false,
     9,
     ApcCamera.VideoMode.RECTIFY_11_BITS_INTERLEAVE_MODE,
-    CameraState(true, Size(1280, 720), 24),
-    CameraState(false, Size(640, 360), 24)
+    CameraState(true, Size(1280, 720), 30),
+    CameraState(false, Size(640, 360), 30)
 )
 
 private val DEFAULT_EX8059_U3_MODE = CameraMode(
     8059,
     true,
-    6,
+    7,
     ApcCamera.VideoMode.RECTIFY_11_BITS,
-    CameraState(false, Size(640, 400), 60),
-    CameraState(false, Size(640, 400), 60)
+    CameraState(false, Size(0, 0), 0),
+    CameraState(false, Size(1280, 720), 60)
 )
 
 private val DEFAULT_YX8062_U2_MODE = CameraMode(
     8062,
     false,
-    6,
+    7,
     ApcCamera.VideoMode.RECTIFY_11_BITS,
-    CameraState(true, Size(1280, 720), 30),
-    CameraState(false, Size(640, 360), 30)
+    CameraState(true, Size(0, 0), 0),
+    CameraState(false, Size(1280, 780), 30)
 )
 
 private val DEFAULT_YX8062_U3_MODE = CameraMode(
@@ -120,6 +120,14 @@ private val DEFAULT_HYPATIA2_U2_MODE = CameraMode(
         CameraState(false, Size(640, 460), 30)
 )
 
+private val DEFAULT_MARY_U3_MODE = CameraMode(
+    174,
+    true,
+    1,
+    ApcCamera.VideoMode.RECTIFY_11_BITS,
+    CameraState(false, Size(640, 480), 60),
+    CameraState(false, Size(640, 480), 60)
+)
 
 //    CameraDefaults(8038, 1,Size(1280, 720), Size(1280, 720), DEPTH_DATA_11_BITS.toInt(), 10, 10, 1, -1, listOf(CameraType.RGB,  CameraType.DEPTH)))
 
@@ -136,7 +144,8 @@ private val DEFAULT_CAMERA_MODES = arrayListOf(
     DEFAULT_YX8062_U2_MODE,
     DEFAULT_YX8062_U3_MODE,
     DEFAULT_YX8071_U2_MODE,
-    DEFAULT_HYPATIA2_U2_MODE
+    DEFAULT_HYPATIA2_U2_MODE,
+    DEFAULT_MARY_U3_MODE
 )
 
 data class CameraMode(

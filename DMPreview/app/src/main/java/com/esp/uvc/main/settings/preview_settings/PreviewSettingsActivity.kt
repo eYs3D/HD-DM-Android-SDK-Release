@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.esp.android.usb.camera.core.USBMonitor
 import com.esp.uvc.BaseFragment
 import com.esp.uvc.R
+import com.esp.uvc.utils.logd
 import com.esp.uvc.utils.roUI
 import kotlinx.android.synthetic.main.activity_preview_image_settings.*
 import org.koin.android.ext.android.inject
@@ -62,17 +63,21 @@ class PreviewSettingsActivity : AppCompatActivity(), IPreviewSettings.View {
 
     override fun onOption(
         showFps: Boolean,
+        /* remove IR UI from settings
         irExtended: Boolean,
         irCurrent: Int,
+        */
         roiSizeList: List<String>,
         roiSizeIndex: Int
     ) = roUI {
         cb_show_fps.isChecked = showFps
+        /* remove IR UI from settings
         cb_ir_extended.isChecked = irExtended
         seekBar_ir.max = if (irExtended) 15f else 6f
         seekBar_ir.min = 0.0f
         seekBar_ir.tickCount = (seekBar_ir.max - seekBar_ir.min + 1).toInt()
         seekBar_ir.setProgress(irCurrent.toFloat())
+        */
         seekBar_roi.max = roiSizeList.size.toFloat() - 1
         seekBar_roi.tickCount = roiSizeList.size
         seekBar_roi.customTickTexts(roiSizeList.toTypedArray())
@@ -144,10 +149,12 @@ class PreviewSettingsActivity : AppCompatActivity(), IPreviewSettings.View {
 
     override fun getOptionViewValues(): ArrayList<Any?> {
         val showFps = cb_show_fps.isChecked
+        /* remove IR UI from settings
         val irExtended = cb_ir_extended.isChecked
         val irValue = seekBar_ir.progress
+        */
         val roiSize = seekBar_roi.progress
-        return arrayListOf(showFps, irExtended, irValue, roiSize)
+        return arrayListOf(showFps, /*irExtended, irValue,*/ roiSize)//remove IR UI from settings
     }
 
     override fun getOtherViewValues(): ArrayList<Any?> {
@@ -212,7 +219,7 @@ class PreviewSettingsActivity : AppCompatActivity(), IPreviewSettings.View {
         spinner_color_fps.onItemSelectedListener = mOnItemSelectedListener
         spinner_depth_fps.adapter = mAdapters[ADAPTER_INDEX_DEPTH_FPS]
         spinner_depth_fps.onItemSelectedListener = mOnItemSelectedListener
-        cb_ir_extended.setOnCheckedChangeListener(mOnCheckedListener)
+        //cb_ir_extended.setOnCheckedChangeListener(mOnCheckedListener)//remove IR UI from settings
     }
 
     private val mOnItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -234,7 +241,7 @@ class PreviewSettingsActivity : AppCompatActivity(), IPreviewSettings.View {
         override fun onNothingSelected(p0: AdapterView<*>?) {
         }
     }
-
+    /* remove IR UI from settings
     private val mOnCheckedListener = CompoundButton.OnCheckedChangeListener { view, isChecked ->
         when (view) {
             cb_ir_extended -> {
@@ -250,6 +257,7 @@ class PreviewSettingsActivity : AppCompatActivity(), IPreviewSettings.View {
             }
         }
     }
+    */
 
     private val mOnDeviceConnectListener = object : USBMonitor.OnDeviceConnectListener {
 

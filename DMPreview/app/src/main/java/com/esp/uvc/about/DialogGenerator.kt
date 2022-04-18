@@ -8,6 +8,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.esp.uvc.R
+import com.esp.uvc.utils.loge
 import com.warkiz.widget.IndicatorSeekBar
 import com.warkiz.widget.OnSeekChangeListener
 import com.warkiz.widget.SeekParams
@@ -21,10 +22,9 @@ object DialogGenerator {
         val dialog = MaterialDialog(context).customView(R.layout.layout_ir)
         val view = dialog.getCustomView()
         val slider = view.findViewById<IndicatorSeekBar>(R.id.ir_value_seekbar)
-
         slider.max = irMax.toFloat()
         slider.min = irMin.toFloat()
-        slider.tickCount = (slider.max - slider.min + 1).toInt()
+        //slider.tickCount = (slider.max - slider.min + 1).toInt() //MARY
         slider.setProgress(irCurrentValue.toFloat())
 
         val extendedView = view.findViewById<CheckBox>(R.id.ir_range_extended_checkbox)

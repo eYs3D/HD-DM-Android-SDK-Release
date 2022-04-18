@@ -1,0 +1,5 @@
+1;L'+D;640x480_YUYV;640x480;null;null;11,14;60;60;3;1;null
+2;L'+R'+D;1280x480_YUYV;640x480;null;null;11,14;60;60;3;1;null
+3;L+R+D;1280x480_YUYV;640x480;null;null;11,14;60;60;3;0;null
+4;D;null;640x480;null;null;11,14;null;60;3;1;null
+5;L+R;1280x480_YUYV;null;null;null;null;60;null;3;0;null

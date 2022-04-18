@@ -19,10 +19,10 @@ import org.koin.core.KoinComponent
 import org.koin.core.inject
 
 const val DEFAULT_SHOW_FPS = true
-
+/* remove IR UI from settings
 const val DEFAULT_IR_EXTENDED = false
 const val DEFAULT_IR_VALUE = 3
-
+*/
 const val DEFAULT_ORIENTATION_REVERSE = true
 const val DEFAULT_ORIENTATION_LANDSCAPE = false
 const val DEFAULT_ORIENTATION_MIRROR = false
@@ -89,13 +89,15 @@ class MPreviewSettings(p: IPreviewSettings.Presenter, usbMonitor: USBMonitor) :
     override fun getOption() {
         val showFps =
             SharedPrefManager.get(KEY.SHOW_FPS, DEFAULT_SHOW_FPS) as Boolean
+        /* remove IR UI from settings
         val irExtended =
             SharedPrefManager.get(KEY.IR_EXTENDED, DEFAULT_IR_EXTENDED) as Boolean
         val irCurrent =
             SharedPrefManager.get(KEY.IR_VALUE, DEFAULT_IR_VALUE) as Int
+        */
         val roiSizeList = RoiSize.values().map { it.toString() }
         val roiSizeIndex = mRoiSizeProvider.getRoiSize().ordinal
-        mIPresenter.onOption(showFps, irExtended, irCurrent, roiSizeList, roiSizeIndex)
+        mIPresenter.onOption(showFps, /*irExtended, irCurrent,*/ roiSizeList, roiSizeIndex) //remove IR UI from settings
     }
 
     override fun getOrientation() {
@@ -486,10 +488,12 @@ class MPreviewSettings(p: IPreviewSettings.Presenter, usbMonitor: USBMonitor) :
     }
 
     private fun saveOptionInfo() {
-        val (showFps, irExtended, irValue, roiSize) = mIPresenter.getOptionViewValues()
+        val (showFps, /*irExtended, irValue,*/ roiSize) = mIPresenter.getOptionViewValues()//remove IR UI from settings
         SharedPrefManager.put(KEY.SHOW_FPS, showFps as Boolean)
+        /* remove IR UI from settings
         SharedPrefManager.put(KEY.IR_EXTENDED, irExtended as Boolean)
         SharedPrefManager.put(KEY.IR_VALUE, irValue as Int)
+        */
         mRoiSizeProvider.storeRoiSize(RoiSize.values()[roiSize as Int])
 
         SharedPrefManager.saveAll()

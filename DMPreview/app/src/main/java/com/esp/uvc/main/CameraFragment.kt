@@ -424,7 +424,7 @@ class CameraFragment : BaseFragment(), IMain.View {
         val slider = view.findViewById<IndicatorSeekBar>(R.id.ir_value_seekbar)
         slider.min = irMin.toFloat()
         slider.max = irMax.toFloat()
-        slider.tickCount = (slider.max - slider.min + 1).toInt()
+        //slider.tickCount = (slider.max - slider.min + 1).toInt()
         slider.setProgress(irCurrentValue.toFloat())
         val extendedView = view.findViewById<CheckBox>(R.id.ir_range_extended_checkbox)
         extendedView.isChecked = irExtended

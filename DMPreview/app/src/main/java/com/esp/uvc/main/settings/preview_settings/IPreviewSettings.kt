@@ -44,8 +44,10 @@ interface IPreviewSettings {
 
         fun onOption(
             showFps: Boolean,
+            /* remove IR UI from settings
             irExtended: Boolean,
             irCurrent: Int,
+            */
             roiSizeList: List<String>,
             roiSizeIndex: Int
         )
@@ -115,8 +117,10 @@ interface IPreviewSettings {
 
         fun onOption(
             showFps: Boolean,
+            /* remove IR UI from settings
             irExtended: Boolean,
             irCurrent: Int,
+            */
             roiSizeList: List<String>,
             roiSizeIndex: Int
         )

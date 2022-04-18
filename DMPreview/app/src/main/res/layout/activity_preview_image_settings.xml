@@ -379,6 +379,7 @@
             android:layout_marginTop="@dimen/label_vertical_spacing"
             android:text="@string/preview_image_ir_intensity"
             android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cb_show_fps" />
 
@@ -388,6 +389,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/base_margin_horizontal"
             android:text="@string/preview_image_ir_extended"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/tv_ir_intensity"
             app:layout_constraintStart_toEndOf="@+id/tv_ir_intensity"
             app:layout_constraintTop_toTopOf="@+id/tv_ir_intensity" />
@@ -399,6 +401,7 @@
             android:layout_marginStart="@dimen/base_margin_horizontal"
             android:layout_marginTop="@dimen/label_vertical_spacing"
             android:layout_marginEnd="@dimen/base_margin_horizontal"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_ir_intensity">
@@ -407,12 +410,10 @@
                 android:id="@+id/seekBar_ir"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:isb_progress="6"
-                app:isb_show_tick_marks_type="divider"
-                app:isb_show_tick_texts="true"
+                app:isb_show_tick_marks_type="oval"
+                app:isb_show_tick_texts="false"
                 app:isb_tick_texts_color="@color/colorPrimary"
-                app:isb_tick_texts_size="8sp"
-                app:isb_ticks_count="6" />
+                app:isb_tick_texts_size="8sp" />
 
         </com.warkiz.widget.IndicatorStayLayout>
 
@@ -425,7 +426,7 @@
             android:text="@string/preview_image_roi_size"
             android:textAppearance="?android:attr/textAppearanceListItemSmall"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_ir_bar" />
+            app:layout_constraintTop_toBottomOf="@id/cb_show_fps" />
 
         <com.warkiz.widget.IndicatorStayLayout
             android:id="@+id/layout_roi_bar"
