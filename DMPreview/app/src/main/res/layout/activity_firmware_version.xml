@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -123,13 +124,248 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_serial_number" />
 
+    <TextView
+        android:id="@+id/tv_firmware_protect"
+        style="@style/common_settings_label"
+        android:text="@string/firmware_protect"
+        android:textIsSelectable="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider4" />
+
+    <TextView
+        android:id="@+id/tv_firmware_protect_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/label_value_spacing"
+        android:layout_marginEnd="@dimen/label_value_spacing"
+        android:text="@string/firmware_protect_value_unknown"
+        android:textIsSelectable="true"
+        app:layout_constraintBottom_toBottomOf="@id/tv_firmware_protect"
+        app:layout_constraintStart_toEndOf="@id/tv_firmware_protect"
+        app:layout_constraintTop_toTopOf="@id/tv_firmware_protect" />
+    <View
+        android:id="@+id/divider5"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/label_vertical_spacing"
+        android:background="?android:attr/dividerVertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_firmware_protect" />
+
+    <TextView
+        android:id="@+id/tv_firmware_structLen"
+        style="@style/common_settings_label"
+        android:text="@string/firmware_StructLen"
+        android:textIsSelectable="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider5" />
+
+    <TextView
+        android:id="@+id/tv_firmware_structLen_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/label_value_spacing"
+        android:text="@string/firmware_StructLen_value_unknown"
+        android:textIsSelectable="true"
+        app:layout_constraintBottom_toBottomOf="@id/tv_firmware_structLen"
+        app:layout_constraintStart_toEndOf="@id/tv_firmware_structLen"
+        app:layout_constraintTop_toTopOf="@id/tv_firmware_structLen" />
+
+    <View
+        android:id="@+id/divider6"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/label_vertical_spacing"
+        android:background="?android:attr/dividerVertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_firmware_structLen" />
+
+    <TextView
+        android:id="@+id/tv_firmware_unpAreaStartSec"
+        style="@style/common_settings_label"
+        android:text="@string/firmware_UnpAreaStartSec"
+        android:textIsSelectable="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider6" />
+
+    <TextView
+        android:id="@+id/tv_firmware_unpAreaStartSec_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/label_value_spacing"
+        android:text="@string/firmware_UnpAreaStartSec_value_unknown"
+        android:textIsSelectable="true"
+        app:layout_constraintBottom_toBottomOf="@id/tv_firmware_unpAreaStartSec"
+        app:layout_constraintStart_toEndOf="@id/tv_firmware_unpAreaStartSec"
+        app:layout_constraintTop_toTopOf="@id/tv_firmware_unpAreaStartSec" />
+
+    <View
+        android:id="@+id/divider7"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/label_vertical_spacing"
+        android:background="?android:attr/dividerVertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_firmware_unpAreaStartSec" />
+
+    <Button
+        android:id="@+id/tv_read3x"
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
+        android:enabled="false"
+        android:text="@string/firmware_read3X"
+        app:layout_constraintRight_toRightOf="@+id/tv_write3x"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider7" />
+
+    <Button
+        android:id="@+id/tv_write3x"
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
+        android:enabled="false"
+        android:text="@string/firmware_write3X"
+        app:layout_constraintStart_toStartOf="@+id/tv_read3x"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider7" />
+
+    <View
+        android:id="@+id/divider8"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/dividerVertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_read3x" />
+
+    <Button
+        android:id="@+id/tv_read4x"
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
+        android:enabled="false"
+        android:text="@string/firmware_read4X"
+        app:layout_constraintRight_toRightOf="@+id/tv_write4x"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider8" />
+
+    <Button
+        android:id="@+id/tv_write4x"
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
+        android:enabled="false"
+        android:text="@string/firmware_write4X"
+        app:layout_constraintStart_toStartOf="@+id/tv_read4x"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider8" />
+
+    <View
+        android:id="@+id/divider9"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/dividerVertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_read4x" />
+
+    <Button
+        android:id="@+id/tv_read5x"
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
+        android:enabled="false"
+        android:text="@string/firmware_read5X"
+        app:layout_constraintRight_toRightOf="@+id/tv_write5x"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider9" />
+    <Button
+        android:id="@+id/tv_write5x"
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
+        android:enabled="false"
+        android:text="@string/firmware_write5X"
+        app:layout_constraintStart_toStartOf="@+id/tv_read5x"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider9" />
+
+    <View
+        android:id="@+id/divider10"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/dividerVertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_read5x" />
+
+    <Button
+        android:id="@+id/tv_read24x"
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
+        android:enabled="false"
+        android:text="@string/firmware_read24X"
+        app:layout_constraintRight_toRightOf="@+id/tv_write24x"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider10" />
+    <Button
+        android:id="@+id/tv_write24x"
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
+        android:enabled="false"
+        android:text="@string/firmware_write24X"
+        app:layout_constraintStart_toStartOf="@+id/tv_read24x"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider10" />
+    <View
+        android:id="@+id/divider11"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/dividerVertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_read24x" />
+
+    <Button
+        android:id="@+id/tv_root_text_input"
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
+        android:enabled="false"
+        android:text="@string/firmware_root"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider11" />
+
+    <View
+        android:id="@+id/divider12"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/dividerVertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_root_text_input" />
+
     <View
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/app_detail_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.157"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider4" />
+        app:layout_constraintTop_toBottomOf="@id/divider12"
+        app:layout_constraintVertical_bias="0.887" />
+
+    <Button
+        android:id="@+id/tv_firmware_factoryReset"
+        android:layout_width="195dp"
+        android:layout_height="42dp"
+        android:enabled="false"
+        android:text="@string/firmware_factoryReset"
+        tools:layout_editor_absoluteX="24dp"
+        tools:layout_editor_absoluteY="371dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider12" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
