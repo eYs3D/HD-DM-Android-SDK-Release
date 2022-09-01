@@ -32,3 +32,6 @@
      
 11. Launch eDepthPreview application from Android device.  
 
+## License
+
+This project is licensed under the [Apache License, Version 2.0](/LICENSE). Copyright 2020 eYs3D Microelectronics, Co., Ltd.
