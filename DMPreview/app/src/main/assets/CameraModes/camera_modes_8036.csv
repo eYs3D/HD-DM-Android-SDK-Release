@@ -1,7 +1,7 @@
 1;L'+D;1280x720_YUYV;1280x720;null;null;11,14;60;60;3;1;null
 2;L'+D;1280x720_YUYV;1280x720;null;null;11,14;30;30;3;1;null
 3;L'+D;1280x720_YUYV;1280x720;null;null;11,14;10;10;3;1;null
-4;L'+D;1280x720_YUYV;1280x720;null;null;11,14;60;60;3;1;60
+4;L'+D interleave mode;1280x720_YUYV;1280x720;null;null;11,14;60;60;3;1;60
 5;L'+D scale_down mode;1280x720_YUYV;640x360;null;null;11,14;30;30;3;1;null
 6;L'+D scale_down mode;1280x720_YUYV;640x360;null;null;11,14;15;15;3;1;null
 7;L'+D scale_down mode;1280x720_YUYV;640x360;null;null;11,14;10;10;3;1;null
@@ -23,7 +23,7 @@
 23;D scale_down mode;null;640x360;null;null;11,14;null;15;3;1;null
 24;D scale_down mode;null;640x360;null;null;11,14;null;10;3;1;null
 25;L+R;2560x960_MJPEG;null;null;null;null;54;null;3;0;null
-26;L+R;2560x720_MJPEG;null;null;null;null;30;null;3;1;null
+26;L+R;2560x720_MJPEG;null;null;null;null;30;null;3;0;null
 27;L'+R';2560x720_MJPEG;null;null;null;null;60;null;3;1;null
 28;L'+R';2560x720_MJPEG;null;null;null;null;30;null;3;1;null
 29;L(R);1280x720_MJPEG;null;null;null;null;60;null;3;0;null
@@ -33,10 +33,10 @@
 33;D scale_down mode;null;640x360;null;null;11,14;null;15;2;1;null
 34;D scale_down mode;null;640x360;null;null;11,14;null;10;2;1;null
 35;L'+D;1280x720_MJPEG;1280x720;null;null;11,14;5;5;2;1;null
-36;L'+D;1280x720_MJPEG;640x360;null;null;11,14;30;30;2;1;null
-37;L'+D;1280x720_MJPEG;640x360;null;null;11,14;15;15;2;1;null
-38;L'+D;1280x720_MJPEG;640x360;null;null;11,14;10;10;2;1;null
+36;L'+D scale_down mode;1280x720_MJPEG;640x360;null;null;11,14;30;30;2;1;null
+37;L'+D scale_down mode;1280x720_MJPEG;640x360;null;null;11,14;15;15;2;1;null
+38;L'+D scale_down mode;1280x720_MJPEG;640x360;null;null;11,14;10;10;2;1;null
 39;L'+R'+D;2560x720_MJPEG;1280x720;null;null;11,14;3;3;2;1;null
 40;L+R;2560x960_MJPEG;null;null;null;null;24;null;2;0;null
-41;L+R;2560x720_MJPEG;null;null;;null;30;null;2;0;null
+41;L+R;2560x720_MJPEG;null;null;null;null;30;null;2;0;null
 42;L(R);1280x720_MJPEG;null;null;null;null;30;null;2;0;null

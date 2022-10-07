@@ -1,3 +1,6 @@
-5;L'+D;1280x720_YUYV;1280x720;null;null;11;60,30;60,30;3;1;30
+1;L+R;2560x720_YUYV;null;null;null;null;30;null;3;0;null
+3;L'+R'+D;2560x720_YUYV;1280x720;null;null;11;30;30;3;1;null
+5;L'+D;1280x720_YUYV;1280x720;null;null;11;60;60;3;1;null
+6;L'+D interleave mode;1280x720_YUYV;1280x720;null;null;11;30;30;3;1;30
 7;D;null;1280x720;null;null;11;null;60,30;3;0;null
-9;L'+D;1280x720_MJPEG;640x360;null;null;11;30;30;2;1;30
+9;L'+D interleave mode;1280x720_MJPEG;640x360;null;null;11;24;24;2;1;24

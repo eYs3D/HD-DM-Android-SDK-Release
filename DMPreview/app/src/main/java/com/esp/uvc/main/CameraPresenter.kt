@@ -967,10 +967,10 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
         }
         SharedPrefManager.put(KEY.PRESET_MODE, default.mode)
         SharedPrefManager.saveAll()
-        logd("Set video mode : ${mCameraMode!!.videoMode}")
+        logd("startCameraViaDefaults Set video mode : ${mCameraMode!!.videoMode}")
         apcCamera?.videoMode = default.videoMode
         configureInterleaveMode(
-            SharedPrefManager.get(KEY.INTERLEAVE_MODE, false) as Boolean || default.videoMode > 9
+            SharedPrefManager.get(KEY.INTERLEAVE_MODE, false) as Boolean
         )
         if (default.rgbCameraState != null) {
             loge("Starting RGB")
@@ -1030,7 +1030,7 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
         monitorFramerate = SharedPrefManager.get(KEY.SHOW_FPS, monitorFramerate) as Boolean
         mCameraMode!!.videoMode =
             SharedPrefManager.get(KEY.VIDEO_MODE, mCameraMode!!.videoMode) as Int
-        logd("Set video mode : ${mCameraMode!!.videoMode}")
+        logd("startPreview Set video mode : ${mCameraMode!!.videoMode}")
         apcCamera?.videoMode = mCameraMode!!.videoMode
         ExposureManager.setAEBySharedPrefs(apcCamera)
         WhiteBalanceManager.setAWBBySharedPrefs(apcCamera)
@@ -1189,6 +1189,7 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
             product.contains("8036_L") -> "QualityCfg/EX8036_DM_Quality_Register_Setting.cfg"
             else -> "QualityCfg/${product}_DM_Quality_Register_Setting.cfg"
         }
+        logi("getQualityCfg path : $path")
         return try {
             mContext.assets.open(path).bufferedReader().readLines()
         } catch (e: FileNotFoundException) {

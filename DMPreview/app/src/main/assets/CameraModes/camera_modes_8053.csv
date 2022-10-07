@@ -1,0 +1,5 @@
+1;L+R;2560x720_YUYV;null;null;null;null;30;null;3;0;null
+2;L'+R'+D;2560x720_YUYV;1280x720;null;null;11;30;30;3;1;null
+3;L'+D interleave mode;1280x720_YUYV;1280x720;null;null;11;24;24;3;1;24
+4;D;null;1280x720;null;null;11;null;60,30;3;1;null
+5;L'+D interleave mode;1280x720_MJPEG;640x360;null;null;11;24;24;2;1;24

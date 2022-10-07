@@ -468,10 +468,6 @@ class MPreviewSettings(p: IPreviewSettings.Presenter, usbMonitor: USBMonitor) :
                 LightSourceManager.INDEX_LOW_LIGHT_COMPENSATION,
                 ApcCamera.LOW_LIGHT_COMPENSATION_OFF
             )
-            // Cover the "different design" PIF (8059/8062)
-            if (mProductVersion!!.contains("YX8059")) {
-                videoMode += 16 // ex : 11_BITS(4) +16 -> 11_BITS_INTERLEAVE_MODE(20)
-            }
         }
 
         SharedPrefManager.put(KEY.PRESET_MODE, presetMode)
