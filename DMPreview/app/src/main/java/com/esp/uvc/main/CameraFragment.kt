@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentActivity
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
+import com.esp.android.usb.camera.core.AutoFocusCamValue
 import com.esp.android.usb.camera.core.IMUData
 import com.esp.uvc.BaseFragment
 import com.esp.uvc.BuildConfig
@@ -54,6 +55,9 @@ class CameraFragment : BaseFragment(), IMain.View {
     private var mIMUDialog: IMUDialogFragment? = null
 
     private var mSensorDialog: SensorDialogFragment? = null
+
+    private var mAutoFocusDialog: AutoFocusDialogFragment? = null
+
 
     private var mIRControlDialog: MaterialDialog? = null
 
@@ -329,6 +333,34 @@ class CameraFragment : BaseFragment(), IMain.View {
         mSensorDialog?.setChecked(tag, enabled)
     }
 
+    //AutoFocusDialogFragment
+    override fun enableAutoFocusSettingsButton(enabled: Boolean) = roUI {
+        af_settings?.isEnabled = enabled
+        af_settings?.alpha = if (enabled) ALPHA_ENABLED else ALPHA_DISABLED
+    }
+
+    override fun showAutoFocusDialogFragment(
+            isAlways: Boolean,
+            listener: AutoFocusDialogFragment.OnListener
+    ) {
+        mAutoFocusDialog = AutoFocusDialogFragment()
+        mAutoFocusDialog!!.setConfiguration(isAlways, listener)
+        mAutoFocusDialog!!.show(fragmentManager!!, tag)
+    }
+
+    override fun getLeftCamAutoFocusROI(): AutoFocusCamValue {
+        return  mAutoFocusDialog!!.getLeftCamAutoFocusROI()
+    }
+
+    override fun getRightCamAutoFocusROI(): AutoFocusCamValue {
+        return mAutoFocusDialog!!.getRightCamAutoFocusROI()
+    }
+
+    override fun updateAutoFocusReport(LCam: AutoFocusCamValue, RCam: AutoFocusCamValue) {
+        mAutoFocusDialog!!.updateAutoFocusReport(LCam, RCam)
+    }
+
+    //AccuracyDialogFragment
     override fun enableAccuracySettingsButton(enabled: Boolean) = roUI {
         ib_accuracy_settings?.isEnabled = enabled
         ib_accuracy_settings?.alpha = if (enabled) ALPHA_ENABLED else ALPHA_DISABLED
@@ -669,6 +701,7 @@ class CameraFragment : BaseFragment(), IMain.View {
         mIMUDialog?.dismiss()
         mSensorDialog?.dismiss()
         mColorPaletteDialog?.dismiss()
+        mAutoFocusDialog?.dismiss()
     }
 
     private fun applyRotationChanges() {
@@ -707,6 +740,7 @@ class CameraFragment : BaseFragment(), IMain.View {
             live_ply.rotation = LANDSCAPE_ROTATION
             colorPalette.rotation = LANDSCAPE_ROTATION
             ir.rotation = LANDSCAPE_ROTATION
+            af_settings.rotation = LANDSCAPE_ROTATION
         } else {
             camera_view_RGB.rotation = NORMAL_ROTATION
             camera_view_RGB.scaleX = if (camera_view_RGB.scaleX < 0) -1.0f else 1.0f
@@ -725,6 +759,7 @@ class CameraFragment : BaseFragment(), IMain.View {
             live_ply.rotation = NORMAL_ROTATION
             colorPalette.rotation = NORMAL_ROTATION
             ir.rotation = NORMAL_ROTATION
+            af_settings.rotation = NORMAL_ROTATION
         }
     }
 
@@ -862,6 +897,8 @@ class CameraFragment : BaseFragment(), IMain.View {
         ib_accuracy_settings.setOnClickListener {
             mPresenter.onAccuracySettingsClick()
         }
+        af_settings.isEnabled = false
+        af_settings.setOnClickListener { mPresenter.onAutoFocusSettingsClick() }
         savePly.setOnClickListener {
             mPresenter.savePLY()
         }

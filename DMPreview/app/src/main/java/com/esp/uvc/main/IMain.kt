@@ -3,6 +3,7 @@ package com.esp.uvc.main
 import android.graphics.Rect
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
+import com.esp.android.usb.camera.core.AutoFocusCamValue
 import com.esp.android.usb.camera.core.IMUData
 import com.esp.uvc.R
 import com.esp.uvc.main.common.*
@@ -13,6 +14,20 @@ import kotlinx.android.synthetic.main.dialog_region_accuracy.view.*
 interface IMain {
 
     interface View {
+        // --- auto focus settings button ---
+        fun enableAutoFocusSettingsButton(isEnable: Boolean)
+
+        fun showAutoFocusDialogFragment(
+                isAlways: Boolean,
+                listener: AutoFocusDialogFragment.OnListener
+        )
+
+        fun getLeftCamAutoFocusROI() : AutoFocusCamValue
+
+        fun getRightCamAutoFocusROI() : AutoFocusCamValue
+
+        fun updateAutoFocusReport(LCam: AutoFocusCamValue , RCam: AutoFocusCamValue)
+
         // --- about button ---
         fun showAboutDialog(cameraName: String = "")
         // --------------------
@@ -268,6 +283,8 @@ interface IMain {
         fun onAccuracySettingsClick()
 
         fun onSensorSettingsClick()
+
+        fun onAutoFocusSettingsClick()
 
         fun onIMUClick()
 

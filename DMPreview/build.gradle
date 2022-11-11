@@ -59,11 +59,11 @@ ext {
     slider = '2.1.2'
 
     appVersionCode = 1
-    appVersionName = '1.4.7'
+    appVersionName = '1.4.8'
     appDevNumber = '1'
 
     sdkVersionCode = 1
-    sdkVersionName = '1.2.0.7'
+    sdkVersionName = '1.2.0.8'
     sdkDevNumber = '0'
 
     buildVersion = genBuildNumber()

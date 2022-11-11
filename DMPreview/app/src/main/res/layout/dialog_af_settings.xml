@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TableLayout
+        android:id="@+id/af_table_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:stretchColumns="*"
+        tools:ignore="MissingConstraints">
+        <TableRow>
+            <TextView
+                android:text="@string/af_settings_title"
+                android:gravity="center" />
+            <TextView
+                android:text="@string/af_settings_left_cam_title"
+                android:gravity="center" />
+            <TextView
+                android:text="@string/af_settings_right_cam_title"
+                android:gravity="center" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:text="@string/af_settings_af_h_start_title"
+                android:gravity="center" />
+            <EditText
+                android:id="@+id/left_cam_af_h_start"
+                android:text="@string/af_settings_af_setting_default_value"
+                android:inputType="number"
+                android:maxLength="3"
+                android:gravity="center" />
+            <EditText
+                android:id="@+id/right_cam_af_h_start"
+                android:text="@string/af_settings_af_setting_default_value"
+                android:inputType="number"
+                android:maxLength="3"
+                android:gravity="center" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:text="@string/af_settings_af_v_start_title"
+                android:gravity="center" />
+            <EditText
+                android:id="@+id/left_cam_af_v_start"
+                android:text="@string/af_settings_af_setting_default_value"
+                android:inputType="number"
+                android:maxLength="3"
+                android:gravity="center" />
+            <EditText
+                android:id="@+id/right_cam_af_v_start"
+                android:text="@string/af_settings_af_setting_default_value"
+                android:inputType="number"
+                android:maxLength="3"
+                android:gravity="center" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:text="@string/af_settings_af_h_size_title"
+                android:gravity="center" />
+            <EditText
+                android:id="@+id/left_cam_af_h_size"
+                android:text="@string/af_settings_af_setting_default_value"
+                android:inputType="number"
+                android:maxLength="3"
+                android:gravity="center" />
+            <EditText
+                android:id="@+id/right_cam_af_h_size"
+                android:text="@string/af_settings_af_setting_default_value"
+                android:inputType="number"
+                android:maxLength="3"
+                android:gravity="center" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:text="@string/af_settings_af_v_size_title"
+                android:gravity="center" />
+            <EditText
+                android:id="@+id/left_cam_af_v_size"
+                android:text="@string/af_settings_af_setting_default_value"
+                android:inputType="number"
+                android:maxLength="3"
+                android:gravity="center" />
+            <EditText
+                android:id="@+id/right_cam_af_v_size"
+                android:text="@string/af_settings_af_setting_default_value"
+                android:inputType="number"
+                android:maxLength="3"
+                android:gravity="center" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:text="@string/af_settings_af_h_skip_title"
+                android:gravity="center" />
+            <EditText
+                android:id="@+id/left_cam_af_h_skip"
+                android:text="@string/af_settings_af_setting_default_value"
+                android:inputType="number"
+                android:maxLength="2"
+                android:gravity="center" />
+            <EditText
+                android:id="@+id/right_cam_af_h_skip"
+                android:text="@string/af_settings_af_setting_default_value"
+                android:inputType="number"
+                android:maxLength="2"
+                android:gravity="center" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:text="@string/af_settings_af_v_skip_title"
+                android:gravity="center" />
+            <EditText
+                android:id="@+id/left_cam_af_v_skip"
+                android:text="@string/af_settings_af_setting_default_value"
+                android:inputType="number"
+                android:maxLength="2"
+                android:gravity="center" />
+            <EditText
+                android:id="@+id/right_cam_af_v_skip"
+                android:text="@string/af_settings_af_setting_default_value"
+                android:inputType="number"
+                android:maxLength="2"
+                android:gravity="center" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:text="@string/af_settings_af_thd_title"
+                android:gravity="center" />
+            <EditText
+                android:id="@+id/left_cam_af_thd"
+                android:text="@string/af_settings_af_setting_default_value"
+                android:inputType="number"
+                android:maxLength="3"
+                android:gravity="center" />
+            <EditText
+                android:id="@+id/right_cam_af_thd"
+                android:text="@string/af_settings_af_setting_default_value"
+                android:inputType="number"
+                android:maxLength="3"
+                android:gravity="center" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:text="@string/af_settings_af_report_title"
+                android:gravity="center" />
+            <TextView
+                android:id="@+id/left_cam_af_report"
+                android:text="@string/af_settings_af_setting_default_value"
+                android:gravity="center" />
+            <TextView
+                android:id="@+id/right_cam_af_report"
+                android:text="@string/af_settings_af_setting_default_value"
+                android:gravity="center" />
+        </TableRow>
+    </TableLayout>
+
+    <LinearLayout
+        android:id="@+id/af_control_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/af_table_layout"
+        android:padding="8dp">
+
+        <Button
+            android:id="@+id/af_update_af_report_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/af_settings_af_update_af_report_title" />
+
+        <CheckBox
+            android:id="@+id/cb_always"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/af_settings_af_always_update_check_title"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

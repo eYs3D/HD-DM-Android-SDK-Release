@@ -6,6 +6,7 @@ import android.content.DialogInterface
 import android.graphics.Rect
 import android.hardware.SensorManager
 import android.hardware.usb.UsbDevice
+import android.os.Handler
 import android.util.Size
 import android.view.OrientationEventListener
 import android.view.Surface
@@ -149,6 +150,10 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
     private var mDepthTemporalNoise = 0f
     private lateinit var mRectifyLogData: RectifyLogData
 
+    private var misAFAlwaysCheck = false
+    private var mAutuFocusTaskHandler = Handler()
+
+
     override fun attach() {
     }
 
@@ -159,6 +164,7 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
         apcCamera = null
         depthMeasureEnabled = false
         mIView.enableDepthMeasure(false)
+        mIView.enableAutoFocusSettingsButton(false)
         mIView.updateInfoTextRGB()
         mIView.updateInfoTextDepth()
         mIView.updateFrameCntRGB(0)
@@ -182,6 +188,7 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
         mDepthAngleX = 0f
         mDepthAngleY = 0f
         mDepthTemporalNoise = 0f
+        misAFAlwaysCheck = false
     }
 
     override fun onResume() {
@@ -201,6 +208,7 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
         mIView.enableIMUButton(false)
         mIView.enableFocalLengthButton(false)
         mIView.enableAccuracySettingsButton(false)
+        mIView.enableAutoFocusSettingsButton(false)
         mZDBuffer = null
         apcCamera?.destroy()
         apcCamera = null
@@ -396,6 +404,20 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
             )
         }
     }
+
+    override fun onAutoFocusSettingsClick() {
+        if (apcCamera == null) {
+            mIView.toast(getString(R.string.camera_error_not_connected_abort))
+        } else {
+            val exposureInfo = getExposureInfo()
+            val wbInfo = getWBInfo()
+            mIView.showAutoFocusDialogFragment(
+                    misAFAlwaysCheck,
+                    mAutoFocusListener
+            )
+        }
+    }
+
 
     override fun onIRClick() {
         if (apcCamera == null) {
@@ -1158,6 +1180,7 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
 
     private fun updateUI() {
         mIView.enableSensorSettingsButton(true)
+        mIView.enableAutoFocusSettingsButton(true)
         if (aspectRatioEnabled) {
             GlobalScope.launch(Dispatchers.Main) {
                 mIView.getDepthTextureView()
@@ -1418,7 +1441,8 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
                 }
                 mIView.hideDialogs()
                 mIView.enableIRButton(false)
-                mIView.enableDepthFilterButton(true)
+                mIView.enableAutoFocusSettingsButton(false)
+                mIView.enableDepthFilterButton(false)
                 mIView.enableColorPaletteButton(false)
                 mIView.enablePLYButton(false)
                 mIView.enableLivePlyButton(false)
@@ -1709,6 +1733,52 @@ class CameraPresenter(v: IMain.View, context: Context) : IMain.Presenter, KoinCo
             }
         }
     }
+
+    private val mAutoFocusListener = object : AutoFocusDialogFragment.OnListener {
+
+        override fun onAlwaysCheck(tag: String, always: Boolean) {
+            when (tag) {
+                AutoFocusDialogFragment.TAG_ALWAYS_CHECK -> {
+                    misAFAlwaysCheck = always
+                }
+            }
+        }
+
+        override fun onClicked(tag: String) {
+            when (tag) {
+                AutoFocusDialogFragment.TAG_UPDATE_REPORT -> {
+                    if (misAFAlwaysCheck) {
+                        mAutuFocusTaskHandler.postDelayed(mAutoFocusRunnable, 0)
+                    } else {
+                        mDoUpdateAutoFocusReport()
+                    }
+                }
+            }
+        }
+
+        override fun onDismiss() {
+            logi("mAutoFocusListener onDismiss")
+            mAutuFocusTaskHandler.removeCallbacksAndMessages(null)
+        }
+    }
+
+    private fun mDoUpdateAutoFocusReport() {
+        val Lcam = mIView.getLeftCamAutoFocusROI()
+        val Rcam = mIView.getLeftCamAutoFocusROI()
+        apcCamera!!.enableAFBypass()
+        apcCamera!!.SetAFSettings(Lcam, Rcam)
+        apcCamera!!.GetAFReport(Lcam, Rcam)
+        mIView.updateAutoFocusReport(Lcam, Rcam)
+    }
+
+    private var mAutoFocusRunnable = object:Runnable{
+        override fun run() {
+            logi("mAutoFocusRunnable...")
+            mDoUpdateAutoFocusReport()
+            mAutuFocusTaskHandler.postDelayed(this, 1000)
+        }
+    }
+
 
     /**
      * Rotation changes

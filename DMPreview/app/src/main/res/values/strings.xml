@@ -476,4 +476,22 @@
 
     <string name="module_sync_master">MASTER</string>
 
+    <string name="af_settings_title">Auto Focus Settings</string>
+    <string name="af_settings_left_cam_title">LCam</string>
+    <string name="af_settings_right_cam_title">RCam</string>
+    <string name="af_settings_af_h_start_title">AF_H_START (0-255)</string>
+    <string name="af_settings_af_v_start_title">AF_V_START (0-255)</string>
+    <string name="af_settings_af_h_size_title">AF_H_SIZE (0-255)</string>
+    <string name="af_settings_af_v_size_title">AF_V_SIZE (0-255)</string>
+    <string name="af_settings_af_h_skip_title">AF_H_SKIP (0-15)</string>
+    <string name="af_settings_af_v_skip_title">AF_V_SKIP (0-15)</string>
+    <string name="af_settings_af_thd_title">AF_THD (0-255)</string>
+    <string name="af_settings_af_report_title">AF_REPORT (0-16777215)</string>
+    <string name="af_settings_af_update_af_report_title">Update AF report</string>
+    <string name="af_settings_af_always_update_check_title">Always update</string>
+    <string name="af_settings_af_setting_default_value">0</string>
+
+
+
+
 </resources>
